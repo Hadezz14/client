@@ -52,7 +52,6 @@ const SingleProduct = () => {
         dispatch(addProdToCart({
           productId:productState?._id,
           colour,
-          // size:selectedSize,
           price:productState?.price,
           quantity,
         }))

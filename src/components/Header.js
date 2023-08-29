@@ -15,9 +15,7 @@ const Header = () => {
   const cartState = useSelector((state) => state?.auth?.cartProducts)
   const authState = useSelector((state) => state.auth)
  
-  useEffect(() =>{
-    dispatch(getUserCart())
-  },[cartState])
+  
   return (
     <>
      
