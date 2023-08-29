@@ -1,0 +1,25 @@
+{
+  "files": {
+    "main.css": "/static/css/main.e46a58c9.css",
+    "main.js": "/static/js/main.0c8de351.js",
+    "static/media/vyamtshirt.png": "/static/media/vyamtshirt.00ef91ef2cbec43cf197.png",
+    "static/media/empty-cart.jpg": "/static/media/empty-cart.66f4b0d6f771756ea9fc.jpg",
+    "static/media/order-confirmed.png": "/static/media/order-confirmed.090e4ede7b6396016026.png",
+    "static/media/Vyamlogo2.png": "/static/media/Vyamlogo2.502d5b2bed81f8d3cb17.png",
+    "static/media/error404.png": "/static/media/error404.15ca2627047469a19817.png",
+    "static/media/menu.svg": "/static/media/menu.dce6240c61671672f341c0f8f4253c71.svg",
+    "static/media/cart.svg": "/static/media/cart.79051989c99a96e7b41957b587a428dd.svg",
+    "index.html": "/index.html",
+    "static/media/view.svg": "/static/media/view.90f335b63d298305bb0baa27e6786d6c.svg",
+    "static/media/wish.svg": "/static/media/wish.b893ca13ff8e692e6b1ec110845b2b79.svg",
+    "static/media/add-cart.svg": "/static/media/add-cart.e3aa8ff791dce20f9b416809db48b272.svg",
+    "static/media/wishlist.svg": "/static/media/wishlist.72059c2bea7b950e0366b684244ca1bb.svg",
+    "static/media/user.svg": "/static/media/user.1ab0d7646f68a516d1007d9f8bab54a9.svg",
+    "main.e46a58c9.css.map": "/static/css/main.e46a58c9.css.map",
+    "main.0c8de351.js.map": "/static/js/main.0c8de351.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.e46a58c9.css",
+    "static/js/main.0c8de351.js"
+  ]
+}
