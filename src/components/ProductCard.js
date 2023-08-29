@@ -41,6 +41,9 @@ const ProductCard = (props) => {
               <img src={wish} alt="wishlist" />
             </button>
           </div>
+          <Link
+             to={`/product/${item._id}`}
+          >
           <div className="product-image">
           {
             item?.images && item.images[0]&&(
@@ -49,6 +52,7 @@ const ProductCard = (props) => {
           }
           <img src={item?.images[0].url} className="img-fluid" alt="product image" />
           </div>
+          </Link>
           <div className="product-details">
             <h6 className="brand">{item?.brand}</h6>
             <Link
