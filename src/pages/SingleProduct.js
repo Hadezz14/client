@@ -56,6 +56,7 @@ const SingleProduct = () => {
           price:productState?.price,
           quantity,
         }))
+        dispatch(getUserCart())
       }
   }
 
@@ -177,7 +178,7 @@ const SingleProduct = () => {
                   alreadyAdded === false && <>
                   <div className="d-flex gap-10 flex-column mt-2 mb-3">
                   <h3 className="product-heading">Color :</h3>
-                  <Color setColour = {setColour} colourData ={productState?.color} />
+                  <Color setColour = {setColour} colourData ={productState?.color} selectedColour={colour}/>
 
                 </div>
                   </>

@@ -8,18 +8,15 @@ import menu from "../images/menu.svg";
 import logo from "../images/Vyamlogo2.png"
 import { useDispatch, useSelector } from "react-redux";
 import { AiFillHeart, AiOutlineUser } from "react-icons/ai";
+import { getUserCart } from "../features/user/userSlice";
 
 const Header = () => {
   const dispatch = useDispatch();
   const cartState = useSelector((state) => state?.auth?.cartProducts)
   const authState = useSelector((state) => state.auth)
-  const [total,setTotal] = useState(null);
+ 
   useEffect(() =>{
-    let sum = 0
-    // for (let index = 0; index < cartState.length; index++) {
-    //   sum = sum + (Number(cartState[index].quantity)*Number(cartState[index].price))
-    //   setTotal(sum)
-    // }
+    dispatch(getUserCart())
   },[cartState])
   return (
     <>

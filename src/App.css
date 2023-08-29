@@ -453,6 +453,9 @@ footer .input-group-text {
   background-color: red;
   border-radius: 50%;
 }
+.colors li:hover {
+  border: 2px solid white;
+}
 .random-products h5 {
   font-size: 14px;
   margin-bottom: 8px;
@@ -822,3 +825,4 @@ footer .input-group-text {
   
   /* ... (other adjustments) */
 }
+

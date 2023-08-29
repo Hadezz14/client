@@ -51,9 +51,14 @@ const ProductCard = (props) => {
           </div>
           <div className="product-details">
             <h6 className="brand">{item?.brand}</h6>
+            <Link
+              to={`/product/${item._id}`}
+            > 
             <h5 className="product-title">
              {item?.title}
             </h5>
+            </Link>
+            
             <ReactStars
               count={5}
               size={24}

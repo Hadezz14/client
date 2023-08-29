@@ -97,13 +97,17 @@ const Home = () => {
                             <img src={item?.images[0].url} className="img-fluid" alt="product image" />
                           )
                         }
-                        <img src={tshirt2} className="img-fluid" alt="product image" />
+                            <img src={item?.images[0].url} className="img-fluid" alt="product image" />
                       </div>
                       <div className="product-details">
                         <h6 className="brand">{item?.brand}</h6>
+                        <Link
+                          to={`/product/${item._id}`}
+                        > 
                         <h5 className="product-title">
                         {item?.title}
                         </h5>
+                        </Link>
                         <ReactStars
                           count={5}
                           size={24}
