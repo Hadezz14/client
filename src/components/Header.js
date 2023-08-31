@@ -1,11 +1,10 @@
-import React from "react";
+import React, {useState} from "react";
 import { NavLink, Link } from "react-router-dom";
 import { AiFillHeart, AiOutlineUser } from "react-icons/ai";
 import cart from "../images/cart.svg";
 import menu from "../images/menu.svg";
 import logo from "../images/Vyamlogo2.png"
 import { useDispatch, useSelector } from "react-redux";
-import { AiFillHeart, AiOutlineUser } from "react-icons/ai";
 import { getUserCart } from "../features/user/userSlice";
 
 const Header = () => {
