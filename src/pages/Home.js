@@ -41,6 +41,8 @@ const Home = () => {
             <div className="d-flex flex-wrap gap-10 justify-content-between align-items-center">    
               <SmallBanner/>
               <SmallBanner/>
+              <SmallBanner/>
+              <SmallBanner/>
             </div>
           </div>
         </div>
@@ -51,7 +53,7 @@ const Home = () => {
             <div className="servies d-flex align-items-center justify-content-between">
               {services?.map((i, j) => {
                 return (
-                  <div className="d-flex align-items-center gap-15" key={j}>
+                  <div className="d-flex align-items-center gap-10" key={j}>
                     <img src={i.image} alt="services" />
                     <div>
                       <h6>{i.title}</h6>
@@ -90,20 +92,29 @@ const Home = () => {
                           <img src={wish} alt="wishlist" />
                         </button>
                       </div>
-
+                      
+                      <Link
+                        to={`/product/${item._id}`}
+                      >
                       <div className="product-image">
                         {
                           item?.images && item.images[0]&&(
                             <img src={item?.images[0].url} className="img-fluid" alt="product image" />
                           )
                         }
-                        <img src={tshirt2} className="img-fluid" alt="product image" />
+                            <img src={item?.images[0].url} className="img-fluid" alt="product image" />
                       </div>
+                      </Link>
+                      
                       <div className="product-details">
                         <h6 className="brand">{item?.brand}</h6>
+                        <Link
+                          to={`/product/${item._id}`}
+                        > 
                         <h5 className="product-title">
                         {item?.title}
                         </h5>
+                        </Link>
                         <ReactStars
                           count={5}
                           size={24}

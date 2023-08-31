@@ -7,15 +7,17 @@ import { Link } from "react-router-dom";
 import Container from "../components/Container";
 import { useDispatch, useSelector } from "react-redux";
 import { deleteCartProduct, getUserCart, updateCartProduct } from "../features/user/userSlice";
-
+import emptyCart from "../images/empty-cart.jpg"
 const Cart = () => {
   const dispatch = useDispatch();
+  React.useEffect(() =>{
+    dispatch(getUserCart())
+  },[])
+  
   const [productUpdateDetail,setProductUpdateDetail] = useState(null);
   const [totalAmount,setTotalAmount] = useState(null);
   const useCartState = useSelector((state) => state.auth.cartProducts)
-  useEffect(() =>{
-    dispatch(getUserCart())
-  },[])
+  
 
   useEffect(() =>{
     if(productUpdateDetail !== null){
@@ -23,6 +25,7 @@ const Cart = () => {
     setTimeout(() =>{
       dispatch(getUserCart())
     },200)
+      
     }
   },[productUpdateDetail])
 
@@ -48,7 +51,18 @@ const Cart = () => {
       <Container class1="cart-wrapper home-wrapper-2 py-5">
         <div className="row">
           <div className="col-12">
-            <div className="cart-header py-3 d-flex justify-content-between align-items-center">
+            { useCartState?.length === 0? (
+              <div className="text-center">
+                <p>Your cart is empty. Add items to start shopping!</p>
+                <img
+                  src={emptyCart}
+                  alt="Emptry Cart"
+                  className="img-fluid"
+                />
+              </div>
+            ):(
+              <div>
+                 <div className="cart-header py-3 d-flex justify-content-between align-items-center">
               <h4 className="cart-col-1">Product</h4>
               <h4 className="cart-col-2">Price</h4>
               <h4 className="cart-col-3">Quantity</h4>
@@ -71,10 +85,11 @@ const Cart = () => {
                   <p>{item?.productId.title}</p>
                   
                   <p className="d-flex gap -3">
-                    Color: <ul className="colors ps-0">
-                      
-
-                    <li style={{backgroundColor:item?.productId.color}}></li>
+                    Color:
+                    <ul className="colors ps-0">
+                      {item?.productId.color.map((color, index) => (
+                        <li key={index} style={{ backgroundColor: color }}></li>
+                      ))}
                     </ul>
                   </p>
                 </div>
@@ -100,15 +115,12 @@ const Cart = () => {
                 </div>
               </div>
               <div className="cart-col-4">
-                <h5 className="price">$ {item?.price * item?.quantity}</h5>
+                <h5 className="price">Rs {item?.price * item?.quantity}</h5>
               </div>
             </div>
                 )
-              })
-            }
-            
-            
-          </div>
+              })}  
+          
           <div className="col-12 py-2 mt-4">
             <div className="d-flex justify-content-between align-items-baseline">
               <Link to="/product" className="button">
@@ -125,6 +137,9 @@ const Cart = () => {
               </div>
               }
             </div>
+          </div>
+              </div>
+            )}
           </div>
         </div>
       </Container>

@@ -13,14 +13,14 @@ const shippingschema = yup.object({
   lastName: yup.string().required("Last Name is Required"),
   address: yup.string().required("Address details are Required"),
   city: yup.string().required("City is Required"),
-  pincode: yup.number().required("Pincode is Required"),
-  
-   
+  pincode: yup.number().required("Pincode Number is Required"),   
 });
  
 const Checkout = () => {
   const dispatch = useDispatch();
   const navigate =useNavigate();
+  const orderState = useSelector((state) => state.auth.order)
+  
   const cartState = useSelector((state) => state.auth.cartProducts)
   const userId = useSelector((state) =>state.auth.user._id);
  
@@ -45,7 +45,7 @@ const Checkout = () => {
       },
       totalPrice: 0,
     },
-    // validationSchema:shippingschema,
+    // validationSchema: shippingschema,
     onSubmit: async (values) => {
      
       const orderedItems = cartState.map((item) =>({
@@ -62,14 +62,25 @@ const Checkout = () => {
       };
       try {
         await dispatch(createUserOrder(orderData));
-        dispatch(clearUserCart(userId))
-        navigate("/order-confirm")
+        
+        // if(orderState.success === true){
+        //   navigate("/order-confirm")
+        //   dispatch(clearUserCart(userId))
+        // }
+        
       } catch (error) {
         console.error("Error creating order:", error);
       }
       
-    },
+    }
   });
+
+  useEffect(() => {
+    if ( orderState !== null) {
+      dispatch(clearUserCart(userId));
+      navigate("/order-confirm");
+    }
+  }, [orderState]);
 
   return (
     <>

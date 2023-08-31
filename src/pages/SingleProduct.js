@@ -52,10 +52,10 @@ const SingleProduct = () => {
         dispatch(addProdToCart({
           productId:productState?._id,
           colour,
-          // size:selectedSize,
           price:productState?.price,
           quantity,
         }))
+        dispatch(getUserCart())
       }
   }
 
@@ -123,16 +123,22 @@ const SingleProduct = () => {
               </div>
               <div className="border-bottom py-3">
                 <p className="price">Rs {productState?.price}</p>
-                <div className="d-flex align-items-center gap-10">
+                {
+                  productState && productState.ratings?.map((item,index) => {
+                    return(
+                      <div className="d-flex align-items-center gap-10">
                   <ReactStars
                     count={5}
                     size={24}
-                    value={productState?.totalratings}
+                    value={item?.star}
                     edit={false}
                     activeColor="#ffd700"
                   />
-                  <p className="mb-0 t-review">( 2 Reviews )</p>
+                  <p className="mb-0 t-review">( {item.length} )</p>
                 </div>
+                    )
+                  })
+                }
                 <a className="review-btn" href="#review">
                   Write a Review
                 </a>
@@ -177,7 +183,7 @@ const SingleProduct = () => {
                   alreadyAdded === false && <>
                   <div className="d-flex gap-10 flex-column mt-2 mb-3">
                   <h3 className="product-heading">Color :</h3>
-                  <Color setColour = {setColour} colourData ={productState?.color} />
+                  <Color setColour = {setColour} colourData ={productState?.color} selectedColour={colour}/>
 
                 </div>
                   </>

@@ -3,9 +3,10 @@ import { NavLink, Link } from "react-router-dom";
 import { AiFillHeart, AiOutlineUser } from "react-icons/ai";
 import cart from "../images/cart.svg";
 import menu from "../images/menu.svg";
-import logo from "../images/Vyamlogo2.png";
-import { useSelector } from "react-redux";
-import { useState } from "react";
+import logo from "../images/Vyamlogo2.png"
+import { useDispatch, useSelector } from "react-redux";
+import { AiFillHeart, AiOutlineUser } from "react-icons/ai";
+import { getUserCart } from "../features/user/userSlice";
 
 const Header = () => {
   const cartState = useSelector((state) => state?.auth?.cartProducts);
