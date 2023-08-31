@@ -117,6 +117,72 @@ a {
   background-color: transparent;
   color: var(--color-febd69) !important;
 }
+@media (max-width: 767px) {
+  /* Header upper */
+  .header-upper {
+    max-height: none;
+    padding: 1rem;
+  }
+  
+  .header-upper .logo {
+    width: 100px;
+    height: auto;
+  }
+  
+  /* Header bottom */
+  .header-bottom {
+    background-color: #807d7e;
+    padding: 0.5rem;
+  }
+  
+  .header-bottom .menu-links {
+    display: none;
+  }
+  
+  .header-bottom .dropdown button {
+    padding: 0;
+    background: none;
+    border: none;
+  }
+  
+  .header-bottom .dropdown-menu {
+    transform: translate3d(0px, 45px, 0px) !important;
+  }
+  
+  .header-bottom .dropdown-item {
+    padding: 10px;
+  }
+}
+
+@media (max-width: 320px) {
+  .header-upper {
+    max-height: 6rem;
+  }
+
+  .header-upper .logo {
+    width: 120px;
+    height: auto;
+  }
+
+  .header-bottom .dropdown-menu {
+    transform: translate3d(0px, 45px, 0px) !important;
+  }
+
+  .header-bottom .menu-links {
+    display: none;
+  }
+
+  .header-bottom .dropdown button {
+    padding: 0;
+    background: none;
+    border: none;
+  }
+
+  .header-bottom .dropdown-item {
+    padding: 15px;
+  }
+}
+
 /* Header Part End Here */
 
 /* Footer Part */
@@ -311,12 +377,16 @@ footer .input-group-text {
   border-radius: 10px;
   overflow: hidden;
   width: 100%;
+  position: relative;
+  margin-bottom: 20px;
 }
 .product-card .product-image {
   height: 270px;
 }
 .product-card .product-image img {
   object-fit: contain;
+  width: 100%;
+  height: 100%;
 }
 .product-card .product-image > img:last-child {
   display: none;
@@ -348,19 +418,47 @@ footer .input-group-text {
   margin-right: 20px;
 }
 .action-bar {
+  
   top: 10%;
   right: -23px;
   transition: 0.3s;
+  /* transform: translate(-50%); */
+
 }
 .wishlist-icon {
+  
   top: 2%;
   right: 15px;
 }
 @media screen and (max-width: 768px) {
   .product-card {
-    /* Adjust card width, padding, etc. */
+    padding: 10px;
   }
-  /* ... (adjust other styles) */
+
+  .product-card .product-image {
+    height: 200px;
+  }
+
+  .product-card .product-details h5 {
+    font-size: 14px;
+  }
+
+  .product-card .product-details p.price {
+    font-size: 14px;
+  }
+
+  .product-card p.description {
+    font-size: 12px;
+  }
+
+  .action-bar {
+    right: 5px;
+  }
+
+  .wishlist-icon {
+    top: 5px;
+    right: 5px;
+  }
 }
 /* Product Card ends here */
 
@@ -480,13 +578,13 @@ footer .input-group-text {
   width: 100%;
 }
 .gr-6 {
-  width: 49%;
+  width: 50%;
 }
 .gr-4 {
-  width: 32%;
+  width: 33%;
 }
 .gr-3 {
-  width: 24%;
+  width: 25%;
 }
 .gr-12 .product-card {
   display: flex;
