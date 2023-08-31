@@ -1,19 +1,24 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 
-const SmallBanner = () => {
+const SmallBanner = ({item}) => {
   return (
-    <div className="small-banner position-relative">
-    <img
-      src="../images/Blacktshirt.png"
-      className="img-fluid rounded-3"
-      alt="main banner"
-    />
-    <div className="small-banner-content position-absolute">
-      <h4>Best Deal</h4>
-      <h5>Black T-shirt</h5>
-      
-    </div>
-  </div>
+    <Link to={`/product/${item?._id}`}>
+          <div className="small-banner position-relative">
+          {item?.images && item.images[0] && (
+            <img
+              src={item?.images[0].url}
+              className="img-fluid rounded-3 small-banner-image"
+              alt="product image"
+            />
+          )}
+          <div className="small-banner-content position-absolute">
+            <h4>Best Deal</h4>
+            <h5>{item?.title}</h5>
+            
+          </div>
+        </div>
+          </Link>
   )
 }
 

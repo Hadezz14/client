@@ -1,21 +1,31 @@
 import React from 'react'
+import tshirt from "../images/Blacktshirt.png"
 import { Link } from 'react-router-dom'
 
-const BigBanner = () => {
+const BigBanner = ({item}) => {
+  console.log(item);
   return (
-    <div className="main-banner position-relative ">
-    <img
-      src="../images/vyamtshirt.png"
-      className="img-fluid rounded-3"
-      alt="main banner"
-    />
+    <>
+      <div className="main-banner position-relative ">
+           <div>
+          {
+            item?.images && item.images[0] &&(
+              <img
+                src={item?.images[0].url}
+                className="img-fluid rounded-3 banner-image"
+                alt="main banner"
+              />
+            )
+          }
     <div className="main-banner-content position-absolute">
-      <h4>Active ware</h4>
-      <h5>Black T-shirt</h5>
+      {/* <h4>{item?.price}</h4> */}
+      <h5>{item?.title}</h5>
       
-      <Link to={'/product'} className="button">BUY NOW</Link>
+      <Link to={`/product/${item?._id}`}className="button">BUY NOW</Link>
     </div>
+        </div>
   </div>
+    </>
   )
 }
 

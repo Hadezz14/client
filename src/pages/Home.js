@@ -15,10 +15,13 @@ import tshirt2 from "../images/vyamtshirt.png";
 import addcart from "../images/add-cart.svg";
 import view from "../images/view.svg";
 import { addToWishlist } from "../features/products/productSlice";
+import ProductCard from "../components/ProductCard";
+import HomeProductCard from "../components/Products/HomeProductCard";
+import { useState } from "react";
 
 const Home = () => {
   const productState = useSelector((state) => state.product.product);
-  
+ 
   const navigate = useNavigate();
   const dispatch = useDispatch();
   useEffect(() =>{
@@ -27,33 +30,75 @@ const Home = () => {
   const getProducts =() =>{ 
     dispatch(getAllProducts());
   }
-  const addToWish = (id) =>{
-    dispatch(addToWishlist(id));
+  // const addToWish = (id) =>{
+  //   dispatch(addToWishlist(id));
+  // };
+
+  const handleAddToWishlist = (productId) => {
+    dispatch(addToWishlist(productId));
   };
+  const firstFourProducts = productState.slice(0, 4);
+  const latestProduct = productState.slice(0,2);
+
+  const [col,setCol] = useState(3);
+  useEffect(() =>{
+    const handleResize =() =>{
+      if(window.innerWidth <= 425){
+        setCol(12)
+      }
+      else if(window.innerWidth <=768){
+        setCol(6)
+      }
+      else{
+        setCol(3)
+      }
+    };
+    window.addEventListener("resize",handleResize);
+    return ()=>{
+      window.removeEventListener("resize",handleResize)
+    }
+  },[])
+  
+
+
   return (
     <>
-      <Container class1="home-wrapper-1 py-5">
+      <Container class1="home-wrapper-1 py-3">
         <div className="row">
-          <div className="col-6"> 
-           <BigBanner/>
-          </div>
-          <div className="col-6">
+          {
+            latestProduct?.map((item,index) =>(
+              <div key={index} className="col-6"> 
+                <BigBanner
+                  item ={item}
+                /> 
+              </div>
+            ))
+          }
+          <div className="row py-4">
+          {
+            firstFourProducts?.map((item,index) =>(
+              <div className={`col-3`}>
+            
             <div className="d-flex flex-wrap gap-10 justify-content-between align-items-center">    
-              <SmallBanner/>
-              <SmallBanner/>
-              <SmallBanner/>
-              <SmallBanner/>
-            </div>
+              <SmallBanner
+                item ={item}
+              />
+              </div>
+            
           </div>
+            ))
+          }
         </div>
+          </div>
+          
       </Container>
-      <Container class1="home-wrapper-2 py-5">
+      <Container class1="home-wrapper-2">
         <div className="row">
           <div className="col-12">
             <div className="servies d-flex align-items-center justify-content-between">
               {services?.map((i, j) => {
                 return (
-                  <div className="d-flex align-items-center gap-10" key={j}>
+                  <div className="service-item" key={j}>
                     <img src={i.image} alt="services" />
                     <div>
                       <h6>{i.title}</h6>
@@ -67,80 +112,27 @@ const Home = () => {
         </div>
       </Container>
       
-      <Container class1="featured-wrapper py-5 home-wrapper-2">
+      <Container class1="featured-wrapper py-3 home-wrapper-2">
         <div className="row">
           <div className="col-12">
             <h3 className="section-heading">New Arival</h3>
+            <div className="row">
+              {/* <HomeProductCard/> */}
+            {
+              firstFourProducts?.map((item,index) =>(
+                <div key={index} className={`col-${col}`}>
+             
+                  <HomeProductCard
+                    item={[item]}
+                   onAddToWishlist={handleAddToWishlist} 
+                  />
+                  </div>
+                  
+               
+              ))}
           </div>
-          <div className="row">
+          </div>
           
-            {productState &&
-              productState?.map((item,index) =>{
-                
-                  return(
-                    <div key={index} className={"col-3"}>
-                      <div
-                      
-                      className="product-card position-relative"
-                    >
-                      <div className="wishlist-icon position-absolute">
-                        <button 
-                          className="border-0 bg-transparent" 
-                          onClick={(e) =>{
-                            addToWish(item?._id);
-                          }}>
-                          <img src={wish} alt="wishlist" />
-                        </button>
-                      </div>
-                      
-                      <Link
-                        to={`/product/${item._id}`}
-                      >
-                      <div className="product-image">
-                        {
-                          item?.images && item.images[0]&&(
-                            <img src={item?.images[0].url} className="img-fluid" alt="product image" />
-                          )
-                        }
-                            <img src={item?.images[0].url} className="img-fluid" alt="product image" />
-                      </div>
-                      </Link>
-                      
-                      <div className="product-details">
-                        <h6 className="brand">{item?.brand}</h6>
-                        <Link
-                          to={`/product/${item._id}`}
-                        > 
-                        <h5 className="product-title">
-                        {item?.title}
-                        </h5>
-                        </Link>
-                        <ReactStars
-                          count={5}
-                          size={24}
-                          value={item?.totalrating.toString()}
-                          edit={false}
-                          activeColor="#ffd700"
-                        />
-                        
-                        <p className="price">Rs {item?.price}</p>
-                      </div>
-                      <div className="action-bar position-absolute">
-                        <div className="d-flex flex-column gap-15">
-                          <button className="border-0 bg-transparent">
-                            <img onClick={()=>navigate("/product/"+item?._id)} src={view} alt="view" />
-                          </button>
-                          <button className="border-0 bg-transparent">
-                            <img onClick={() => navigate("/cart")} src={addcart} alt="addcart" />
-                          </button>
-                          
-                          
-                    </div>
-                  </div> 
-                </div>
-              </div>
-            ) })}
-          </div>
         </div>
       </Container>
       {/* <Carosal/>

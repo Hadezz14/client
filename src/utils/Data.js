@@ -1,9 +1,9 @@
 export const services = [
-    {
-      title: "Shipping",
-      tagline: "From all orders",
-      image: "images/service.png",
-    },
+    // {
+    //   title: "Shipping",
+    //   tagline: "From all orders",
+    //   image: "images/service.png",
+    // },
     
     {
       title: "Support 24/7",

@@ -119,72 +119,6 @@ a {
   background-color: transparent;
   color: var(--color-febd69) !important;
 }
-@media (max-width: 767px) {
-  /* Header upper */
-  .header-upper {
-    max-height: none;
-    padding: 1rem;
-  }
-  
-  .header-upper .logo {
-    width: 100px;
-    height: auto;
-  }
-  
-  /* Header bottom */
-  .header-bottom {
-    background-color: #807d7e;
-    padding: 0.5rem;
-  }
-  
-  .header-bottom .menu-links {
-    display: none;
-  }
-  
-  .header-bottom .dropdown button {
-    padding: 0;
-    background: none;
-    border: none;
-  }
-  
-  .header-bottom .dropdown-menu {
-    transform: translate3d(0px, 45px, 0px) !important;
-  }
-  
-  .header-bottom .dropdown-item {
-    padding: 10px;
-  }
-}
-
-@media (max-width: 320px) {
-  .header-upper {
-    max-height: 6rem;
-  }
-
-  .header-upper .logo {
-    width: 120px;
-    height: auto;
-  }
-
-  .header-bottom .dropdown-menu {
-    transform: translate3d(0px, 45px, 0px) !important;
-  }
-
-  .header-bottom .menu-links {
-    display: none;
-  }
-
-  .header-bottom .dropdown button {
-    padding: 0;
-    background: none;
-    border: none;
-  }
-
-  .header-bottom .dropdown-item {
-    padding: 15px;
-  }
-}
-
 /* Header Part End Here */
 
 /* Footer Part */
@@ -232,6 +166,39 @@ footer .input-group-text {
   letter-spacing: 0.4;
   color: var(--color-131921);
 }
+.banner-image {
+  width: 100%; /* Set your desired width */
+  height: 400px; /* Set your desired height */
+  object-fit: cover; /* Maintain aspect ratio and cover container */
+}
+@media(max-width:768px){
+  .banner-image{
+    height: 200px;
+  }
+  .main-banner-content {
+    top: 50%;
+    left: 50%;
+    /* transform: translate(-50%, -50%); */
+    text-align: center;
+  }
+  .main-banner-content h4 {
+    font-size: 14px;
+    line-height: 20px;
+    margin-bottom: 8px;
+  }
+
+  .main-banner-content h5 {
+    font-size: 32px;
+    line-height: 42px;
+    letter-spacing: -1px;
+  }
+
+  .main-banner-content p {
+    font-size: 16px;
+    line-height: 24px;
+  }
+}
+
 .small-banner-content {
   top: 25%;
   left: 10%;
@@ -261,8 +228,65 @@ footer .input-group-text {
   color: var(--color-131921);
 }
 .small-banner {
-  width: 49%;
+  width: 100%;
 }
+.small-banner-image {
+  width: 100%; /* Set your desired width */
+  height: 300px; /* Set your desired height */
+  object-fit: cover; /* Maintain aspect ratio and cover container */
+}
+
+@media (max-width: 768px) {
+  .small-banner-image {
+    width: 200px; /* Set your desired width */
+    height: 200px; /* Set your desired height */
+    object-fit: cover; /* Maintain aspect ratio and cover container */
+  }
+  .small-banner {
+    width: 100%;
+    /* margin-bottom: 20px; Add margin between small banners */
+  }
+
+  .small-banner-content {
+    top: 50%;
+    left: 50%;
+    /* transform: translate(-50%, -50%); */
+    text-align: center;
+  }
+
+  .small-banner-content h4 {
+    font-size: 12px;
+    line-height: 18px;
+    margin-bottom: 8px;
+  }
+  .small-banner-content h5 {
+    font-size: 18px;
+    line-height: 28px;
+  }
+
+  .small-banner-content p {
+    font-size: 12px;
+    line-height: 18px;
+  }
+}
+@media screen and (max-width: 425px) {
+  .small-banner-image {
+    width: 100px; /* Set your desired width */
+    height: 80px; /* Set your desired height */
+    object-fit: cover; /* Maintain aspect ratio and cover container */
+  }
+  .small-banner-content h4 {
+    font-size: 6px;
+    line-height: 18px;
+    
+  }
+  .small-banner-content h5 {
+    font-size: 10px;
+    /* line-height: 28px; */
+  }
+
+}
+
 
 /* home wrapper 2 */
 .home-wrapper-2 {
@@ -379,16 +403,12 @@ footer .input-group-text {
   border-radius: 10px;
   overflow: hidden;
   width: 100%;
-  position: relative;
-  margin-bottom: 20px;
 }
 .product-card .product-image {
   height: 270px;
 }
 .product-card .product-image img {
   object-fit: contain;
-  width: 100%;
-  height: 100%;
 }
 .product-card .product-image > img:last-child {
   display: none;
@@ -420,47 +440,19 @@ footer .input-group-text {
   margin-right: 20px;
 }
 .action-bar {
-  
   top: 10%;
   right: -23px;
   transition: 0.3s;
-  /* transform: translate(-50%); */
-
 }
 .wishlist-icon {
-  
   top: 2%;
   right: 15px;
 }
 @media screen and (max-width: 768px) {
   .product-card {
-    padding: 10px;
+    /* Adjust card width, padding, etc. */
   }
-
-  .product-card .product-image {
-    height: 200px;
-  }
-
-  .product-card .product-details h5 {
-    font-size: 14px;
-  }
-
-  .product-card .product-details p.price {
-    font-size: 14px;
-  }
-
-  .product-card p.description {
-    font-size: 12px;
-  }
-
-  .action-bar {
-    right: 5px;
-  }
-
-  .wishlist-icon {
-    top: 5px;
-    right: 5px;
-  }
+  /* ... (adjust other styles) */
 }
 /* Product Card ends here */
 
@@ -580,13 +572,13 @@ footer .input-group-text {
   width: 100%;
 }
 .gr-6 {
-  width: 50%;
+  width: 49%;
 }
 .gr-4 {
-  width: 33%;
+  width: 32%;
 }
 .gr-3 {
-  width: 25%;
+  width: 24%;
 }
 .gr-12 .product-card {
   display: flex;
@@ -1003,3 +995,83 @@ footer .input-group-text {
     margin-top: 10px;
   }
 }
+
+
+/* Services */
+.servies {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.service-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 20px; /* Add margin between service items */
+}
+
+.service-item img {
+  max-width: 80px; /* Limit image width */
+}
+
+.service-item h6 {
+  font-size: 16px;
+  color: var(--color-bf4800);
+  margin: 0;
+}
+
+.service-item p {
+  font-size: 14px;
+  color: var(--color-777777);
+  margin: 0;
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+  .servies {
+    /* flex-direction: column; Stack items vertically */
+    align-items: flex-start; /* Align items to the left */
+  }
+
+  .service-item {
+    width: 100%; /* Full width */
+    margin-bottom: 15px; /* Adjust margin for spacing */
+  }
+
+  .service-item img {
+    max-width: 100px; /* Adjust image max-width */
+  }
+
+  .service-item h6 {
+    font-size: 14px; /* Decrease font size */
+  }
+
+  .service-item p {
+    font-size: 12px; /* Decrease font size */
+  }
+}
+@media (max-width: 425px) {
+  .servies {
+    /* flex-direction: column; Stack items vertically */
+    align-items: flex-start; /* Align items to the left */
+  }
+
+  .service-item {
+    width: 100%; /* Full width */
+    margin-bottom: 15px; /* Adjust margin for spacing */
+  }
+
+  .service-item img {
+    max-width: 50px; /* Adjust image max-width */
+  }
+
+  .service-item h6 {
+    font-size: 10px; /* Decrease font size */
+  }
+
+  .service-item p {
+    font-size: 8px; /* Decrease font size */
+  }
+}
+
