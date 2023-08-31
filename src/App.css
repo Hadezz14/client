@@ -72,7 +72,9 @@ a {
   background-color: #F6f6f6;
   max-height: 8rem;
 }
-
+.hamburger{
+  display : none ;
+}
 .header-bottom {
   background-color: #807d7e;
 }
@@ -821,4 +823,82 @@ footer .input-group-text {
   }
   
   /* ... (other adjustments) */
+}
+
+/* Media query for header */
+/* @media (max-width: 475px) {
+  .row.align-items-center.justify-content-between {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .col-md-3.col-6.text-center.mb-3.mb-md-0 {
+    margin-bottom: 1rem;
+  }
+
+  .header-upper-links {
+    flex-direction: row;
+    align-items: center;
+  }
+
+  .header-upper-links a {
+    margin-bottom: 0.5rem;
+  }
+} */
+
+/* Add these media queries to your CSS */
+@media (max-width: 520px) {
+  .headMenu {
+    display: none;
+  }
+  .hamburger {
+    display: block;
+    border: none;
+    cursor: pointer;
+    margin-right: 20px;
+    width: 52px; 
+    /* transform: translateY(-50%); */
+  }
+
+  .hamburger-menu {
+    position: absolute;
+    right: 0;
+    background-color: var(--color-131921);
+    padding: 0.5rem;
+    z-index: 1; 
+    border-radius: 0.5rem;
+    display: flex;
+  flex-direction: column;
+  align-items: center;
+  }
+  .hamburger-menu p{
+    color: white;
+  }
+
+  
+  .hamburger-menu.show {
+    display: block; 
+  }
+  .hamburger-menu a {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: black;
+    margin-bottom: 10px; /* Add some vertical spacing between links */
+  }
+  .menu-icon {
+    filter: invert(100%);
+  }
+  
+  /* Add styles for icons in the links */
+  .hamburger-menu svg {
+    margin-right: 10px;
+  }
+  
+  /* Add a horizontal line between links */
+  .hamburger-menu a + a {
+    border-top: 1px solid black;
+    padding-top: 10px;
+    margin-top: 10px;
+  }
 }
