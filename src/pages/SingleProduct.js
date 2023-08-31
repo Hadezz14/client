@@ -90,18 +90,35 @@ const SingleProduct = () => {
     return false
   }
 
+  const [col,setCol] = useState(12);
+  useEffect(() =>{
+    const handleResize =() =>{
+      if(window.innerWidth > 425){
+        setCol(6)
+      }
+      else{
+        setCol(12)
+      }
+    };
+    window.addEventListener("resize",handleResize);
+    return ()=>{
+      window.removeEventListener("resize",handleResize)
+    }
+  },[])
   
   return (
     <>
       <Meta title={"Product Name"} />
       <BreadCrumb title="Product Name" />
-      <Container class1="main-product-wrapper py-5 home-wrapper-2">
+      <Container class1="main-product-wrapper py-3 home-wrapper-2">
         <div className="row">
-          <div className="col-6">
+          <div className={`col-${col}`}>
             <div className="main-product-image">
-              <div>
-                <ReactImageZoom {...props} />
-              </div>
+            <img
+                src={productState?.images[0]?.url || "../images/vyamtshirt.png"}
+                alt="main product"
+                className="img-fluid"
+              />
             </div>
             <div className="other-product-images d-flex flex-wrap gap-15">
                 {productState?.images.map((item,index) =>{
@@ -114,14 +131,14 @@ const SingleProduct = () => {
                 })}
             </div>
           </div>
-          <div className="col-6">
+          <div className={`col-${col}`}>
             <div className="main-product-details">
               <div className="border-bottom">
                 <h3 className="title">
                   {productState?.title}
                 </h3>
               </div>
-              <div className="border-bottom py-3">
+              <div className="border-bottom ">
                 <p className="price">Rs {productState?.price}</p>
                 {
                   productState && productState.ratings?.map((item,index) => {
@@ -129,7 +146,7 @@ const SingleProduct = () => {
                       <div className="d-flex align-items-center gap-10">
                   <ReactStars
                     count={5}
-                    size={24}
+                    size={10}
                     value={item?.star}
                     edit={false}
                     activeColor="#ffd700"
@@ -241,7 +258,7 @@ const SingleProduct = () => {
           </div>
         </div>
       </Container>
-      <Container class1="description-wrapper py-5 home-wrapper-2">
+      <Container class1="description-wrapper py-3 home-wrapper-2">
         <div className="row">
           <div className="col-12">
             <h4>Description</h4>

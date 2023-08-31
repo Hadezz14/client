@@ -8,7 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getAllProducts } from "../features/products/productSlice";
 
 const OurStore = () => {
-  const [grid, setGrid] = useState(4);
+  const [grid, setGrid] = useState(12);
   const productState = useSelector((state) => state.product.product) || [];
   const dispatch = useDispatch();
   useEffect(() => {
@@ -23,9 +23,12 @@ const OurStore = () => {
 
   useEffect(() => {
     const handleResize = () => {
-      if (window.innerWidth <= 320) {
+      if (window.innerWidth >=1024) {
+        setGrid(3);
+      } else if (window.innerWidth <= 1024 && window.innerWidth >=768 ){
         setGrid(6);
-      } else {
+      }
+      else{
         setGrid(12);
       }
     };
@@ -49,22 +52,22 @@ const OurStore = () => {
                 <div className="d-flex align-items-center gap-10">
                   <p className="totalproducts mb-0">{totalproducts}Products</p>
                   <div className="d-flex gap-10 align-items-center grid">
-                    <img
+                    {/* <img
                       onClick={() => {
                         setGrid(3);
                       }}
                       src="images/gr4.svg"
                       className="d-block img-fluid"
                       alt="grid"
-                    />
-                    <img
+                    /> */}
+                    {/* <img
                       onClick={() => {
                         setGrid(4);
                       }}
                       src="images/gr3.svg"
                       className="d-block img-fluid"
                       alt="grid"
-                    />
+                    /> */}
                     <img
                       onClick={() => {
                         setGrid(6);

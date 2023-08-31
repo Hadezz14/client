@@ -40,7 +40,7 @@ const Home = () => {
   const firstFourProducts = productState.slice(0, 4);
   const latestProduct = productState.slice(0,2);
 
-  const [col,setCol] = useState(3);
+  const [col,setCol] = useState(12);
   useEffect(() =>{
     const handleResize =() =>{
       if(window.innerWidth <= 425){

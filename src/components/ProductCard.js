@@ -197,7 +197,7 @@ const ProductCard = (props) => {
                   {item?.images && item.images[0] && (
                     <img
                       src={item?.images[0].url}
-                      className="img-fluid"
+                      className="img-fluid productcard-img"
                       alt="product image"
                     />
                   )}
@@ -210,7 +210,7 @@ const ProductCard = (props) => {
                 </Link>
                 <ReactStars
                   count={5}
-                  size={24}
+                  size={20}
                   value={item?.totalrating.toString()}
                   edit={false}
                   activeColor="#ffd700"

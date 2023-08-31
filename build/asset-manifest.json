@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/static/css/main.b0079cce.css",
-    "main.js": "/static/js/main.16035e97.js",
+    "main.css": "/static/css/main.d3db158d.css",
+    "main.js": "/static/js/main.7ead9603.js",
     "static/media/Blacktshirt.png": "/static/media/Blacktshirt.b78af1c74f1f11aab787.png",
     "static/media/vyamtshirt.png": "/static/media/vyamtshirt.00ef91ef2cbec43cf197.png",
     "static/media/empty-cart.jpg": "/static/media/empty-cart.66f4b0d6f771756ea9fc.jpg",
@@ -14,11 +14,11 @@
     "static/media/view.svg": "/static/media/view.90f335b63d298305bb0baa27e6786d6c.svg",
     "static/media/wish.svg": "/static/media/wish.b893ca13ff8e692e6b1ec110845b2b79.svg",
     "static/media/add-cart.svg": "/static/media/add-cart.e3aa8ff791dce20f9b416809db48b272.svg",
-    "main.b0079cce.css.map": "/static/css/main.b0079cce.css.map",
-    "main.16035e97.js.map": "/static/js/main.16035e97.js.map"
+    "main.d3db158d.css.map": "/static/css/main.d3db158d.css.map",
+    "main.7ead9603.js.map": "/static/js/main.7ead9603.js.map"
   },
   "entrypoints": [
-    "static/css/main.b0079cce.css",
-    "static/js/main.16035e97.js"
+    "static/css/main.d3db158d.css",
+    "static/js/main.7ead9603.js"
   ]
 }
