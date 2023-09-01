@@ -106,7 +106,7 @@ import addcart from "../images/add-cart.svg";
 import view from "../images/view.svg";
 import { useDispatch } from "react-redux";
 import { addToWishlist } from "../features/products/productSlice";
-import styled from "styled-components"; // Import styled-components
+import styled from "styled-components"; 
 
 const ProductCardWrapper = styled.div`
   padding: 15px;
