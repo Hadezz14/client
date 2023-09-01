@@ -34,7 +34,7 @@ const Footer = () => {
       <footer className="py-4">
         <div className="container-xxl">
           <div className="row">
-            <div className="col-4">
+            <div className="col-4 py-3">
               <h4 className="text-white mb-4">Contact Us</h4>
               <div>
                 <address className="text-white fs-6">
@@ -45,7 +45,7 @@ const Footer = () => {
                   
                   className="mt-3 d-block mb-1 text-white"
                 >
-                  PhoneNumber
+                  Phone
                 </a>
                 <a
                  
@@ -69,7 +69,7 @@ const Footer = () => {
                 </div>
               </div>
             </div>
-            <div className="col-3">
+            {/* <div className="col-3">
               <h4 className="text-white mb-4">Information</h4>
               <div className="footer-link d-flex flex-column">
                 <Link to="/privacy-policy" className="text-white py-2 mb-1">
@@ -86,8 +86,8 @@ const Footer = () => {
                 </Link>
                 
               </div>
-            </div>
-            <div className="col-3">
+            </div> */}
+            <div className="col-3 py-3">
               <h4 className="text-white mb-4">Account</h4>
               <div className="footer-link d-flex flex-column">
                 <Link className="text-white py-2 mb-1">About Us</Link>

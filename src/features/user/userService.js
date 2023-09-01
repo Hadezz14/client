@@ -81,7 +81,18 @@ const createOrder = async (orderData)=>{
     } catch (error) {
         throw error.response.data.message;
     }
-};  
+};
+
+const applyCoupon = async (coupon)=>{
+    try {
+        const response = await axios.post(`${base_url}user/cart/applycoupon`,{coupon},config);
+        console.log(response.data);
+        return response.data;
+    
+    } catch (error) {
+        throw error.response.data.message;
+    }
+};   
 
 export const authService ={
     register,
@@ -93,4 +104,5 @@ export const authService ={
     updateProdcutFromCart,
     createOrder,
     clearCart,
+    applyCoupon,
 };
