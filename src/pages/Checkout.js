@@ -6,7 +6,8 @@ import Container from "../components/Container";
 import { useDispatch, useSelector } from "react-redux";
 import { useFormik } from "formik";
 import * as yup from 'yup';
-import { clearCart, clearUserCart, createUserOrder } from "../features/user/userSlice";
+import { applyDisCoupne, clearCart, clearUserCart, createUserOrder } from "../features/user/userSlice";
+import { getAllCoupon } from "../features/coupon/couponSlice";
 
 const shippingschema = yup.object({
   firstName: yup.string().required("Frist Name is Required"),
@@ -17,6 +18,10 @@ const shippingschema = yup.object({
 });
  
 const Checkout = () => {
+  // React.useEffect(() =>{
+  //   dispatch(getAllCoupon())
+  // },[])
+
   const dispatch = useDispatch();
   const navigate =useNavigate();
   const orderState = useSelector((state) => state.auth.order)
@@ -25,11 +30,15 @@ const Checkout = () => {
   const userId = useSelector((state) =>state.auth.user._id);
  
   const [totalAmount,setTotalAmount] = useState(null);
-
+  const [discountAmount,setDiscountamt] = useState(null);
  useEffect(() =>{
     let sum = 0;
     for (let index = 0; index < cartState?.length; index++) {
       sum = sum+(Number(cartState[index].quantity)*cartState[index].price)
+      if((cartState[index].productId.discount)){
+        let discount = Number((sum*(cartState[index].productId.discount)/100))
+        setDiscountamt(discount);
+      }
       setTotalAmount(sum)
     }
   },[cartState])
@@ -81,6 +90,19 @@ const Checkout = () => {
       navigate("/order-confirm");
     }
   }, [orderState]);
+
+  // const [coupon,setCoupon] = useState("");
+  
+  // const [showInput, setShowInput] = useState(false);
+
+  // const couponState = useSelector((state) => state.coupon.coupons)
+  // console.log(couponState);
+  // const handleApplyCoupon = () => {
+  //   setShowInput(true);
+  //   dispatch(applyDisCoupne(coupon))
+  // };
+
+  
 
   return (
     <>
@@ -226,9 +248,7 @@ const Checkout = () => {
                       <BiArrowBack className="me-2" />
                       Return to Cart
                     </Link>
-                    <Link to="/order-confirm" className="button">
-                      Continue to Shipping
-                    </Link>
+                    
                     <button className="button" type="submit">Order</button>
                   </div>
                 </div>
@@ -274,12 +294,38 @@ const Checkout = () => {
                 <p className="mb-0 total">Shipping</p>
                 <p className="mb-0 total-price">Rs 100</p>
               </div>
+              <div className="d-flex justify-content-between align-items-center">
+                <p className="mb-0 total">Discount</p>
+                <p className="mb-0 total-price">Rs {discountAmount?discountAmount:"0"}</p>
+              </div>
             </div>
             <div className="d-flex justify-content-between align-items-center border-bootom py-4">
               <h4 className="total">Total</h4>
-              <h5 className="total-price">Rs {totalAmount ? totalAmount + 100 : "0"}</h5>
+              <h5 className="total-price">Rs {(totalAmount-discountAmount) ? (totalAmount-discountAmount) + 100 : "0"}</h5>
             </div>
+            <Link to="/product" className="button">
+                      Continue to Shop
+                    </Link>
           </div>
+          {/* <div className="py-5">
+      {showInput ? (
+        <div>
+          <input
+            type="text"
+            placeholder="Enter Coupon Code"
+            value={coupon}
+            onChange={(e) => setCoupon(e.target.value)}
+          />
+          <button className="button" onClick={() => handleApplyCoupon()}>
+            Apply Coupon
+          </button>
+        </div>
+      ) : (
+        <button className="button" onClick={() => handleApplyCoupon()}>
+          Apply Coupon
+        </button>
+      )}
+    </div> */}
         </div>
       </Container>
     </>

@@ -6,7 +6,7 @@ import { AiFillDelete } from "react-icons/ai";
 import { Link } from "react-router-dom";
 import Container from "../components/Container";
 import { useDispatch, useSelector } from "react-redux";
-import { applyDisCoupne, deleteCartProduct, getUserCart, updateCartProduct } from "../features/user/userSlice";
+import { deleteCartProduct, getUserCart, updateCartProduct } from "../features/user/userSlice";
 import emptyCart from "../images/empty-cart.jpg"
 const Cart = () => {
   const dispatch = useDispatch();
@@ -44,10 +44,7 @@ const Cart = () => {
     }
   },[useCartState])
   
-  const [coupon,setCoupon] = useState("");
-  const handleApplyCoupon =() =>{
-    dispatch(applyDisCoupne(coupon))
-  }
+  
   return (
     <>
       <Meta title={"Cart"} />
@@ -127,37 +124,34 @@ const Cart = () => {
                 )
               })}  
           
-          <div className="col-12 py-2 mt-4">
+          <div className="col-20 py-10 mt-2">
+          
             <div className="d-flex justify-content-between align-items-baseline">
                 
               
               {
                 (totalAmount !== null || totalAmount !== 0) &&
-                <div className="d-flex flex-column align-items-end">
+                <div className="d-flex flex-column ">
                 <h4>SubTotal: Rs {totalAmount}</h4>
                 <p>Taxes and shipping calculated at checkout</p>
-                <Link to="/checkout" className="button">
-                  Checkout
-                </Link>
+                
+                
               </div>
               }
+              <Link to="/checkout" className="button">
+                  Checkout
+                </Link>
             </div>
+            
           </div>
+          
               </div>
             )}
+            <Link to="/product" className="button ">
+              Continue To Shopping
+            </Link>
           </div>
-          <div>
-          <Link to="/product" className="button ">
-                Continue To Shopping
-              </Link>
-          <input
-                    type="text"
-                    placeholder="Enter Coupon Code"
-                    value={coupon}
-                    onChange={(e) => setCoupon(e.target.value)}
-                  />
-                  <button className="button" onClick={() => handleApplyCoupon()}>Apply Coupon</button>
-          </div>
+          
         </div>
       </Container>
     </>

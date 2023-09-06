@@ -108,6 +108,17 @@ import { useDispatch } from "react-redux";
 import { addToWishlist } from "../features/products/productSlice";
 import styled from "styled-components"; 
 
+const DiscountBanner = styled.div`
+  position: absolute;
+  top: 0;
+  left:0;
+  background-color: var(--color-bf4800); // Set the background color for the banner
+  color: white; // Set the text color for the banner
+  padding: 5px 10px; // Adjust the padding as needed
+  border-radius: 10px 0 0 0; // Add a border radius to the top right corner
+  font-size: 12px; // Adjust the font size as needed
+`;
+
 const ProductCardWrapper = styled.div`
   padding: 15px;
   background-color: white;
@@ -182,6 +193,10 @@ const ProductCard = (props) => {
             } `}
           >
             <div className="product-card position-relative">
+            {
+                item?.discount &&
+                <DiscountBanner>Save {item?.discount} %</DiscountBanner>
+              }
               <WishlistIcon>
                 <button
                   className="border-0 bg-transparent"

@@ -113,17 +113,17 @@ export const clearUserCart = createAsyncThunk(
     }
 );
 
-export const applyDisCoupne = createAsyncThunk(
-    "user/cart/applycoupne",
-    async(coupon,thunkAPI) =>{
-        try{
-            return await authService.applyCoupon(coupon);
-        }
-        catch(error){
-            return thunkAPI.rejectWithValue(error);
-        }
-    }
-);
+// export const applyDisCoupne = createAsyncThunk(
+//     "user/cart/applycoupne",
+//     async(coupon,thunkAPI) =>{
+//         try{
+//             return await authService.applyCoupon(coupon);
+//         }
+//         catch(error){
+//             return thunkAPI.rejectWithValue(error);
+//         }
+//     }
+// );
 
 
 export const authSlice=createSlice({
@@ -311,22 +311,22 @@ export const authSlice=createSlice({
             state.isSuccess = true;
             state.message = action.payload.toString();
         })
-        .addCase(applyDisCoupne.pending,(state) =>{
-            state.isLoading = true;
-        })
-        .addCase(applyDisCoupne.fulfilled, (state,action) =>{
-            state.isLoading = false;
-            state.isError = false;
-            state.isSuccess = true;
-            state.totalAfterDiscount = action.payload;
+        // .addCase(applyDisCoupne.pending,(state) =>{
+        //     state.isLoading = true;
+        // })
+        // .addCase(applyDisCoupne.fulfilled, (state,action) =>{
+        //     state.isLoading = false;
+        //     state.isError = false;
+        //     state.isSuccess = true;
+        //     state.totalAfterDiscount = action.payload;
             
-        })
-        .addCase(applyDisCoupne.rejected,(state,action) =>{
-            state.isLoading = false;
-            state.isError = false;
-            state.isSuccess = true;
-            state.message = action.payload.toString();
-        })
+        // })
+        // .addCase(applyDisCoupne.rejected,(state,action) =>{
+        //     state.isLoading = false;
+        //     state.isError = false;
+        //     state.isSuccess = true;
+        //     state.message = action.payload.toString();
+        // })
 
     },
 });
