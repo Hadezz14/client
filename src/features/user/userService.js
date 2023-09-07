@@ -74,6 +74,7 @@ const clearCart = async(userId) =>{
 }
 const createOrder = async (orderData)=>{
     try {
+        console.log(orderData);
         const response = await axios.post(`${base_url}user/cart/create-order`,orderData,config);
         console.log(response.data);
         return response.data;
@@ -83,16 +84,16 @@ const createOrder = async (orderData)=>{
     }
 };
 
-const applyCoupon = async (coupon)=>{
-    try {
-        const response = await axios.post(`${base_url}user/cart/applycoupon`,{coupon},config);
-        console.log(response.data);
-        return response.data;
+// const applyCoupon = async (coupon)=>{
+//     try {
+//         const response = await axios.post(`${base_url}user/cart/applycoupon`,{coupon},config);
+//         console.log(response.data);
+//         return response.data;
     
-    } catch (error) {
-        throw error.response.data.message;
-    }
-};   
+//     } catch (error) {
+//         throw error.response.data.message;
+//     }
+// };   
 
 export const authService ={
     register,
@@ -104,5 +105,5 @@ export const authService ={
     updateProdcutFromCart,
     createOrder,
     clearCart,
-    applyCoupon,
+    // applyCoupon,
 };

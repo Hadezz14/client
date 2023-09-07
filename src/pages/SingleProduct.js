@@ -59,13 +59,13 @@ const SingleProduct = () => {
       }
   }
 
-  const props = {
-    width: 594,
-    height: 600,
-    zoomWidth: 600,
+  // const props = {
+  //   width: 594,
+  //   height: 600,
+  //   zoomWidth: 600,
 
-    img: productState?.images[0].url ? productState?.images[0].url : "../images/vyamtshirt.png",
-  };
+  //   img: productState?.images[0].url ? productState?.images[0].url : "../images/vyamtshirt.png",
+  // };
 
   const [orderedProduct, setorderedProduct] = useState(true);
   
@@ -90,7 +90,7 @@ const SingleProduct = () => {
     return false
   }
 
-  const [col,setCol] = useState(12);
+  const [col,setCol] = useState(6);
   useEffect(() =>{
     const handleResize =() =>{
       if(window.innerWidth > 425){
@@ -112,7 +112,7 @@ const SingleProduct = () => {
       <BreadCrumb title="Product Name" />
       <Container class1="main-product-wrapper py-3 home-wrapper-2">
         <div className="row">
-          <div className={`col-${col}`}>
+          <div className={`col-md-${col}`}>
             <div className="main-product-image">
             <img
                 src={productState?.images[0]?.url || "../images/vyamtshirt.png"}
@@ -131,7 +131,7 @@ const SingleProduct = () => {
                 })}
             </div>
           </div>
-          <div className={`col-${col}`}>
+          <div className={`col-md-${col}`}>
             <div className="main-product-details">
               <div className="border-bottom">
                 <h3 className="title">
@@ -215,7 +215,9 @@ const SingleProduct = () => {
                       name=""
                       min={1}
                       max={10}
-                      className="form-control"
+                      className={`form-control ${
+                        alreadyAdded ? "w-100" : "w-50"
+                      }`}
                       style={{ width: "70px" }}
                       id=""
                       onChange={(e)=> setQuantity(e.target.value)}
@@ -226,13 +228,15 @@ const SingleProduct = () => {
                   }
                   <div className={alreadyAdded?"ms-0":"ms -5"}>
                     <button
-                      className="button border-0"
+                      className={`button border-0 ${
+                        alreadyAdded ? "btn-success" : "btn-primary"
+                      }`}
                       // data-bs-toggle="modal"
                       // data-bs-target="#staticBackdrop"
                       type="button"
-                      onClick={() =>{alreadyAdded? navigate('/cart'):uploadCart()}}
+                      onClick={() =>{alreadyAdded? navigate('/cart') : uploadCart()}}
                     >
-                      {alreadyAdded ? "Go to Cart" :"Add to Cart"}
+                      {alreadyAdded ? "Go to Cart" : "Add to Cart"}
                     </button>
                     
                   </div>
@@ -313,7 +317,11 @@ const SingleProduct = () => {
                       setStar(e)}
                     />
                   </div>
-                  <div>
+                  <div
+                    className={`mt-md-0 mt-3 ${
+                      alreadyAdded ? "d-none" : "d-md-block"
+                    }`}
+                  >
                     <textarea
                       name=""
                       id=""
@@ -327,7 +335,12 @@ const SingleProduct = () => {
                     ></textarea>
                   </div>
                   <div className="d-flex justify-content-end mt-3">
-                    <button className="button border-0" onClick={addRatingtoProduct} type="button" >Submit Review</button>
+                    <button 
+                    className={`button border-0 ${
+                      alreadyAdded ? "btn-success" : "btn-primary"
+                    }`}
+                    onClick={addRatingtoProduct} 
+                    type="button" >Submit Review</button>
                   </div>
                 
               </div>

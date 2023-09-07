@@ -71,57 +71,72 @@ const Cart = () => {
               </div>
             {
               useCartState && useCartState?.map((item,index) =>{
-                return(
+                if(useCartState?.productId !== null){
+                  return(
+                  
+                  
+                    <div key={index} className="cart-data py-1 mb-1 d-flex justify-content-between align-items-center">
+                  <div className="cart-col-1 gap-15 d-flex align-items-center">
+                  <div className="w-70">
+                        {
+                      item?.productId.images && item.productId.images[0]&&(
+                        <img src={item?.productId.images[0].url} className="img-fluid" alt="product image" />
+                      )
+                    }
+                    
+                  </div>
+                  <div className="w-30">
+                    <p>{item?.productId.title}</p>
+                    
+                    <p className="d-flex gap-2">
+                      Color:
+                      <ul className="colors ps-0">
+                        {item?.productId.color.map((color, index) => (
+                          <li key={index} style={{ backgroundColor: color }}></li>
+                        ))}
+                      </ul>
+                    </p>
+                  </div>
+                </div>
+                <div className="cart-col-2">
+                  <h5 className="price">Rs {item?.price}</h5>
+                </div>
+                <div className="cart-col-3 d-flex align-items-center gap-20">
+                  <div>
+                    <input
+                      className="form-control"
+                      type="number"
+                      // name=""
+                      min={1}
+                      max={10}
+                      id=""
+                      value={productUpdateDetail?.quantity ? productUpdateDetail?.quantity : item?.quantity}
+                      onChange={(e) => {setProductUpdateDetail({cartItemId:item?._id,quantity:e.target.value})}}
+                    />
+                  </div>
+                  <div>
+                    <AiFillDelete onClick={() =>{deleteACartProduct(item?._id)}} className="text-danger " />
+                  </div>
+                </div>
+                <div className="cart-col-4">
+                  <h5 className="price">Rs {item?.price * item?.quantity}</h5>
+                </div>
+              </div>
+                     
+                  )
+                }
+                else if(useCartState?.productId === null){
+                  <div className="text-center">
+                <p>Product you have added doesn't exist !</p>
+                <img
+                  src={emptyCart}
+                  alt="Emptry Cart"
+                  className="img-fluid"
+                />
+                <button>Clear Cart</button>
+              </div>
               
-                <div key={index} className="cart-data py-1 mb-1 d-flex justify-content-between align-items-center">
-                <div className="cart-col-1 gap-15 d-flex align-items-center">
-                <div className="w-70">
-                      {
-                    item?.productId.images && item.productId.images[0]&&(
-                      <img src={item?.productId.images[0].url} className="img-fluid" alt="product image" />
-                    )
-                  }
-                  
-                </div>
-                <div className="w-30">
-                  <p>{item?.productId.title}</p>
-                  
-                  <p className="d-flex gap-2">
-                    Color:
-                    <ul className="colors ps-0">
-                      {item?.productId.color.map((color, index) => (
-                        <li key={index} style={{ backgroundColor: color }}></li>
-                      ))}
-                    </ul>
-                  </p>
-                </div>
-              </div>
-              <div className="cart-col-2">
-                <h5 className="price">Rs {item?.price}</h5>
-              </div>
-              <div className="cart-col-3 d-flex align-items-center gap-20">
-                <div>
-                  <input
-                    className="form-control"
-                    type="number"
-                    // name=""
-                    min={1}
-                    max={10}
-                    id=""
-                    value={productUpdateDetail?.quantity ? productUpdateDetail?.quantity : item?.quantity}
-                    onChange={(e) => {setProductUpdateDetail({cartItemId:item?._id,quantity:e.target.value})}}
-                  />
-                </div>
-                <div>
-                  <AiFillDelete onClick={() =>{deleteACartProduct(item?._id)}} className="text-danger " />
-                </div>
-              </div>
-              <div className="cart-col-4">
-                <h5 className="price">Rs {item?.price * item?.quantity}</h5>
-              </div>
-            </div>
-            
-                )
+                }
               })}  
           
           <div className="col-20 py-10 mt-2">

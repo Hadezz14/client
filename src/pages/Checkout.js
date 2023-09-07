@@ -27,6 +27,7 @@ const Checkout = () => {
   const orderState = useSelector((state) => state.auth.order)
   
   const cartState = useSelector((state) => state.auth.cartProducts)
+  console.log(cartState);
   const userId = useSelector((state) =>state.auth.user._id);
  
   const [totalAmount,setTotalAmount] = useState(null);
@@ -59,6 +60,7 @@ const Checkout = () => {
      
       const orderedItems = cartState.map((item) =>({
         product: item.productId._id,
+        productName:item.productId.title,
         color: item.productId.color[0],
         quantity: item.quantity,
         price: item.price,
@@ -66,16 +68,16 @@ const Checkout = () => {
       const orderData ={
         shippingInfo:{...values.shippingInfo},
         orderedItems: orderedItems,
-        totalPrice: totalAmount,
-        totalPriceAfterDiscount:totalAmount,
+        totalPrice: totalAmount+100,
+        totalPriceAfterDiscount:totalAmount-discountAmount,
       };
       try {
         await dispatch(createUserOrder(orderData));
         
-        // if(orderState.success === true){
-        //   navigate("/order-confirm")
-        //   dispatch(clearUserCart(userId))
-        // }
+        if(orderState.success === true){
+          navigate("/order-confirm")
+          dispatch(clearUserCart(userId))
+        }
         
       } catch (error) {
         console.error("Error creating order:", error);
@@ -84,12 +86,12 @@ const Checkout = () => {
     }
   });
 
-  useEffect(() => {
-    if ( orderState !== null) {
-      dispatch(clearUserCart(userId));
-      navigate("/order-confirm");
-    }
-  }, [orderState]);
+  // useEffect(() => {
+  //   if ( orderState !== null) {
+  //     dispatch(clearUserCart(userId));
+  //     navigate("/order-confirm");
+  //   }
+  // }, [orderState]);
 
   // const [coupon,setCoupon] = useState("");
   

@@ -10,7 +10,7 @@ const DiscountBanner = styled.div`
   position: absolute;
   top: 0;
   left:0;
-  background-color: var(--color-bf4800); // Set the background color for the banner
+  background-color: var(--color-bf4800); 
   color: white; // Set the text color for the banner
   padding: 5px 10px; // Adjust the padding as needed
   border-radius: 10px 0 0 0; // Add a border radius to the top right corner
@@ -25,6 +25,9 @@ const ProductCardWrapper = styled.div`
   width: 100%;
   position: relative;
   margin-bottom: 20px;
+  @media (max-width:576px){
+    padding: 10px;
+  }
 `;
 
 const ProductImage = styled.div`
@@ -33,6 +36,9 @@ const ProductImage = styled.div`
     object-fit: contain;
     width: 100%;
     height: 100%;
+  }
+  @media (max-width: 576px) {
+    height: auto;
   }
 `;
 

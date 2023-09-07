@@ -10,6 +10,7 @@ const BigBanner = ({item}) => {
            <div>
           {
             item?.images && item.images[0] &&(
+              // console.log(item?.images[0].public_id)
               <img
                 src={item?.images[0].url}
                 className="img-fluid rounded-3 banner-image"
