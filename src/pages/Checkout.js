@@ -76,10 +76,12 @@ const Checkout = () => {
         totalPriceAfterDiscount:(totalAmount-discountAmount)+shippingamt,
         profit:profit,     };
       try {
-        await dispatch(createUserOrder(orderData));
-        orderState.success === true ? (navigate("/order-confirm"), dispatch(clearUserCart(userId))) : null;
-
-        
+        await dispatch(createUserOrder(orderData))
+        // orderState.success === true ? ((navigate("/order-confirm"), dispatch(clearUserCart(userId)))) : null;
+        if ( orderState !== null) {
+              dispatch(clearUserCart(userId));
+              navigate("/order-confirm");
+            }  
       } catch (error) {
         console.error("Error creating order:", error);
       }

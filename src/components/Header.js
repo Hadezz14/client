@@ -1,11 +1,12 @@
 import React, {useState} from "react";
-import { NavLink, Link } from "react-router-dom";
-import { AiFillHeart, AiOutlineUser } from "react-icons/ai";
+import { NavLink, Link, useNavigate } from "react-router-dom";
+import { AiFillHeart, AiOutlineLogout, AiOutlineUser } from "react-icons/ai";
 import cart from "../images/cart.svg";
 import menu from "../images/menu.svg";
 import logo from "../images/Vyamlogo2.png"
 import { useDispatch, useSelector } from "react-redux";
 import { getUserCart } from "../features/user/userSlice";
+import { handleLogout } from "../utils/axiosConfig";
 
 const Header = () => {
   const cartState = useSelector((state) => state?.auth?.cartProducts);
@@ -16,6 +17,13 @@ const Header = () => {
   const toggleMenu = () => {
     setShowMenu(!showMenu);
   };
+  const navigate = useNavigate();
+
+  const handleLogoutClick =() =>{
+    handleLogout();
+    window.location.reload();
+    navigate("/login");
+  }
 
   return (
     <>
@@ -53,6 +61,17 @@ const Header = () => {
                     {cartState?.length ? cartState?.length : 0}
                   </span>
                 </Link>
+              
+                {authState?.user !== null && (
+            // Render the Logout link when a user is logged in
+            <Link
+              to="#"
+              onClick={handleLogoutClick}
+              className="d-flex align-items-center text-white mx-2"
+            >
+              <AiOutlineLogout color="black" size={30} />
+            </Link>
+          )}
               </div>
             </div>
             <button
@@ -90,6 +109,16 @@ const Header = () => {
               {cartState?.length ? cartState?.length : 0}
             </span>
           </Link>
+          {authState?.user !== null && (
+            // Render the Logout link when a user is logged in
+            <Link
+              to="#"
+              onClick={handleLogoutClick}
+              className="d-flex align-items-center text-white mx-2"
+            >
+              <AiOutlineLogout color="black" size={30} /> Logout
+            </Link>
+          )}
         </div>
       )}
 
@@ -128,6 +157,7 @@ const Header = () => {
                       </Link>
                     </li>
                   </ul>
+                  
                 </div>
 
                 <div className="menu-links">
