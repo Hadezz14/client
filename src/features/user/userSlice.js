@@ -36,6 +36,17 @@ export const loginUser=createAsyncThunk(
     }
 });
 
+export const logoutUser = createAsyncThunk(
+    "auth/logout",
+    async (_,thunkAPI)=>{
+        try {
+            await authService.logout();
+        } catch (error) {
+            return thunkAPI.rejectWithValue(error)
+        }
+    }
+)
+
 export const getUserProductWishlist = createAsyncThunk(
     "user/wishlist",
     async(thunkAPI) =>{
@@ -327,6 +338,7 @@ export const authSlice=createSlice({
         //     state.isSuccess = true;
         //     state.message = action.payload.toString();
         // })
+        
 
     },
 });

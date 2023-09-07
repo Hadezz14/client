@@ -11,11 +11,14 @@ const OrderConformation = () => {
     <BreadCrumb title="Order Confirm" />
     <Container>
           <Link to={"/product"}> 
-          <img src={order}/>
+          <img src={order}
+          className="img-fluid"/>
           </Link>        
     </Container>
     </>
   )
 }
+
+
 
 export default OrderConformation

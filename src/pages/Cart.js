@@ -6,7 +6,7 @@ import { AiFillDelete } from "react-icons/ai";
 import { Link } from "react-router-dom";
 import Container from "../components/Container";
 import { useDispatch, useSelector } from "react-redux";
-import { deleteCartProduct, getUserCart, updateCartProduct } from "../features/user/userSlice";
+import { clearUserCart, deleteCartProduct, getUserCart, updateCartProduct } from "../features/user/userSlice";
 import emptyCart from "../images/empty-cart.jpg"
 const Cart = () => {
   const dispatch = useDispatch();
@@ -17,7 +17,7 @@ const Cart = () => {
   const [productUpdateDetail,setProductUpdateDetail] = useState(null);
   const [totalAmount,setTotalAmount] = useState(null);
   const useCartState = useSelector((state) => state.auth.cartProducts)
-  
+  const userId = useSelector((state) =>state.auth.user._id);
 
   useEffect(() =>{
     if(productUpdateDetail !== null){
@@ -71,10 +71,8 @@ const Cart = () => {
               </div>
             {
               useCartState && useCartState?.map((item,index) =>{
-                if(useCartState?.productId !== null){
+                if(item?.productId !== null){
                   return(
-                  
-                  
                     <div key={index} className="cart-data py-1 mb-1 d-flex justify-content-between align-items-center">
                   <div className="cart-col-1 gap-15 d-flex align-items-center">
                   <div className="w-70">
@@ -123,22 +121,30 @@ const Cart = () => {
                 </div>
               </div>
                      
-                  )
+                  );
                 }
-                else if(useCartState?.productId === null){
-                  <div className="text-center">
-                <p>Product you have added doesn't exist !</p>
-                <img
-                  src={emptyCart}
-                  alt="Emptry Cart"
-                  className="img-fluid"
-                />
-                <button>Clear Cart</button>
+                return null ;
+              })}
+
+                   
+          {
+            useCartState && useCartState?.map((item,index) =>{
+              if(item?.productId === null){
+                return(
+                                  
+                <div className="text-center">
+                <p> Another Product you have added doesn't exist Please Clear the cart to continue !</p>
+                
+                <button 
+                className="button"
+                onClick={() => dispatch(clearUserCart(userId))}
+                >Clear Cart</button>
               </div>
-              
-                }
-              })}  
-          
+                )
+              }
+              return null;
+            })
+          }
           <div className="col-20 py-10 mt-2">
           
             <div className="d-flex justify-content-between align-items-baseline">

@@ -165,10 +165,12 @@ const SingleProduct = () => {
                   <h3 className="product-heading">Type :</h3>
                   <p className="product-data">Active ware</p>
                 </div>
-                <div className="d-flex gap-10 align-items-center my-2">
+
+                {/* <div className="d-flex gap-10 align-items-center my-2">
                   <h3 className="product-heading">Brand :</h3>
                   <p className="product-data">{productState?.Brand}</p>
-                </div>
+                </div> */}
+
                 <div className="d-flex gap-10 align-items-center my-2">
                   <h3 className="product-heading">Category :</h3>
                   <p className="product-data">{productState?.category}</p>
@@ -216,7 +218,7 @@ const SingleProduct = () => {
                       min={1}
                       max={10}
                       className={`form-control ${
-                        alreadyAdded ? "w-100" : "w-50"
+                        alreadyAdded ? "w-100" : "w-55"
                       }`}
                       style={{ width: "70px" }}
                       id=""

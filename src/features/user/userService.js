@@ -28,6 +28,15 @@ const login = async (userData) => {
     } 
 };
 
+const logout = async () =>{
+    try {
+        const response = await axios.get(`${base_url}user/logout`,null,config);
+        return response.data;
+    } catch (error) {
+        throw error.response ? error.response.data : error.message;
+    }
+}
+
 const getUserWishlist = async () =>{
     const response = await axios.get(`${base_url}user/wishlist`,config);
     if(response.data){
@@ -106,4 +115,5 @@ export const authService ={
     createOrder,
     clearCart,
     // applyCoupon,
+    logout,
 };

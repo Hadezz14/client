@@ -29,9 +29,10 @@ const Checkout = () => {
   const cartState = useSelector((state) => state.auth.cartProducts)
   console.log(cartState);
   const userId = useSelector((state) =>state.auth.user._id);
- 
+  const shippingamt = 100;
   const [totalAmount,setTotalAmount] = useState(null);
   const [discountAmount,setDiscountamt] = useState(null);
+  const [profit,setProfit] = useState(null);
  useEffect(() =>{
     let sum = 0;
     for (let index = 0; index < cartState?.length; index++) {
@@ -40,6 +41,8 @@ const Checkout = () => {
         let discount = Number((sum*(cartState[index].productId.discount)/100))
         setDiscountamt(discount);
       }
+      let profit = Number((cartState[index].quantity)*(cartState[index].productId.profit))
+      setProfit(profit);
       setTotalAmount(sum)
     }
   },[cartState])
@@ -64,20 +67,18 @@ const Checkout = () => {
         color: item.productId.color[0],
         quantity: item.quantity,
         price: item.price,
+  
       }))
       const orderData ={
         shippingInfo:{...values.shippingInfo},
         orderedItems: orderedItems,
-        totalPrice: totalAmount+100,
-        totalPriceAfterDiscount:totalAmount-discountAmount,
-      };
+        totalPrice: totalAmount+shippingamt,
+        totalPriceAfterDiscount:(totalAmount-discountAmount)+shippingamt,
+        profit:profit,     };
       try {
         await dispatch(createUserOrder(orderData));
-        
-        if(orderState.success === true){
-          navigate("/order-confirm")
-          dispatch(clearUserCart(userId))
-        }
+        orderState.success === true ? (navigate("/order-confirm"), dispatch(clearUserCart(userId))) : null;
+
         
       } catch (error) {
         console.error("Error creating order:", error);
