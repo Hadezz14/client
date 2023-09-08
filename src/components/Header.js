@@ -1,12 +1,14 @@
 import React, {useState} from "react";
 import { NavLink, Link, useNavigate } from "react-router-dom";
 import { AiFillHeart, AiOutlineLogout, AiOutlineUser } from "react-icons/ai";
+import {GiHamburgerMenu } from "react-icons/gi"
 import cart from "../images/cart.svg";
 import menu from "../images/menu.svg";
 import logo from "../images/Vyamlogo2.png"
 import { useDispatch, useSelector } from "react-redux";
 import { getUserCart } from "../features/user/userSlice";
 import { handleLogout } from "../utils/axiosConfig";
+
 
 const Header = () => {
   const cartState = useSelector((state) => state?.auth?.cartProducts);
@@ -55,9 +57,9 @@ const Header = () => {
                   </p>
                 </Link>
 
-                <Link to="/cart" className="d-flex align-items-center text-white">
+                <Link to="/cart" className="cart d-flex align-items-center text-white">
                   <img src={cart} alt="cart" width="30" />
-                  <span className="badge bg-white text-dark">
+                  <span className="badge0">
                     {cartState?.length ? cartState?.length : 0}
                   </span>
                 </Link>
@@ -74,11 +76,14 @@ const Header = () => {
           )}
               </div>
             </div>
-            <button
-          className="hamburger"
+          <button
+          className="hamburger bg-none"
           onClick={toggleMenu}
         >
-          <img src={menu} alt="menu" className="menu-icon" />
+        <GiHamburgerMenu/>
+          <span className="badge1">
+                    {cartState?.length ? cartState?.length : 0}
+                  </span>
         </button>
           </div>
         </div>
@@ -105,7 +110,7 @@ const Header = () => {
           </Link>
           <Link to="/cart" className="d-flex align-items-center text-white">
             <img src={cart} alt="cart" width="30" />
-            <span className="badge bg-white text-dark">
+            <span className="badge0">
               {cartState?.length ? cartState?.length : 0}
             </span>
           </Link>
@@ -116,7 +121,7 @@ const Header = () => {
               onClick={handleLogoutClick}
               className="d-flex align-items-center text-white mx-2"
             >
-              <AiOutlineLogout color="black" size={30} /> Logout
+              <AiOutlineLogout color="white" size={27} /> Logout
             </Link>
           )}
         </div>

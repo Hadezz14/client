@@ -199,6 +199,37 @@ footer .input-group-text {
   }
 }
 
+@media(max-width:430px){
+  .banner-image{
+    height: 200px;
+  }
+  .main-banner-content {
+    top: 50%;
+    left: 50%;
+    /* transform: translate(-50%, -50%); */
+    text-align: center;
+  }
+  .main-banner-content h4 {
+    font-size: 14px;
+    line-height: 20px;
+    margin-bottom: 8px;
+  }
+  .main-banner-content a {
+    font-size: 8px;
+    padding: 5px 10px;
+  }
+  .main-banner-content h5 {
+    font-size: 20px;
+    line-height: 42px;
+    letter-spacing: -1px;
+  }
+
+  .main-banner-content p {
+    font-size: 16px;
+    line-height: 24px;
+  }
+}
+
 .small-banner-content {
   top: 25%;
   left: 10%;
@@ -302,7 +333,7 @@ footer .input-group-text {
     top: 20%;
     left: 5%;
   }
-  /* ... (adjust other styles) */
+  
 }
 /* home wrapper 2 ends */
 
@@ -449,12 +480,7 @@ footer .input-group-text {
   right: 15px;
 }
 
-@media screen and (max-width: 768px) {
-  .product-card {
-    /* Adjust card width, padding, etc. */
-  }
-  /* ... (adjust other styles) */
-}
+
 /* Product Card ends here */
 
 /* Special Product */
@@ -1086,16 +1112,25 @@ footer .input-group-text {
 } */
 
 /* Add these media queries to your CSS */
+@media (max-width: 768px) {
+  .header-upper .logo{
+    position: absolute;
+    left: 0;
+    top: -1.8rem
+  }
+}
 @media (max-width: 520px) {
   .headMenu {
     display: none;
   }
+
   .hamburger {
     display: block;
     border: none;
     cursor: pointer;
     margin-right: 20px;
     width: 52px; 
+    background: none !important;
     /* transform: translateY(-50%); */
   }
 
@@ -1141,8 +1176,27 @@ footer .input-group-text {
     margin-top: 10px;
   }
 }
+.badge0 {
+  background-color: red;
+    color: white;
+    border-radius: 50%;
+    padding: 0px 5px;
+    font-size: 13px;
+    font-weight: 600;
+    margin-bottom: 16px;
+    margin-left: 1px;
+}
 
-
+ .badge1 {
+  position: absolute;
+    top: 17px;
+    background-color: red;
+    color: white;
+    border-radius: 50%;
+    padding: 0px 5px;
+    font-size: 12px;
+    font-weight: 600;
+}
 /* Services */
 .servies {
   display: flex;

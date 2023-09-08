@@ -105,6 +105,8 @@ const SingleProduct = () => {
       window.removeEventListener("resize",handleResize)
     }
   },[])
+
+  const authState = useSelector((state) => state.auth);
   
   return (
     <>
@@ -236,9 +238,18 @@ const SingleProduct = () => {
                       // data-bs-toggle="modal"
                       // data-bs-target="#staticBackdrop"
                       type="button"
-                      onClick={() =>{alreadyAdded? navigate('/cart') : uploadCart()}}
+                      
+                      onClick ={() => {if(authState?.user === null){
+                        navigate("/login");
+                      }
+                      else{
+                        uploadCart();
+                      }
+                    }}
                     >
                       {alreadyAdded ? "Go to Cart" : "Add to Cart"}
+
+
                     </button>
                     
                   </div>
@@ -294,7 +305,7 @@ const SingleProduct = () => {
                       edit={false}
                       activeColor="#ffd700"
                     />
-                    <p className="mb-0">Based on 2 Reviews</p>
+                    {/* <p className="mb-0">Based on 2 Reviews</p> */}
                   </div>
                 </div>
                 {orderedProduct && (
@@ -341,7 +352,13 @@ const SingleProduct = () => {
                     className={`button border-0 ${
                       alreadyAdded ? "btn-success" : "btn-primary"
                     }`}
-                    onClick={addRatingtoProduct} 
+                    onClick={() =>{if(authState?.user === null){
+                      navigate("/login");
+                    }
+                    else{
+                      addRatingtoProduct();
+                    }
+                  }} 
                     type="button" >Submit Review</button>
                   </div>
                 
