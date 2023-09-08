@@ -78,10 +78,10 @@ const Checkout = () => {
       try {
         await dispatch(createUserOrder(orderData))
         // orderState.success === true ? ((navigate("/order-confirm"), dispatch(clearUserCart(userId)))) : null;
-        if ( orderState !== null) {
-              dispatch(clearUserCart(userId));
-              navigate("/order-confirm");
-            }  
+        // if ( orderState !== null) {
+        //       dispatch(clearUserCart(userId));
+        //       navigate("/order-confirm");
+        //     }  
       } catch (error) {
         console.error("Error creating order:", error);
       }
@@ -89,12 +89,12 @@ const Checkout = () => {
     }
   });
 
-  // useEffect(() => {
-  //   if ( orderState !== null) {
-  //     dispatch(clearUserCart(userId));
-  //     navigate("/order-confirm");
-  //   }
-  // }, [orderState]);
+  useEffect(() => {
+    if ( orderState && orderState !== null) {
+      dispatch(clearUserCart(userId));
+      navigate("/order-confirm");
+    }
+  }, [orderState]);
 
   // const [coupon,setCoupon] = useState("");
   
