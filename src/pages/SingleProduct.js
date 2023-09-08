@@ -27,6 +27,10 @@ const SingleProduct = () => {
   const productState = useSelector((state) => state.product.singleproduct)
   const cartState = useSelector((state) => state.auth.cartProducts)
  
+  // const ratingAsNumber = parseInt(productState?.totalrating,10);
+  
+
+
   useEffect(() =>{
     dispatch(getAProduct(getProductId))
     dispatch(getUserCart())
@@ -55,18 +59,12 @@ const SingleProduct = () => {
           price:productState?.price,
           quantity,
         }))
-        dispatch(getUserCart())
+        setTimeout(() =>{
+          dispatch(getUserCart())
+        },20)
+        
       }
   }
-
-  // const props = {
-  //   width: 594,
-  //   height: 600,
-  //   zoomWidth: 600,
-
-  //   img: productState?.images[0].url ? productState?.images[0].url : "../images/vyamtshirt.png",
-  // };
-
   const [orderedProduct, setorderedProduct] = useState(true);
   
   const [star,setStar] = useState(null);
@@ -142,22 +140,16 @@ const SingleProduct = () => {
               </div>
               <div className="border-bottom ">
                 <p className="price">Rs {productState?.price}</p>
-                {
-                  productState && productState.ratings?.map((item,index) => {
-                    return(
-                      <div className="d-flex align-items-center gap-10">
-                  <ReactStars
-                    count={5}
-                    size={10}
-                    value={item?.star}
-                    edit={false}
-                    activeColor="#ffd700"
-                  />
-                  <p className="mb-0 t-review">( {item.length} )</p>
+                <div className="d-flex align-items-center gap-10">
+                <ReactStars
+                      count={5}
+                      size={24}
+                      value={productState?.totalrating}
+                      edit={false}
+                      activeColor="#ffd700"
+                    />
+                  <p className="mb-0 t-review">  ({productState?.ratings.length} ) </p>                
                 </div>
-                    )
-                  })
-                }
                 <a className="review-btn" href="#review">
                   Write a Review
                 </a>
@@ -235,15 +227,15 @@ const SingleProduct = () => {
                       className={`button border-0 ${
                         alreadyAdded ? "btn-success" : "btn-primary"
                       }`}
-                      // data-bs-toggle="modal"
-                      // data-bs-target="#staticBackdrop"
+                      
                       type="button"
                       
                       onClick ={() => {if(authState?.user === null){
                         navigate("/login");
                       }
                       else{
-                        uploadCart();
+                        uploadCart()
+                        
                       }
                     }}
                     >
@@ -301,11 +293,11 @@ const SingleProduct = () => {
                     <ReactStars
                       count={5}
                       size={24}
-                      value={4}
+                      value={productState?.totalrating}
                       edit={false}
                       activeColor="#ffd700"
                     />
-                    {/* <p className="mb-0">Based on 2 Reviews</p> */}
+                    <p className="mb-0">Based on {productState?.ratings.length} Reviews</p>
                   </div>
                 </div>
                 {orderedProduct && (
@@ -390,7 +382,7 @@ const SingleProduct = () => {
           </div>
         </div>
       </Container>
-      <Container class1="popular-wrapper py-5 home-wrapper-2">
+      {/* <Container class1="popular-wrapper py-5 home-wrapper-2">
         <div className="row">
           <div className="col-12">
             <h3 className="section-heading">Our Popular Products</h3>
@@ -399,7 +391,7 @@ const SingleProduct = () => {
         <div className="row">
           <ProductCard />
         </div>
-      </Container>
+      </Container> */}
 
       <div
         className="modal fade"
