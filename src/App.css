@@ -1284,3 +1284,41 @@ footer .input-group-text {
   }
 }
 
+.currency-toggle-btn {
+  background-color: transparent;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  position: relative;
+  display: inline-block;
+  padding: 5px 10px;
+  border-radius: 20px;
+  font-size: 14px;
+  transition: background-color 0.3s, color 0.3s;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.currency-toggle-btn::before {
+  content: "";
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  border: 2px solid #ffffff;
+  transition: transform 0.3s, background-color 0.3s;
+  /* background-color: #fff;  */
+}
+
+.currency-toggle-btn[aria-pressed="true"] {
+  background-color: #4caf50; /* Background color when Pound is selected */
+  color:#1c1c1b /* Text color when Pound is selected */
+}
+
+.currency-toggle-btn[aria-pressed="true"]::before {
+  transform: translateX(24px); /* Move the switch to the right */
+  background-color: #4caf50; /* Circle color when Pound is selected */
+}

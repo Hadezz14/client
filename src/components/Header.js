@@ -8,9 +8,11 @@ import logo from "../images/Vyamlogo2.png"
 import { useDispatch, useSelector } from "react-redux";
 import { getUserCart } from "../features/user/userSlice";
 import { handleLogout } from "../utils/axiosConfig";
+import { toggleCurrency } from "../features/currency/currencySlice";
 
 
 const Header = () => {
+  const dispatch = useDispatch();
   const cartState = useSelector((state) => state?.auth?.cartProducts);
   const authState = useSelector((state) => state.auth);
 
@@ -27,6 +29,12 @@ const Header = () => {
     navigate("/login");
   }
 
+  const currency = useSelector((state) => state.currency.currency);
+  
+  const handleCurrencyToggle =() => {
+    dispatch (toggleCurrency());
+  }
+
   return (
     <>
       <header className="header-upper py-3" style={{ marginTop: "0" }}>
@@ -37,6 +45,7 @@ const Header = () => {
                 <img className="logo" src={logo} alt="Logo" />
               </Link>
             </div>
+            
 
             <div className="headMenu col-md-9 col-6">
               <div className="header-upper-links d-flex align-items-center justify-content-end gap-3">
@@ -146,6 +155,7 @@ const Header = () => {
                     className="dropdown-menu"
                     aria-labelledby="dropdownMenuButton1"
                   >
+                    
                     <li>
                       <Link className="dropdown-item text-white" to="/">
                         Home
@@ -167,6 +177,13 @@ const Header = () => {
 
                 <div className="menu-links">
                   <div className="d-flex align-items-center gap-15">
+                  <button
+                    className="currency-toggle-btn"
+                    onClick={handleCurrencyToggle}
+                    // aria-pressed={currency === "Pound"}
+                    >
+                      {currency === "Rs" ? "Rs":"£"}
+                    </button>
                     <NavLink to="/">Home</NavLink>
                     <NavLink to="/product">Our Store</NavLink>
                     <NavLink to="/contact">Contact</NavLink>

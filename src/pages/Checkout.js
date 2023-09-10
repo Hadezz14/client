@@ -8,6 +8,7 @@ import { useFormik } from "formik";
 import * as yup from 'yup';
 import { applyDisCoupne, clearCart, clearUserCart, createUserOrder } from "../features/user/userSlice";
 import { getAllCoupon } from "../features/coupon/couponSlice";
+import { ConvertToPound } from "../components/ConvertToPound";
 
 const shippingschema = yup.object({
   firstName: yup.string().required("Frist Name is Required"),
@@ -96,6 +97,7 @@ const Checkout = () => {
     }
   }, [orderState]);
 
+  const currency = useSelector((state) => state.currency.currency)
   // const [coupon,setCoupon] = useState("");
   
   // const [showInput, setShowInput] = useState(false);
@@ -234,7 +236,7 @@ const Checkout = () => {
                 <div className="flex-grow-1">
                   <input
                     type="text"
-                    placeholder="Zipcode"
+                    placeholder="Phone Number"
                     className="form-control"
                     name="shippingInfo.pincode"
                     value={formik.values.shippingInfo.pincode}
@@ -282,7 +284,11 @@ const Checkout = () => {
                   </div>
                 </div>
                 <div className="flex-grow-1">
-                  <h5 className="total">Rs {item?.price * item?.quantity}</h5>
+                  <h5 className="total">
+                  {
+                    currency === "Rs" ? `Rs ${item?.price * item?.quantity}`:`£ ${ConvertToPound(item?.price * item?.quantity)}`
+                  }
+                  </h5>
                 </div>
               </div>
                   )
@@ -291,6 +297,7 @@ const Checkout = () => {
               
             </div>
             <div className="border-bottom py-4">
+             
               <div className="d-flex justify-content-between align-items-center">
                 <p className="total">Subtotal</p>
                 <p className="total-price">Rs {totalAmount?totalAmount : "0"}</p>

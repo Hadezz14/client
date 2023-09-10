@@ -15,6 +15,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { addRating, getAProduct } from "../features/products/productSlice";
 import { toast } from "react-toastify";
 import { addProdToCart, getUserCart } from "../features/user/userSlice";
+import { ConvertToPound } from "../components/ConvertToPound";
 
 const SingleProduct = () => {
   const [colour,setColour] = useState(null)
@@ -105,6 +106,7 @@ const SingleProduct = () => {
   },[])
 
   const authState = useSelector((state) => state.auth);
+  const currency = useSelector((state) => state.currency.currency);
   
   return (
     <>
@@ -139,7 +141,11 @@ const SingleProduct = () => {
                 </h3>
               </div>
               <div className="border-bottom ">
-                <p className="price">Rs {productState?.price}</p>
+                <p className="price">
+                {
+                    currency === "Rs" ? `Rs ${productState?.price}`:`£ ${ConvertToPound(productState?.price)}`
+                  }
+                </p>
                 <div className="d-flex align-items-center gap-10">
                 <ReactStars
                       count={5}
