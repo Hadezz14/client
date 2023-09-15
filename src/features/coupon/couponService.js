@@ -1,15 +1,16 @@
-// import axios from "axios";
+// couponService.js
+import axios from 'axios';
+import { base_url } from '../../utils/axiosConfig';
 
-// import { base_url, config } from "../../utils/axiosConfig";
+const applyCouponAPI = async ({ promoCode, userId }) => {
+  try {
+    const response = await axios.post(`${base_url}user/cart/applycoupon`, { promoCode, userId });
+    return response.data;
+  } catch (error) {
+    throw error.response.data;
+  }
+};
 
-// const getCoupons = async () => {
-//   const response = await axios.get(`${base_url}coupon/`, config);
-
-//   return response.data;
-// };
-
-// const couponService = {
-//   getCoupons,
-// };
-
-// export default couponService;
+export const couponService = {
+    applyCouponAPI
+}

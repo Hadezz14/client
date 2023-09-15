@@ -7,7 +7,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { useFormik } from "formik";
 import * as yup from 'yup';
 import { applyDisCoupne, clearCart, clearUserCart, createUserOrder } from "../features/user/userSlice";
-import { getAllCoupon } from "../features/coupon/couponSlice";
+import { applyCoupon, getAllCoupon } from "../features/coupon/couponSlice";
+import { toast } from "react-toastify";
 
 const shippingschema = yup.object({
   firstName: yup.string().required("Frist Name is Required"),
@@ -18,21 +19,22 @@ const shippingschema = yup.object({
 });
  
 const Checkout = () => {
-  // React.useEffect(() =>{
-  //   dispatch(getAllCoupon())
-  // },[])
 
   const dispatch = useDispatch();
   const navigate =useNavigate();
   const orderState = useSelector((state) => state.auth.order)
   
   const cartState = useSelector((state) => state.auth.cartProducts)
-  console.log(cartState);
   const userId = useSelector((state) =>state.auth.user._id);
   const shippingamt = 100;
   const [totalAmount,setTotalAmount] = useState(null);
   const [discountAmount,setDiscountamt] = useState(null);
   const [profit,setProfit] = useState(null);
+  const [couponCode, setCouponCode] = useState("");
+  const [discount, setDiscount] = useState(0);
+
+
+  
  useEffect(() =>{
     let sum = 0;
     for (let index = 0; index < cartState?.length; index++) {
@@ -89,25 +91,34 @@ const Checkout = () => {
     }
   });
 
-  useEffect(() => {
-    if ( orderState && orderState !== null) {
-      dispatch(clearUserCart(userId));
-      navigate("/order-confirm");
+  const handleApplyCoupon = async () => {
+    if (couponCode.trim() === "") {
+      toast.error('Enter a promo code')
+      return;
     }
-  }, [orderState]);
-
-  // const [coupon,setCoupon] = useState("");
   
-  // const [showInput, setShowInput] = useState(false);
+    try {
+      const response = await dispatch(
+        applyCoupon({ promoCode: couponCode, userId: userId })
+      );
 
-  // const couponState = useSelector((state) => state.coupon.coupons)
-  // console.log(couponState);
-  // const handleApplyCoupon = () => {
-  //   setShowInput(true);
-  //   dispatch(applyDisCoupne(coupon))
-  // };
-
+      if (response) {
+        setDiscount(response.payload.discount);
+      } else {
+        setDiscount(0); 
+      }
+      if (response.payload.error){
+        toast.error('Promo Code already used')
+      }
+    } catch (error) {
+      console.error("Error applying coupon:", error);
+    }
+  };
   
+  const totalPriceAfterDis = totalAmount- discountAmount;
+  const couponDisAmt = (totalPriceAfterDis * discount)/ 100;  
+
+
 
   return (
     <>
@@ -300,37 +311,42 @@ const Checkout = () => {
                 <p className="mb-0 total-price">Rs 100</p>
               </div>
               <div className="d-flex justify-content-between align-items-center">
-                <p className="mb-0 total">Discount</p>
+                <p className="mb-0 total">Discount</p> 
                 <p className="mb-0 total-price">Rs {discountAmount?discountAmount:"0"}</p>
               </div>
+              {discount > 0 && (
+                <div className="d-flex justify-content-between align-items-center">
+                  <p className="mb-0 total">Promo Code Discount</p> 
+                  <p className="mb-0 total-price"> Rs {couponDisAmt}</p>
+                </div>
+              )}
             </div>
             <div className="d-flex justify-content-between align-items-center border-bootom py-4">
-              <h4 className="total">Total</h4>
-              <h5 className="total-price">Rs {(totalAmount-discountAmount) ? (totalAmount-discountAmount) + 100 : "0"}</h5>
+            <h4 className="total">Total</h4>
+              {couponDisAmt > 0 ? (
+                <h5 className="total-price">Rs {totalPriceAfterDis - couponDisAmt + 100}</h5>
+              ) : (
+                <h5 className="total-price">Rs {totalPriceAfterDis + 100}</h5>
+              )}
             </div>
             <Link to="/product" className="button">
                       Continue to Shop
                     </Link>
           </div>
-          {/* <div className="py-5">
-      {showInput ? (
-        <div>
-          <input
-            type="text"
-            placeholder="Enter Coupon Code"
-            value={coupon}
-            onChange={(e) => setCoupon(e.target.value)}
-          />
-          <button className="button" onClick={() => handleApplyCoupon()}>
-            Apply Coupon
-          </button>
-        </div>
-      ) : (
-        <button className="button" onClick={() => handleApplyCoupon()}>
-          Apply Coupon
-        </button>
-      )}
-    </div> */}
+          <div className="py-5">
+    <div className="d-flex align-items-center">
+    <input
+  type="text"
+  placeholder="Enter Coupon Code"
+  value={couponCode}
+  onChange={(event) => setCouponCode(event.target.value)}
+/>
+
+      <button className="button" onClick={handleApplyCoupon}>
+        Apply Coupon
+      </button>
+    </div>
+  </div>
         </div>
       </Container>
     </>
