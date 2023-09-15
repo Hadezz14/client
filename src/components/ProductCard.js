@@ -104,9 +104,10 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import wish from "../images/wish.svg";
 import addcart from "../images/add-cart.svg";
 import view from "../images/view.svg";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { addToWishlist } from "../features/products/productSlice";
 import styled from "styled-components"; 
+import { ConvertToPound } from "./ConvertToPound";
 
 const DiscountBanner = styled.div`
   position: absolute;
@@ -182,6 +183,8 @@ const ProductCard = (props) => {
     dispatch(addToWishlist(id));
   };
 
+  const currency = useSelector((state) => state.currency.currency)
+
   return (
     <>
       {data?.map((item, index) => {
@@ -226,7 +229,7 @@ const ProductCard = (props) => {
                 <ReactStars
                   count={5}
                   size={20}
-                  value={item?.totalrating.toString()}
+                  value={item?.totalrating}
                   edit={false}
                   activeColor="#ffd700"
                 />
@@ -236,7 +239,11 @@ const ProductCard = (props) => {
                   }`}
                   dangerouslySetInnerHTML={{ __html: item?.description }}
                 ></p>
-                <p className="price">Rs {item?.price}</p>
+                <p className="price">
+                {
+                    currency === "Rs" ? `Rs ${item?.price}`:`£ ${ConvertToPound(item?.price)}`
+                  }
+                </p>
               </ProductDetails>
               <ActionBar>
                 <div className="d-flex flex-column gap-15">

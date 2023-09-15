@@ -5,6 +5,8 @@ import wish from "../../images/wish.svg";
 import addcart from "../../images/add-cart.svg";
 import view from "../../images/view.svg";
 import styled from "styled-components"; // Import styled-components
+import { useSelector } from "react-redux";
+import { ConvertToPound } from "../ConvertToPound";
 
 const DiscountBanner = styled.div`
   position: absolute;
@@ -79,6 +81,7 @@ const WishlistIcon = styled.div`
 const HomeProductCard = ({item,onAddToWishlist}) => {
     
   const navigate = useNavigate();
+  const currency = useSelector((state) => state.currency.currency);
 
         return (
           <>
@@ -102,18 +105,18 @@ const HomeProductCard = ({item,onAddToWishlist}) => {
                 </button>
               </WishlistIcon>
               <Link to={`/product/${item?._id}`}>
-                <ProductImage>
-                  {item?.images && item.images[0] && (
+                <div style={{height:"200px",width:"200px",objectFit:"contain" }}>
+                {item?.images && item.images[0] && (
                     <img
                       src={item?.images[0].url}
                       className="img-fluid"
                       alt="product image"
                     />
                   )}
-                </ProductImage>
+                </div>
               </Link>
               <ProductDetails>
-                <h6 className="brand">{item?.brand}</h6>
+                {/* <h6 className="brand">{item?.brand}</h6> */}
                 <Link to={`/product/${item?._id}`}>
                   <h5 className="product-title">{item?.title}</h5>
                 </Link>
@@ -128,7 +131,12 @@ const HomeProductCard = ({item,onAddToWishlist}) => {
                   className={`description `}
                   dangerouslySetInnerHTML={{ __html: item?.description }}
                 ></p> */}
-                <p className="price">Rs {item?.price}</p>
+                <p className="price">
+                  
+                  {
+                    currency === "Rs" ? `Rs ${item?.price}`:`£ ${ConvertToPound(item?.price)}`
+                  }
+                  </p>
               </ProductDetails>
               <ActionBar>
                 <div className="d-flex flex-column gap-15">

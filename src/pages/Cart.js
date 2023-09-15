@@ -8,6 +8,7 @@ import Container from "../components/Container";
 import { useDispatch, useSelector } from "react-redux";
 import { clearUserCart, deleteCartProduct, getUserCart, updateCartProduct } from "../features/user/userSlice";
 import emptyCart from "../images/empty-cart.jpg"
+import { ConvertToPound } from "../components/ConvertToPound";
 const Cart = () => {
   const dispatch = useDispatch();
   React.useEffect(() =>{
@@ -44,7 +45,7 @@ const Cart = () => {
     }
   },[useCartState])
   
-  
+  const currency = useSelector((state) => state.currency.currency);
   return (
     <>
       <Meta title={"Cart"} />
@@ -97,7 +98,11 @@ const Cart = () => {
                   </div>
                 </div>
                 <div className="cart-col-2">
-                  <h5 className="price">Rs {item?.price}</h5>
+                  <h5 className="price">
+                  {
+                    currency === "Rs" ? `Rs ${item?.price}`:`£ ${ConvertToPound(item?.price)}`
+                  }
+                  </h5>
                 </div>
                 <div className="cart-col-3 d-flex align-items-center gap-20">
                   <div>
@@ -117,7 +122,12 @@ const Cart = () => {
                   </div>
                 </div>
                 <div className="cart-col-4">
-                  <h5 className="price">Rs {item?.price * item?.quantity}</h5>
+                
+                  <h5 className="price">
+                  {
+                    currency === "Rs" ? `Rs ${item?.price * item?.quantity}`:`£ ${ConvertToPound(item?.price * item?.quantity)}`
+                  }
+                    </h5>
                 </div>
               </div>
                      
@@ -153,7 +163,11 @@ const Cart = () => {
               {
                 (totalAmount !== null || totalAmount !== 0) &&
                 <div className="d-flex flex-column ">
-                <h4>SubTotal: Rs {totalAmount}</h4>
+                <h4>SubTotal: 
+                  {
+                    currency === "Rs" ? `Rs ${totalAmount}`:`£ ${ConvertToPound(totalAmount)}`
+                  }
+                  </h4>
                 <p>Taxes and shipping calculated at checkout</p>
                 
                 
