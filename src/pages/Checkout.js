@@ -340,13 +340,12 @@ const Checkout = () => {
           </div>
           <div className="py-5">
     <div className="d-flex align-items-center">
-    <input
-  type="text"
-  placeholder="Enter Coupon Code"
-  value={couponCode}
-  onChange={(event) => setCouponCode(event.target.value)}
-/>
-
+        <input
+      type="text"
+      placeholder="Enter Coupon Code"
+      value={couponCode}
+      onChange={(event) => setCouponCode(event.target.value)}
+    />
       <button className="button" onClick={handleApplyCoupon}>
         Apply Coupon
       </button>
