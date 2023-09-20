@@ -286,7 +286,7 @@ const Checkout = () => {
                 <div className="flex-grow-1">
                   <h5 className="total">
                   {
-                    currency === "Rs" ? `Rs ${item?.price * item?.quantity}`:`£ ${ConvertToPound(item?.price * item?.quantity)}`
+                    currency === "Rs" ? `Rs ${item?.price * item?.quantity}`:`${ConvertToPound(item?.price * item?.quantity)}`
                   }
                   </h5>
                 </div>
@@ -300,20 +300,28 @@ const Checkout = () => {
              
               <div className="d-flex justify-content-between align-items-center">
                 <p className="total">Subtotal</p>
-                <p className="total-price">Rs {totalAmount?totalAmount : "0"}</p>
+                <p className="total-price">
+               {
+                currency === "Rs" ? `Rs ${totalAmount || "0"}` : ` £ ${ConvertToPound(totalAmount || 0)}`
+               }
+                </p>
               </div>
               <div className="d-flex justify-content-between align-items-center">
                 <p className="mb-0 total">Shipping</p>
-                <p className="mb-0 total-price">Rs 100</p>
+                <p className="mb-0 total-price">{currency === "Rs" ? "Rs 100" : "£ 1"}</p>
               </div>
               <div className="d-flex justify-content-between align-items-center">
                 <p className="mb-0 total">Discount</p>
-                <p className="mb-0 total-price">Rs {discountAmount?discountAmount:"0"}</p>
+                <p className="mb-0 total-price">
+                {currency === "Rs" ? `Rs ${discountAmount || "0"}` : `£ ${ConvertToPound(discountAmount || 0)}`}
+                </p>
               </div>
             </div>
             <div className="d-flex justify-content-between align-items-center border-bootom py-4">
               <h4 className="total">Total</h4>
-              <h5 className="total-price">Rs {(totalAmount-discountAmount) ? (totalAmount-discountAmount) + 100 : "0"}</h5>
+              <h5 className="total-price">
+              {currency === "Rs" ? `Rs ${(totalAmount-discountAmount+100) || "0"} ` : `£ ${ConvertToPound(totalAmount-discountAmount+100)}`}
+              </h5>
             </div>
             <Link to="/product" className="button">
                       Continue to Shop

@@ -1,6 +1,8 @@
 import { createSlice,createAsyncThunk } from "@reduxjs/toolkit";
 import { authService } from "./userService";
 import { toast } from "react-toastify";
+import { signInWithGoogle } from "../../firebase";
+import axios from "axios";
 
 const getCustomerfromLocalStorage = localStorage.getItem("customer")
   ? JSON.parse(localStorage.getItem("customer"))
@@ -41,6 +43,17 @@ export const logoutUser = createAsyncThunk(
     async (_,thunkAPI)=>{
         try {
             await authService.logout();
+        } catch (error) {
+            return thunkAPI.rejectWithValue(error)
+        }
+    }
+)
+
+export const loginWithGoogle = createAsyncThunk(
+    "auth/loginWithGoogle",
+    async(thunkAPI) =>{
+        try {
+            return await authService.signinGoogle();
         } catch (error) {
             return thunkAPI.rejectWithValue(error)
         }
@@ -338,7 +351,22 @@ export const authSlice=createSlice({
         //     state.isSuccess = true;
         //     state.message = action.payload.toString();
         // })
-        
+        .addCase(loginWithGoogle.pending, (state) =>{
+            state.isLoading = true;
+        })
+        .addCase(loginWithGoogle.fulfilled, (state,action) =>{
+            state.isLoading = false;
+            state.isError = false;
+            state.isSuccess = true;
+            state.user = action.payload;
+        })
+        .addCase(loginWithGoogle.rejected,(state,action) =>{
+            state.isLoading = false;
+            state.isError = true;
+            state.isSuccess = true;
+            state.message = action.payload.toString();
+        })
+
 
     },
 });

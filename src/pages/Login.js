@@ -7,29 +7,34 @@ import CustomInput from "../components/CustomInput";
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 import { useDispatch, useSelector } from "react-redux";
-import { loginUser } from "../features/user/userSlice";
+import { loginUser, loginWithGoogle } from "../features/user/userSlice";
+import {auth,signInWithGoogle} from "../firebase";
 
-const loginschema = yup.object({
-  email:yup.string().nullable().email("E-mail shoudl be valid").required("Email address is required"),
-  password:yup.string().required("Password is Required"),
+// const loginschema = yup.object({
+//   email:yup.string().nullable().email("E-mail shoudl be valid").required("Email address is required"),
+//   password:yup.string().required("Password is Required"),
   
-});
+// });
 const Login = () => {
   const authState = useSelector((state) => state.auth)
   const navigate = useNavigate()
   const dispatch = useDispatch();
-  const formik = useFormik({
-    initialValues: { 
-      email:'',   
-      password:'',
-    },
-    validationSchema:loginschema,
-    onSubmit: values => {
-      dispatch(loginUser(values));
-      navigate("/")
-    },
-  });
-  
+  // const formik = useFormik({
+  //   initialValues: { 
+  //     email:'',   
+  //     password:'',
+  //   },
+  //   validationSchema:loginschema,
+  //   onSubmit: values => {
+  //     dispatch(loginUser(values));
+  //     navigate("/")
+  //   },
+  // });
+
+  const handleGooglelogin = async() =>{
+    dispatch(loginWithGoogle());
+  }
+
   return (
     <>
       <Meta title={"Login"} />
@@ -37,7 +42,15 @@ const Login = () => {
 
       <Container class1="login-wrapper py-5 home-wrapper-2">
         <div className="row">
-          <div className="col-12">
+          
+          <button className="button"
+            onClick={handleGooglelogin}
+          >
+            Login with Google
+          </button>
+
+
+          {/* <div className="col-12">
             <div className="auth-card">
               <h3 className="text-center mb-3">Login</h3>
               <form action="" onSubmit={formik.handleSubmit} className="d-flex flex-column gap-15">
@@ -76,7 +89,7 @@ const Login = () => {
                 </div>
               </form>
             </div>
-          </div>
+          </div> */}
         </div>
       </Container>
     </>

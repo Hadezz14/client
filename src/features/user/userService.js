@@ -1,5 +1,8 @@
 import axios from "axios";
+
 import { base_url, config } from "../../utils/axiosConfig";
+import { auth, googleProvider, signInWithGoogle } from "../../firebase";
+import { signInWithPopup } from "firebase/auth";
 
 const register = async (userData) => {
     try {
@@ -104,6 +107,28 @@ const createOrder = async (orderData)=>{
 //     }
 // };   
 
+const signinGoogle = async() =>{
+    try {
+        const result = await signInWithPopup(auth,googleProvider);
+        console.log(result.user.phoneNumber);
+        
+        const response = await axios.post(`${base_url}user/google-login`,
+        {
+            email: result.user.email, 
+            firstname:result.user.displayName,
+            mobile:result.user.phoneNumber,
+        
+        });
+        if(response.data){
+            localStorage.setItem("customer", JSON.stringify(response.data));
+            return response.data;
+        }
+        
+    } catch (error) {
+        throw error;
+    }
+}
+
 export const authService ={
     register,
     login,
@@ -116,4 +141,5 @@ export const authService ={
     clearCart,
     // applyCoupon,
     logout,
+    signinGoogle,
 };
