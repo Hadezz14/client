@@ -1322,3 +1322,30 @@ footer .input-group-text {
   transform: translateX(24px); /* Move the switch to the right */
   background-color: #4caf50; /* Circle color when Pound is selected */
 }
+
+.size-chart-container {
+  padding: 20px;
+  font-family: Arial, sans-serif;
+  width: 100%;
+}
+
+.data-grid-container {
+  width: 100%;
+  overflow-x: auto;
+  margin-top: 20px;
+}
+.MuiDataGrid-root {
+  width: 100;
+}
+.MuiDataGrid-colCell:first-child {
+  position: sticky;
+  left: 0;
+  z-index: 1;
+  background-color: #fff;
+}
+@media screen and (max-width: 768px) {
+  .MuiDataGrid-root {
+    overflow-x: auto;
+    max-width: 100%;
+  }
+}
