@@ -9,6 +9,8 @@ import * as yup from 'yup';
 import { applyDisCoupne, clearCart, clearUserCart, createUserOrder } from "../features/user/userSlice";
 import { applyCoupon, getAllCoupon } from "../features/coupon/couponSlice";
 import { toast } from "react-toastify";
+import { ConvertToPound } from "../components/ConvertToPound";
+
 
 const shippingschema = yup.object({
   firstName: yup.string().required("Frist Name is Required"),
@@ -48,6 +50,7 @@ const Checkout = () => {
       setTotalAmount(sum)
     }
   },[cartState])
+  
   const formik = useFormik({
     initialValues: { 
       shippingInfo:{
@@ -118,8 +121,28 @@ const Checkout = () => {
   const totalPriceAfterDis = totalAmount- discountAmount;
   const couponDisAmt = (totalPriceAfterDis * discount)/ 100;  
 
+  const currency = useSelector((state) => state.currency.currency)
+  const [convertedTotalAmount,setConvertedTotalAmount] = useState(null);
+  const [convertedShippingAmt,setConvertedShippingAmt] = useState(null);
+  const [convertedDiscountAmt,setConvertedDiscountAmount]= useState(null);
+  const [convertedCouponDisAmt,setConvertedCouponDisAmt]= useState(null);
 
+useEffect(() =>{
+  const convertAmounts = async() =>{
+    if(currency === "Pound"){
+      const convertedTotal = await ConvertToPound(totalAmount);
+      const convertedShipping = await ConvertToPound(shippingamt);
+      const convertedDiscount = await ConvertToPound(discountAmount);
+      const convertedCouponDiscount = await ConvertToPound(couponDisAmt);
 
+      setConvertedTotalAmount(convertedTotal);
+      setConvertedShippingAmt(convertedShipping);
+      setConvertedDiscountAmount(convertedDiscount);
+      setConvertedCouponDisAmt(convertedCouponDiscount);
+    }
+  };
+  convertAmounts();
+},[currency,totalAmount,shippingamt,discountAmount,couponDisAmt])
   return (
     <>
       <Container class1="checkout-wrapper py-5 home-wrapper-2">
@@ -311,31 +334,40 @@ const Checkout = () => {
                 <p className="total">Subtotal</p>
                 <p className="total-price">
                {
-                currency === "Rs" ? `Rs ${totalAmount || "0"}` : ` £ ${ConvertToPound(totalAmount || 0)}`
+                currency === "Rs" ? `Rs ${totalAmount || "0"}` : `£ ${convertedTotalAmount || "0"}` 
                }
                 </p>
               </div>
               <div className="d-flex justify-content-between align-items-center">
                 <p className="mb-0 total">Shipping</p>
-                <p className="mb-0 total-price">{currency === "Rs" ? "Rs 100" : "£ 1"}</p>
+                <p className="mb-0 total-price">{currency === "Rs"
+                ? `Rs ${shippingamt || "0"}`
+                : `£ ${convertedShippingAmt || "0"}`}</p>
               </div>
               <div className="d-flex justify-content-between align-items-center">
                 <p className="mb-0 total">Discount</p>
                 <p className="mb-0 total-price">
-                {currency === "Rs" ? `Rs ${discountAmount || "0"}` : `£ ${ConvertToPound(discountAmount || 0)}`}
+                {currency === "Rs"
+                ? `Rs ${discountAmount || "0"}`
+                : `£ ${convertedDiscountAmt || "0"}`}
                 </p>
               </div>
               {discount > 0 && (
                 <div className="d-flex justify-content-between align-items-center">
                   <p className="mb-0 total">Promo Code Discount</p> 
-                  <p className="mb-0 total-price"> Rs {couponDisAmt}</p>
+                  <p className="mb-0 total-price">
+                     {currency === "Rs"
+                  ? `Rs ${couponDisAmt || "0"}`
+                  : `£ ${convertedCouponDisAmt || "0"}`}</p>
                 </div>
               )}
             </div>
             <div className="d-flex justify-content-between align-items-center border-bootom py-4">
               <h4 className="total">Total</h4>
               <h5 className="total-price">
-              {currency === "Rs" ? `Rs ${(totalAmount-discountAmount+100) || "0"} ` : `£ ${ConvertToPound(totalAmount-discountAmount+100)}`}
+              {currency === "Rs"
+              ? `Rs ${(totalAmount - discountAmount + shippingamt) || "0"} `
+              : `£ ${convertedTotalAmount - convertedDiscountAmt + convertedShippingAmt || "0"}`}
               </h5>
             </div>
             <Link to="/product" className="button">
