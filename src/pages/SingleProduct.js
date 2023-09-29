@@ -48,7 +48,7 @@ const SingleProduct = () => {
 
   
 
-  const [selectedSize,setSelectedSize] = useState(null);
+  const [size,setSelectedSize] = useState(null);
   const uploadCart = () =>{
       if (colour === null){
         toast.error("Please Choose Color")
@@ -60,6 +60,7 @@ const SingleProduct = () => {
           colour,
           price:productState?.price,
           quantity,
+          size,
         }))
         setTimeout(() =>{
           dispatch(getUserCart())
@@ -185,8 +186,7 @@ const SingleProduct = () => {
                   <h3 className="product-heading">Size :</h3>
                   <div className="d-flex flex-wrap gap-15">
                     {
-                      productState?.size.map((sizeItem,index) =>{
-                        
+                      productState?.size.map((sizeItem,index) =>(
                         <span 
                           key={index}
                           className={`badge border border-1 bg-white text-dark border-secondary
@@ -196,8 +196,7 @@ const SingleProduct = () => {
                           >
                           {sizeItem.size}
                         </span>
-                        
-                      })
+                      ))
                     }
                     
                   </div>
