@@ -37,15 +37,39 @@ const Cart = () => {
     },200)
   }
 
-  useEffect(() =>{
-    let sum = 0;
-    for (let index = 0; index < useCartState?.length; index++) {
-      sum = sum+(Number(useCartState[index].quantity)*useCartState[index].price)
-      setTotalAmount(sum)
-    }
-  },[useCartState])
+  
   
   const currency = useSelector((state) => state.currency.currency);
+  const [convertedPrices, setConvertedPrices] = useState([]);
+  const [convertedSubtotal,setConvertedSubTotal] = useState(null);
+
+  useEffect (() => {
+    let subTotal = 0;
+    for (let index = 0; index < useCartState?.length; index++) {
+      subTotal += (Number(useCartState[index].quantity)*useCartState[index].price)  
+    }
+
+    if(currency === "Pound"){
+      const conversionPrmoiseTotal = [ConvertToPound(subTotal)]
+      Promise.all(conversionPrmoiseTotal)
+        .then((converted) =>{
+          setConvertedSubTotal(converted[0]);
+        })
+        .catch((error) => console.error("Conversion error:" , error));
+      const conversionPromise = useCartState.map((item) => 
+        ConvertToPound(item?.price)
+      );
+      Promise.all(conversionPromise)
+        .then((conversionPrices) => {
+          setConvertedPrices(conversionPrices);
+          
+        })
+        .catch((error) => console.error("Conversion error" , error));
+    }
+    else{
+      setTotalAmount(subTotal);
+    }
+  },[currency,useCartState]);
   return (
     <>
       <Meta title={"Cart"} />
@@ -99,9 +123,9 @@ const Cart = () => {
                 </div>
                 <div className="cart-col-2">
                   <h5 className="price">
-                  {
-                    currency === "Rs" ? `Rs ${item?.price}`:`£ ${ConvertToPound(item?.price)}`
-                  }
+                  {currency === "Rs"
+                  ? `Rs ${item?.price}`
+                  : `£${convertedPrices[index]}`}
                   </h5>
                 </div>
                 <div className="cart-col-3 d-flex align-items-center gap-20">
@@ -124,9 +148,9 @@ const Cart = () => {
                 <div className="cart-col-4">
                 
                   <h5 className="price">
-                  {
-                    currency === "Rs" ? `Rs ${item?.price * item?.quantity}`:`£ ${ConvertToPound(item?.price * item?.quantity)}`
-                  }
+                  {currency === "Rs"
+                  ? `Rs ${item?.price * item?.quantity}`
+                  : `£${convertedPrices[index] * item?.quantity}`}
                     </h5>
                 </div>
               </div>
@@ -165,7 +189,7 @@ const Cart = () => {
                 <div className="d-flex flex-column ">
                 <h4>SubTotal: 
                   {
-                    currency === "Rs" ? `Rs ${totalAmount}`:`£ ${ConvertToPound(totalAmount)}`
+                    currency === "Rs" ? `Rs ${totalAmount}`:`£ ${convertedSubtotal}`
                   }
                   </h4>
                 <p>Taxes and shipping calculated at checkout</p>

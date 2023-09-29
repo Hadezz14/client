@@ -126,10 +126,19 @@ const Checkout = () => {
   const [convertedShippingAmt,setConvertedShippingAmt] = useState(null);
   const [convertedDiscountAmt,setConvertedDiscountAmount]= useState(null);
   const [convertedCouponDisAmt,setConvertedCouponDisAmt]= useState(null);
-
+  const [converteditemPrice,setConverteditemPrice] = useState([]);
 useEffect(() =>{
   const convertAmounts = async() =>{
     if(currency === "Pound"){
+      const conversionPromise = cartState.map((item) =>
+        ConvertToPound(item?.price)
+      );
+      Promise.all(conversionPromise)
+        .then((conversionPrice) =>{
+          setConverteditemPrice(conversionPrice)
+        })
+        .catch((error) => console.error("Conversion error:" , error));
+
       const convertedTotal = await ConvertToPound(totalAmount);
       const convertedShipping = await ConvertToPound(shippingamt);
       const convertedDiscount = await ConvertToPound(discountAmount);
@@ -143,6 +152,8 @@ useEffect(() =>{
   };
   convertAmounts();
 },[currency,totalAmount,shippingamt,discountAmount,couponDisAmt])
+
+
   return (
     <>
       <Container class1="checkout-wrapper py-5 home-wrapper-2">
@@ -298,6 +309,7 @@ useEffect(() =>{
             <div className="border-bottom py-4">
               {
                 cartState && cartState?.map((item,index) =>{
+                  
                   return(
                     <div className="d-flex gap-10 mb-2 align-align-items-center">
                 <div className="w-75 d-flex gap-10">
@@ -317,9 +329,9 @@ useEffect(() =>{
                 </div>
                 <div className="flex-grow-1">
                   <h5 className="total">
-                  {
-                    currency === "Rs" ? `Rs ${item?.price * item?.quantity}`:`${ConvertToPound(item?.price * item?.quantity)}`
-                  }
+                  {currency === "Rs"
+                  ? `Rs ${item?.price * item?.quantity}`
+                  : `£${converteditemPrice[index] * item?.quantity}`}
                   </h5>
                 </div>
               </div>
