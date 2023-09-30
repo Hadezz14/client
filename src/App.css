@@ -560,6 +560,15 @@ footer .input-group-text {
   margin-bottom: 15px;
   margin-top: 20px;
 }
+/* product size selection */
+.productSize{
+  cursor: pointer ;
+}
+.selected {
+  background-color: black !important; 
+  color: #fff !important;
+}
+
 .colors {
   list-style-type: none;
   display: flex;

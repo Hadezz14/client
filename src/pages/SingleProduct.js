@@ -121,7 +121,6 @@ const SingleProduct = () => {
    convertAmt();
   },[currency,productState])
   
-
   return (
     <>
       <Meta title={"Product Name"} />
@@ -200,16 +199,15 @@ const SingleProduct = () => {
                       productState?.size.map((sizeItem,index) =>(
                         <span 
                           key={index}
-                          className={`badge border border-1 bg-white text-dark border-secondary
+                          className={`productSize badge border border-1 bg-white text-dark border-secondary 
                             ${size === sizeItem.size ? "selected":""}
-                          `}
+                          `} 
                           onClick={()=> setSelectedSize(sizeItem.size)}
                           >
                           {sizeItem.size}
                         </span>
                       ))
                     }
-                    
                   </div>
                 </div>
                 {
