@@ -9,8 +9,8 @@ export const getRsToPoundConversionrate = async () => {
    const response = await  axios.get(
    `https://v6.exchangerate-api.com/v6/${API_KEY}/latest/NPR`
    );
-   const ConversionRate = response.data.rates.GBP;
-   return ConversionRate;
+   const rate = response.data.conversion_rates.GBP;
+   return rate;
   } catch (error) {
     console.error("Error fetching converison rate:", error)
     throw error

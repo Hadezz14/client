@@ -9,6 +9,7 @@ import * as yup from 'yup';
 import { applyDisCoupne, clearCart, clearUserCart, createUserOrder } from "../features/user/userSlice";
 import { applyCoupon, getAllCoupon } from "../features/coupon/couponSlice";
 import { toast } from "react-toastify";
+import { ConvertToPound } from "../components/ConvertToPound";
 
 const shippingschema = yup.object({
   firstName: yup.string().required("Frist Name is Required"),
@@ -33,7 +34,7 @@ const Checkout = () => {
   const [couponCode, setCouponCode] = useState("");
   const [discount, setDiscount] = useState(0);
 
-
+  const currency = useSelector((state) => state.currency.currency)
   
  useEffect(() =>{
     let sum = 0;
@@ -118,6 +119,9 @@ const Checkout = () => {
   const totalPriceAfterDis = totalAmount- discountAmount;
   const couponDisAmt = (totalPriceAfterDis * discount)/ 100;  
 
+  
+
+  
 
 
   return (
@@ -295,7 +299,7 @@ const Checkout = () => {
                 <div className="flex-grow-1">
                   <h5 className="total">
                   {
-                    currency === "Rs" ? `Rs ${item?.price * item?.quantity}`:`${ConvertToPound(item?.price * item?.quantity)}`
+                    currency === "Rs" ? `Rs ${item?.price * item?.quantity}`:` £ ${ConvertToPound(item?.price * item?.quantity)}`
                   }
                   </h5>
                 </div>

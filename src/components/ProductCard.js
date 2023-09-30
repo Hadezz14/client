@@ -98,7 +98,7 @@
 // export default ProductCard;
 
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import ReactStars from "react-rating-stars-component";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import wish from "../images/wish.svg";
@@ -185,6 +185,25 @@ const ProductCard = (props) => {
 
   const currency = useSelector((state) => state.currency.currency)
 
+  const convert = async(price)=>{
+    return await ConvertToPound(price)
+  }
+
+  const [productamt,setProductamt] = useState();
+
+  const [converted,setConverted] = useState([])
+  useEffect(() =>{
+    if(currency === "Pound"){
+      data.map(async(item,index)=>{
+        const convertedPrice = await ConvertToPound(item?.price)
+        setConverted([convertedPrice])
+        console.log(converted);
+      })
+    }
+
+  },[currency])
+
+
   return (
     <>
       {data?.map((item, index) => {
@@ -241,7 +260,7 @@ const ProductCard = (props) => {
                 ></p>
                 <p className="price">
                 {
-                    currency === "Rs" ? `Rs ${item?.price}`:`£ ${ConvertToPound(item?.price)}`
+                    currency === "Rs" ? `Rs ${item?.price}`:`£ ${converted[index]}`
                   }
                 </p>
               </ProductDetails>
