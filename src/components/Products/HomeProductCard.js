@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import ReactStars from "react-rating-stars-component";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import wish from "../../images/wish.svg";
@@ -82,6 +82,20 @@ const HomeProductCard = ({item,onAddToWishlist}) => {
     
   const navigate = useNavigate();
   const currency = useSelector((state) => state.currency.currency);
+  const convert = async(price) =>{
+    return await ConvertToPound(price);
+  };
+  const [converted,setConverted] = useState([]);
+  useEffect(() =>{
+    if(currency === "Pound"){
+      const conversionPromise = item.map((i) => convert(i?.price));
+
+      Promise.all(conversionPromise)
+        .then((convertedPrices) => setConverted(convertedPrices))
+        .catch((error) => console.error("Conversion error", error));
+
+    }
+  },[currency,item])
 
         return (
           <>
@@ -133,8 +147,8 @@ const HomeProductCard = ({item,onAddToWishlist}) => {
                 ></p> */}
                 <p className="price">
                   
-                  {
-                    currency === "Rs" ? `Rs ${item?.price}`:`£ ${ConvertToPound(item?.price)}`
+                {
+                    currency === "Rs" ? `Rs ${item?.price}`:`£${converted[index]}`
                   }
                   </p>
               </ProductDetails>

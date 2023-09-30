@@ -21,6 +21,7 @@ import OrderConformation from "./pages/OrderConformation";
 import Errorpage from "./pages/Errorpage";
 import { PrivateRoute } from "./routing/PrivateRoute";
 import { OpenRoute } from "./routing/OpenRoutes";
+import SizeChart from "./pages/SizeChart";
 function App() {
   return (
     <>
@@ -44,6 +45,7 @@ function App() {
             <Route path="term-conditions" element={<TermAndContions />} />
             <Route path="order-confirm" element={<OrderConformation/>} />
             <Route path="error" element={<Errorpage/>}/>
+            <Route path="size-chart" element={<SizeChart/>}/>
           </Route>
         </Routes>
       </BrowserRouter>

@@ -11,6 +11,7 @@ import { applyCoupon, getAllCoupon } from "../features/coupon/couponSlice";
 import { toast } from "react-toastify";
 import { ConvertToPound } from "../components/ConvertToPound";
 
+
 const shippingschema = yup.object({
   firstName: yup.string().required("Frist Name is Required"),
   lastName: yup.string().required("Last Name is Required"),
@@ -49,6 +50,7 @@ const Checkout = () => {
       setTotalAmount(sum)
     }
   },[cartState])
+  
   const formik = useFormik({
     initialValues: { 
       shippingInfo:{
@@ -119,9 +121,37 @@ const Checkout = () => {
   const totalPriceAfterDis = totalAmount- discountAmount;
   const couponDisAmt = (totalPriceAfterDis * discount)/ 100;  
 
-  
+  const currency = useSelector((state) => state.currency.currency)
+  const [convertedTotalAmount,setConvertedTotalAmount] = useState(null);
+  const [convertedShippingAmt,setConvertedShippingAmt] = useState(null);
+  const [convertedDiscountAmt,setConvertedDiscountAmount]= useState(null);
+  const [convertedCouponDisAmt,setConvertedCouponDisAmt]= useState(null);
+  const [converteditemPrice,setConverteditemPrice] = useState([]);
+useEffect(() =>{
+  const convertAmounts = async() =>{
+    if(currency === "Pound"){
+      const conversionPromise = cartState.map((item) =>
+        ConvertToPound(item?.price)
+      );
+      Promise.all(conversionPromise)
+        .then((conversionPrice) =>{
+          setConverteditemPrice(conversionPrice)
+        })
+        .catch((error) => console.error("Conversion error:" , error));
 
-  
+      const convertedTotal = await ConvertToPound(totalAmount);
+      const convertedShipping = await ConvertToPound(shippingamt);
+      const convertedDiscount = await ConvertToPound(discountAmount);
+      const convertedCouponDiscount = await ConvertToPound(couponDisAmt);
+
+      setConvertedTotalAmount(convertedTotal);
+      setConvertedShippingAmt(convertedShipping);
+      setConvertedDiscountAmount(convertedDiscount);
+      setConvertedCouponDisAmt(convertedCouponDiscount);
+    }
+  };
+  convertAmounts();
+},[currency,totalAmount,shippingamt,discountAmount,couponDisAmt])
 
 
   return (
@@ -279,6 +309,7 @@ const Checkout = () => {
             <div className="border-bottom py-4">
               {
                 cartState && cartState?.map((item,index) =>{
+                  
                   return(
                     <div className="d-flex gap-10 mb-2 align-align-items-center">
                 <div className="w-75 d-flex gap-10">
@@ -298,9 +329,9 @@ const Checkout = () => {
                 </div>
                 <div className="flex-grow-1">
                   <h5 className="total">
-                  {
-                    currency === "Rs" ? `Rs ${item?.price * item?.quantity}`:` £ ${ConvertToPound(item?.price * item?.quantity)}`
-                  }
+                  {currency === "Rs"
+                  ? `Rs ${item?.price * item?.quantity}`
+                  : `£${converteditemPrice[index] * item?.quantity}`}
                   </h5>
                 </div>
               </div>
@@ -315,31 +346,40 @@ const Checkout = () => {
                 <p className="total">Subtotal</p>
                 <p className="total-price">
                {
-                currency === "Rs" ? `Rs ${totalAmount || "0"}` : ` £ ${ConvertToPound(totalAmount || 0)}`
+                currency === "Rs" ? `Rs ${totalAmount || "0"}` : `£ ${convertedTotalAmount || "0"}` 
                }
                 </p>
               </div>
               <div className="d-flex justify-content-between align-items-center">
                 <p className="mb-0 total">Shipping</p>
-                <p className="mb-0 total-price">{currency === "Rs" ? "Rs 100" : "£ 1"}</p>
+                <p className="mb-0 total-price">{currency === "Rs"
+                ? `Rs ${shippingamt || "0"}`
+                : `£ ${convertedShippingAmt || "0"}`}</p>
               </div>
               <div className="d-flex justify-content-between align-items-center">
                 <p className="mb-0 total">Discount</p>
                 <p className="mb-0 total-price">
-                {currency === "Rs" ? `Rs ${discountAmount || "0"}` : `£ ${ConvertToPound(discountAmount || 0)}`}
+                {currency === "Rs"
+                ? `Rs ${discountAmount || "0"}`
+                : `£ ${convertedDiscountAmt || "0"}`}
                 </p>
               </div>
               {discount > 0 && (
                 <div className="d-flex justify-content-between align-items-center">
                   <p className="mb-0 total">Promo Code Discount</p> 
-                  <p className="mb-0 total-price"> Rs {couponDisAmt}</p>
+                  <p className="mb-0 total-price">
+                     {currency === "Rs"
+                  ? `Rs ${couponDisAmt || "0"}`
+                  : `£ ${convertedCouponDisAmt || "0"}`}</p>
                 </div>
               )}
             </div>
             <div className="d-flex justify-content-between align-items-center border-bootom py-4">
               <h4 className="total">Total</h4>
               <h5 className="total-price">
-              {currency === "Rs" ? `Rs ${(totalAmount-discountAmount+100) || "0"} ` : `£ ${ConvertToPound(totalAmount-discountAmount+100)}`}
+              {currency === "Rs"
+              ? `Rs ${(totalAmount - discountAmount + shippingamt) || "0"} `
+              : `£ ${convertedTotalAmount - convertedDiscountAmt + convertedShippingAmt || "0"}`}
               </h5>
             </div>
             <Link to="/product" className="button">

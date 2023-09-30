@@ -26,6 +26,7 @@ const SingleProduct = () => {
   const getProductId = location.pathname.split("/")[2]
   const dispatch = useDispatch();
   const productState = useSelector((state) => state.product.singleproduct)
+  console.log(productState);
   const cartState = useSelector((state) => state.auth.cartProducts)
  
   // const ratingAsNumber = parseInt(productState?.totalrating,10);
@@ -46,8 +47,8 @@ const SingleProduct = () => {
   // })
 
   
-  // const productSizes = ["S", "M", "L", "XL", "XXL"];
-  // const [selectedSize, setSelectedSize] = useState(null);
+
+  const [size,setSelectedSize] = useState(null);
   const uploadCart = () =>{
       if (colour === null){
         toast.error("Please Choose Color")
@@ -59,6 +60,7 @@ const SingleProduct = () => {
           colour,
           price:productState?.price,
           quantity,
+          size,
         }))
         setTimeout(() =>{
           dispatch(getUserCart())
@@ -108,6 +110,7 @@ const SingleProduct = () => {
   const authState = useSelector((state) => state.auth);
   const currency = useSelector((state) => state.currency.currency);
   
+
   return (
     <>
       <Meta title={"Product Name"} />
@@ -179,25 +182,25 @@ const SingleProduct = () => {
                   <h3 className="product-heading">Availablity :</h3>
                   <p className="product-data">In Stock</p>
                 </div>
-                {/* <div className="d-flex gap-10 flex-column mt-2 mb-3">
+                <div className="d-flex gap-10 flex-column mt-2 mb-3">
                   <h3 className="product-heading">Size :</h3>
                   <div className="d-flex flex-wrap gap-15">
                     {
-                      productSizes.map((size,index) =>{
+                      productState?.size.map((sizeItem,index) =>(
                         <span 
                           key={index}
                           className={`badge border border-1 bg-white text-dark border-secondary
-                            ${selectedSize === size ? "selected":""}
+                            ${selectedSize === sizeItem.size ? "selected":""}
                           `}
-                          onClick={()=>setSelectedSize(size)}
+                          onClick={()=> setSelectedSize(sizeItem.size)}
                           >
-                          {size}
+                          {sizeItem.size}
                         </span>
-                      })
+                      ))
                     }
                     
                   </div>
-                </div> */}
+                </div>
                 {
                   alreadyAdded === false && <>
                   <div className="d-flex gap-10 flex-column mt-2 mb-3">
