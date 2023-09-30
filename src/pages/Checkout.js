@@ -121,7 +121,7 @@ const Checkout = () => {
   const totalPriceAfterDis = totalAmount- discountAmount;
   const couponDisAmt = (totalPriceAfterDis * discount)/ 100;  
 
-  const currency = useSelector((state) => state.currency.currency)
+  
   const [convertedTotalAmount,setConvertedTotalAmount] = useState(null);
   const [convertedShippingAmt,setConvertedShippingAmt] = useState(null);
   const [convertedDiscountAmt,setConvertedDiscountAmount]= useState(null);
@@ -151,7 +151,7 @@ useEffect(() =>{
     }
   };
   convertAmounts();
-},[currency,totalAmount,shippingamt,discountAmount,couponDisAmt])
+},[currency,cartState,totalAmount,shippingamt,discountAmount,couponDisAmt])
 
 
   return (
@@ -351,18 +351,15 @@ useEffect(() =>{
                 </p>
               </div>
               <div className="d-flex justify-content-between align-items-center">
-                <p className="mb-0 total">Shipping</p>
-                <p className="mb-0 total-price">{currency === "Rs"
-                ? `Rs ${shippingamt || "0"}`
-                : `£ ${convertedShippingAmt || "0"}`}</p>
-              </div>
-              <div className="d-flex justify-content-between align-items-center">
                 <p className="mb-0 total">Discount</p>
                 <p className="mb-0 total-price">
                 {currency === "Rs"
                 ? `Rs ${discountAmount || "0"}`
                 : `£ ${convertedDiscountAmt || "0"}`}
                 </p>
+              </div>
+              <div className="d-flex justify-content-between align-items-center">
+                <p className="mb-0 total-price" style={{ fontWeight: "bold", color: "black" }}>Delivery charge will be taken according to your location</p>
               </div>
               {discount > 0 && (
                 <div className="d-flex justify-content-between align-items-center">
@@ -374,12 +371,13 @@ useEffect(() =>{
                 </div>
               )}
             </div>
+            
             <div className="d-flex justify-content-between align-items-center border-bootom py-4">
               <h4 className="total">Total</h4>
               <h5 className="total-price">
               {currency === "Rs"
-              ? `Rs ${(totalAmount - discountAmount + shippingamt) || "0"} `
-              : `£ ${convertedTotalAmount - convertedDiscountAmt + convertedShippingAmt || "0"}`}
+              ? `Rs ${(totalAmount - discountAmount) || "0"} `
+              : `£ ${convertedTotalAmount - convertedDiscountAmt  || "0"}`}
               </h5>
             </div>
             <Link to="/product" className="button">

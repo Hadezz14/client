@@ -12,8 +12,8 @@ export const ConvertToPound = async (nepaliRupeesAmount) => {
 
         const poundsAmount = nepaliRupeesAmount * conversionRate;
         const roundedPounds = Math.round(poundsAmount *100)/100;
-        console.log(roundedPounds);
-        return poundsAmount;
+        
+        return roundedPounds;
         
     } catch (error) {
         throw error;

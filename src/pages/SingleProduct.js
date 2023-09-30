@@ -109,6 +109,17 @@ const SingleProduct = () => {
 
   const authState = useSelector((state) => state.auth);
   const currency = useSelector((state) => state.currency.currency);
+  const [converteditemPrice,setConvertedItemPrice] = useState(null);
+  
+  useEffect(() =>{
+    const convertAmt = async() =>{
+      if( currency === "Pound"){
+        const convertedPrice = await ConvertToPound(productState?.price);
+        setConvertedItemPrice(convertedPrice)
+      }
+    };
+   convertAmt();
+  },[currency,productState])
   
 
   return (
@@ -146,7 +157,7 @@ const SingleProduct = () => {
               <div className="border-bottom ">
                 <p className="price">
                 {
-                    currency === "Rs" ? `Rs ${productState?.price}`:`£ ${ConvertToPound(productState?.price)}`
+                    currency === "Rs" ? `Rs ${productState?.price}`:`£ ${converteditemPrice}`
                   }
                 </p>
                 <div className="d-flex align-items-center gap-10">
@@ -190,7 +201,7 @@ const SingleProduct = () => {
                         <span 
                           key={index}
                           className={`badge border border-1 bg-white text-dark border-secondary
-                            ${selectedSize === sizeItem.size ? "selected":""}
+                            ${size === sizeItem.size ? "selected":""}
                           `}
                           onClick={()=> setSelectedSize(sizeItem.size)}
                           >
