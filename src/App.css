@@ -524,6 +524,7 @@ footer .input-group-text {
 }
 /* famous card ends */
 
+
 /* Our Store */
 .filter-card {
   background-color: white;
@@ -561,6 +562,12 @@ footer .input-group-text {
   margin-top: 20px;
 }
 /* product size selection */
+.sizeChart{
+  text-decoration: underline;
+}
+.sizeChart:hover{
+  color: black;
+}
 .productSize{
   cursor: pointer ;
 }

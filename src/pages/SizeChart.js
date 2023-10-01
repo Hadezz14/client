@@ -74,23 +74,28 @@ const SizeChart = () => {
             <DataGrid 
             rows={rows} 
             columns={columns} 
-            pageSize={5}
+            initialState={{
+                pagination: {
+                  paginationModel: {pageSize: 4 },
+                },
+              }}
+              pageSizeOptions={[5, 10]}
             autoHeight
-            disableRowSelectionOnClick
+            hideFooter = {true}
             />
         </div>
         <h3>How to Measure</h3>
         <p>
-            CHEST: Measure around the fullest part of your <br/>
-            chest, keeping the measuring tape horizontal.<br/>
+        <strong>CHEST:</strong> <span style={{textAlign: "center"}}>Measure around the fullest part of your
+        chest, keeping the measuring tape horizontal.</span><br/><br/>
 
-            WAIST: Measure around the narrowrest part <br/>
-            typically where you body bends side to side, <br/>
-            keeping the tape horozontal. <br/>
+        <strong>WAIST:</strong> <span style={{textAlign: "center"}}>Measure around the narrowest part
+        typically where your body bends side to side,
+        keeping the tape horizontal.</span> <br/><br/>
 
-            HIPS: Measure around the fullest part of your hips, <br/>
-            keeping the tape horizontal.
-        </p>
+        <strong>HIPS:</strong> <span style={{textAlign: "center"}}>Measure around the fullest part of your hips
+        keeping the tape horizontal.</span>
+    </p>
     </div>
   )
 }

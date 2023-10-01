@@ -6,7 +6,7 @@ import ProductCard from "../components/ProductCard";
 import ReactImageZoom from "react-image-zoom";
 import Color from "../components/Color";
 import { AiOutlineHeart } from "react-icons/ai";
-import { useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 
 import Container from "../components/Container";
 
@@ -209,6 +209,7 @@ const SingleProduct = () => {
                       ))
                     }
                   </div>
+                  <Link to={"/size-chart"} className="sizeChart">View Size Chart</Link>
                 </div>
                 {
                   alreadyAdded === false && <>
