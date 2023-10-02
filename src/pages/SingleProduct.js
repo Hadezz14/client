@@ -54,6 +54,10 @@ const SingleProduct = () => {
         toast.error("Please Choose Color")
         return false
       }
+      else if(size === null){
+        toast.error("Select size")
+        return false
+      }
       else{
         dispatch(addProdToCart({
           productId:productState?._id,
@@ -113,10 +117,10 @@ const SingleProduct = () => {
   
   useEffect(() =>{
     const convertAmt = async() =>{
-      if( currency === "Pound"){
+      
         const convertedPrice = await ConvertToPound(productState?.price);
         setConvertedItemPrice(convertedPrice)
-      }
+      
     };
    convertAmt();
   },[currency,productState])
@@ -155,9 +159,11 @@ const SingleProduct = () => {
               </div>
               <div className="border-bottom ">
                 <p className="price">
-                {
+                {/* {
                     currency === "Rs" ? `Rs ${productState?.price}`:`£ ${converteditemPrice}`
-                  }
+                  } */}
+
+                  Rs {productState?.price} / £{converteditemPrice}
                 </p>
                 <div className="d-flex align-items-center gap-10">
                 <ReactStars
@@ -190,7 +196,9 @@ const SingleProduct = () => {
                 </div>
                 <div className="d-flex gap-10 align-items-center my-2">
                   <h3 className="product-heading">Availablity :</h3>
-                  <p className="product-data">In Stock</p>
+                  <p className={`product-data ${productState?.size.every(sizeItem => sizeItem.quantity <= 0) ? "outOfStock" : ""}`}>
+                    {productState?.size.every(sizeItem => sizeItem.quantity <= 0) ? "Out of Stock" : "In Stock"}
+                  </p>
                 </div>
                 <div className="d-flex gap-10 flex-column mt-2 mb-3">
                   <h3 className="product-heading">Size :</h3>
@@ -201,10 +209,15 @@ const SingleProduct = () => {
                           key={index}
                           className={`productSize badge border border-1 bg-white text-dark border-secondary 
                             ${size === sizeItem.size ? "selected":""}
+                            ${sizeItem.quantity <= 0 ? "outOfStock" :""}
                           `} 
-                          onClick={()=> setSelectedSize(sizeItem.size)}
+                          onClick={()=> {
+                            if(sizeItem.quantity > 0){
+                              setSelectedSize(sizeItem.size);
+                            }
+                          }}
                           >
-                          {sizeItem.size}
+                          {sizeItem.size} {sizeItem.quantity <= 0 && "(Out of Stock)"} 
                         </span>
                       ))
                     }
@@ -222,7 +235,9 @@ const SingleProduct = () => {
                 }
                 <div className="d-flex align-items-center gap-15 flex-row mt-2 mb-3">
                   {
-                    alreadyAdded === false && <>
+                    alreadyAdded === false && 
+                    
+                    <>
                     <h3 className="product-heading">Quantity :</h3>
                   <div className="">
                     <input

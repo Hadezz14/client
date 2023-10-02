@@ -127,9 +127,37 @@ const Checkout = () => {
   const [convertedDiscountAmt,setConvertedDiscountAmount]= useState(null);
   const [convertedCouponDisAmt,setConvertedCouponDisAmt]= useState(null);
   const [converteditemPrice,setConverteditemPrice] = useState([]);
+
+// useEffect(() =>{
+//   const convertAmounts = async() =>{
+//     if(currency === "Pound"){
+//       const conversionPromise = cartState.map((item) =>
+//         ConvertToPound(item?.price)
+//       );
+//       Promise.all(conversionPromise)
+//         .then((conversionPrice) =>{
+//           setConverteditemPrice(conversionPrice)
+//         })
+//         .catch((error) => console.error("Conversion error:" , error));
+
+//       const convertedTotal = await ConvertToPound(totalAmount);
+//       const convertedShipping = await ConvertToPound(shippingamt);
+//       const convertedDiscount = await ConvertToPound(discountAmount);
+//       const convertedCouponDiscount = await ConvertToPound(couponDisAmt);
+
+//       setConvertedTotalAmount(convertedTotal);
+//       setConvertedShippingAmt(convertedShipping);
+//       setConvertedDiscountAmount(convertedDiscount);
+//       setConvertedCouponDisAmt(convertedCouponDiscount);
+//     }
+//   };
+//   convertAmounts();
+// },[currency,cartState,totalAmount,shippingamt,discountAmount,couponDisAmt])
+
+
 useEffect(() =>{
   const convertAmounts = async() =>{
-    if(currency === "Pound"){
+    
       const conversionPromise = cartState.map((item) =>
         ConvertToPound(item?.price)
       );
@@ -148,11 +176,13 @@ useEffect(() =>{
       setConvertedShippingAmt(convertedShipping);
       setConvertedDiscountAmount(convertedDiscount);
       setConvertedCouponDisAmt(convertedCouponDiscount);
-    }
+    
   };
   convertAmounts();
 },[currency,cartState,totalAmount,shippingamt,discountAmount,couponDisAmt])
 
+const TotalSum = totalAmount - discountAmount -couponDisAmt;
+const convertedTotalSum = convertedTotalAmount - convertedDiscountAmt - convertedCouponDisAmt;
 
   return (
     <>
@@ -329,9 +359,10 @@ useEffect(() =>{
                 </div>
                 <div className="flex-grow-1">
                   <h5 className="total">
-                  {currency === "Rs"
+                  {/* {currency === "Rs"
                   ? `Rs ${item?.price * item?.quantity}`
-                  : `£${converteditemPrice[index] * item?.quantity}`}
+                  : `£${converteditemPrice[index] * item?.quantity}`} */}
+                    Rs {item?.price * item?.quantity} / £{converteditemPrice[index] * item?.quantity}
                   </h5>
                 </div>
               </div>
@@ -345,17 +376,19 @@ useEffect(() =>{
               <div className="d-flex justify-content-between align-items-center">
                 <p className="total">Subtotal</p>
                 <p className="total-price">
-               {
+               {/* {
                 currency === "Rs" ? `Rs ${totalAmount || "0"}` : `£ ${convertedTotalAmount || "0"}` 
-               }
+               } */}
+                Rs {totalAmount} / £ {convertedTotalAmount}
                 </p>
               </div>
               <div className="d-flex justify-content-between align-items-center">
                 <p className="mb-0 total">Discount</p>
                 <p className="mb-0 total-price">
-                {currency === "Rs"
+                {/* {currency === "Rs"
                 ? `Rs ${discountAmount || "0"}`
-                : `£ ${convertedDiscountAmt || "0"}`}
+                : `£ ${convertedDiscountAmt || "0"}`} */}
+                Rs {discountAmount || "0"} / £{convertedDiscountAmt ||"0"}
                 </p>
               </div>
               <div className="d-flex justify-content-between align-items-center">
@@ -365,9 +398,11 @@ useEffect(() =>{
                 <div className="d-flex justify-content-between align-items-center">
                   <p className="mb-0 total">Promo Code Discount</p> 
                   <p className="mb-0 total-price">
-                     {currency === "Rs"
+                     {/* {currency === "Rs"
                   ? `Rs ${couponDisAmt || "0"}`
-                  : `£ ${convertedCouponDisAmt || "0"}`}</p>
+                  : `£ ${convertedCouponDisAmt || "0"}`} */}
+                  Rs {couponDisAmt || "0"} / £ {convertedCouponDisAmt || "0"}
+                  </p>
                 </div>
               )}
             </div>
@@ -375,9 +410,10 @@ useEffect(() =>{
             <div className="d-flex justify-content-between align-items-center border-bootom py-4">
               <h4 className="total">Total</h4>
               <h5 className="total-price">
-              {currency === "Rs"
+              {/* {currency === "Rs"
               ? `Rs ${(totalAmount - discountAmount) || "0"} `
-              : `£ ${convertedTotalAmount - convertedDiscountAmt  || "0"}`}
+              : `£ ${convertedTotalAmount - convertedDiscountAmt  || "0"}`} */}
+              Rs {TotalSum} / £ {convertedTotalSum}
               </h5>
             </div>
             <Link to="/product" className="button">

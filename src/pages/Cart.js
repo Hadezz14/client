@@ -18,6 +18,7 @@ const Cart = () => {
   const [productUpdateDetail,setProductUpdateDetail] = useState(null);
   const [totalAmount,setTotalAmount] = useState(null);
   const useCartState = useSelector((state) => state.auth.cartProducts)
+  
   const userId = useSelector((state) =>state.auth.user._id);
 
   useEffect(() =>{
@@ -43,13 +44,40 @@ const Cart = () => {
   const [convertedPrices, setConvertedPrices] = useState([]);
   const [convertedSubtotal,setConvertedSubTotal] = useState(null);
 
+  // useEffect (() => {
+  //   let subTotal = 0;
+  //   for (let index = 0; index < useCartState?.length; index++) {
+  //     subTotal += (Number(useCartState[index].quantity)*useCartState[index].price)  
+  //   }
+
+  //   if(currency === "Pound"){
+  //     const conversionPrmoiseTotal = [ConvertToPound(subTotal)]
+  //     Promise.all(conversionPrmoiseTotal)
+  //       .then((converted) =>{
+  //         setConvertedSubTotal(converted[0]);
+  //       })
+  //       .catch((error) => console.error("Conversion error:" , error));
+  //     const conversionPromise = useCartState.map((item) => 
+  //       ConvertToPound(item?.price)
+  //     );
+  //     Promise.all(conversionPromise)
+  //       .then((conversionPrices) => {
+  //         setConvertedPrices(conversionPrices);
+          
+  //       })
+  //       .catch((error) => console.error("Conversion error" , error));
+  //   }
+  //   else{
+  //     setTotalAmount(subTotal);
+  //   }
+  // },[currency,useCartState]);
   useEffect (() => {
     let subTotal = 0;
     for (let index = 0; index < useCartState?.length; index++) {
       subTotal += (Number(useCartState[index].quantity)*useCartState[index].price)  
     }
-
-    if(currency === "Pound"){
+    setTotalAmount(subTotal);
+    
       const conversionPrmoiseTotal = [ConvertToPound(subTotal)]
       Promise.all(conversionPrmoiseTotal)
         .then((converted) =>{
@@ -65,10 +93,7 @@ const Cart = () => {
           
         })
         .catch((error) => console.error("Conversion error" , error));
-    }
-    else{
-      setTotalAmount(subTotal);
-    }
+    
   },[currency,useCartState]);
   return (
     <>
@@ -119,13 +144,17 @@ const Cart = () => {
                         ))}
                       </ul>
                     </p>
+                    <p> Size : {item?.size}</p>
                   </div>
                 </div>
                 <div className="cart-col-2">
                   <h5 className="price">
-                  {currency === "Rs"
+                  {/* {currency === "Rs"
                   ? `Rs ${item?.price}`
-                  : `£${convertedPrices[index]}`}
+                  : `£${convertedPrices[index]}`} */}
+                    Rs {item?.price} /<br/>
+                    £ {convertedPrices[index]}
+
                   </h5>
                 </div>
                 <div className="cart-col-3 d-flex align-items-center gap-20">
@@ -148,9 +177,11 @@ const Cart = () => {
                 <div className="cart-col-4">
                 
                   <h5 className="price">
-                  {currency === "Rs"
+                  {/* {currency === "Rs"
                   ? `Rs ${item?.price * item?.quantity}`
-                  : `£${convertedPrices[index] * item?.quantity}`}
+                  : `£${convertedPrices[index] * item?.quantity}`} */}
+                    Rs {item?.price * item?.quantity} / <br/>
+                    £ {convertedPrices[index] * item?.quantity}
                     </h5>
                 </div>
               </div>
@@ -188,9 +219,10 @@ const Cart = () => {
                 (totalAmount !== null || totalAmount !== 0) &&
                 <div className="d-flex flex-column ">
                 <h4>SubTotal: 
-                  {
+                  {/* {
                     currency === "Rs" ? `Rs ${totalAmount}`:`£ ${convertedSubtotal}`
-                  }
+                  } */}
+                  Rs {totalAmount} / £ {convertedSubtotal}
                   </h4>
                 <p>Taxes and shipping calculated at checkout</p>
                 

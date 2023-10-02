@@ -101,14 +101,14 @@ const ProductCard = (props) => {
   // },[currency])
 
   useEffect(() =>{
-    if(currency === "Pound"){
+    
       const conversionPromise = data.map((item) => convert(item?.price));
 
       Promise.all(conversionPromise)
         .then((convertedPrices) => setConverted(convertedPrices))
         .catch((error) => console.error("Conversion error", error));
 
-    }
+    
   },[currency,data])
   return (
     <>
@@ -165,9 +165,12 @@ const ProductCard = (props) => {
                   dangerouslySetInnerHTML={{ __html: item?.description }}
                 ></p>
                 <p className="price">
-                {
+                {/* {
                     currency === "Rs" ? `Rs ${item?.price}`:`£${converted[index]}`
-                  }
+                  } */}
+                  
+                    Rs {item?.price} / £{converted[index]}
+                  
                 </p>
               </ProductDetails>
               <ActionBar>

@@ -22,6 +22,7 @@ import Errorpage from "./pages/Errorpage";
 import { PrivateRoute } from "./routing/PrivateRoute";
 import { OpenRoute } from "./routing/OpenRoutes";
 import SizeChart from "./pages/SizeChart";
+import ExchangePolicy from "./pages/ExchangePolicy";
 function App() {
   return (
     <>
@@ -46,6 +47,7 @@ function App() {
             <Route path="order-confirm" element={<OrderConformation/>} />
             <Route path="error" element={<Errorpage/>}/>
             <Route path="size-chart" element={<SizeChart/>}/>
+            <Route path="return-policy" element={<ExchangePolicy/>}/>
           </Route>
         </Routes>
       </BrowserRouter>
