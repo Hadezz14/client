@@ -1,21 +1,12 @@
 import React, { useEffect } from "react";
 import Container from "../components/Container";
 import { services } from "../utils/Data";
-import Carosal from "../components/Carosal";
-import Feedbacks from "../components/Feedbacks";
 import SmallBanner from "../components/smallBanner";
 import BigBanner from "../components/BigBanner";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllProducts } from "../features/products/productSlice";
-import NewArivals from "../components/Products/NewArivals";
-import ReactStars from "react-rating-stars-component";
-import { Link, useLocation, useNavigate } from "react-router-dom";
-import wish from "../images/wish.svg";
-import tshirt2 from "../images/vyamtshirt.png";
-import addcart from "../images/add-cart.svg";
-import view from "../images/view.svg";
+import { useNavigate } from "react-router-dom";
 import { addToWishlist } from "../features/products/productSlice";
-import ProductCard from "../components/ProductCard";
 import HomeProductCard from "../components/Products/HomeProductCard";
 import { useState } from "react";
 
@@ -30,10 +21,7 @@ const Home = () => {
   const getProducts =() =>{ 
     dispatch(getAllProducts());
   }
-  // const addToWish = (id) =>{
-  //   dispatch(addToWishlist(id));
-  // };
-
+  
   const handleAddToWishlist = (productId) => {
     dispatch(addToWishlist(productId));
   };
@@ -135,8 +123,6 @@ const Home = () => {
           
         </div>
       </Container>
-      {/* <Carosal/>
-      <Feedbacks/> */}
     </>
   );
 };

@@ -110,15 +110,17 @@ const createOrder = async (orderData)=>{
 const signinGoogle = async() =>{
     try {
         const result = await signInWithPopup(auth,googleProvider);
-        console.log(result.user.phoneNumber);
+        const displayNameParts = result.user.displayName.split(' ');
+        const firstName = displayNameParts[0];
         
         const response = await axios.post(`${base_url}user/google-login`,
         {
             email: result.user.email, 
-            firstname:result.user.displayName,
-            mobile:result.user.phoneNumber,
+            firstname:firstName,
+            mobile:result.user.phoneNumber || '',
         
         });
+        console.log(response);
         if(response.data){
             localStorage.setItem("customer", JSON.stringify(response.data));
             return response.data;

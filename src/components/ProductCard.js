@@ -90,16 +90,6 @@ const ProductCard = (props) => {
 
   const [converted,setConverted] = useState([]);
 
-  // useEffect(() =>{
-  //   if(currency === "Pound"){
-  //     data.map(async(item,index) =>{
-  //       const convertedPrice = await ConvertToPound(item?.price)
-  //       setConverted([convertedPrice])
-  //       console.log(converted);
-  //     })
-  //   }
-  // },[currency])
-
   useEffect(() =>{
     
       const conversionPromise = data.map((item) => convert(item?.price));
@@ -169,7 +159,7 @@ const ProductCard = (props) => {
                     currency === "Rs" ? `Rs ${item?.price}`:`£${converted[index]}`
                   } */}
                   
-                    Rs {item?.price} / £{converted[index]}
+                  £ {item?.price} / Rs {converted[index]}
                   
                 </p>
               </ProductDetails>

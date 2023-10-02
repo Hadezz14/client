@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import BreadCrumb from "../components/BreadCrumb";
 import Meta from "../components/Meta";
 import ProductCard from "../components/ProductCard";
-import Color from "../components/Color";
 import Container from "../components/Container";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllProducts } from "../features/products/productSlice";
@@ -52,22 +51,6 @@ const OurStore = () => {
                 <div className="d-flex align-items-center gap-10">
                   <p className="totalproducts mb-0">{totalproducts}Products</p>
                   <div className="d-flex gap-10 align-items-center grid">
-                    {/* <img
-                      onClick={() => {
-                        setGrid(3);
-                      }}
-                      src="images/gr4.svg"
-                      className="d-block img-fluid"
-                      alt="grid"
-                    /> */}
-                    {/* <img
-                      onClick={() => {
-                        setGrid(4);
-                      }}
-                      src="images/gr3.svg"
-                      className="d-block img-fluid"
-                      alt="grid"
-                    /> */}
                     <img
                       onClick={() => {
                         setGrid(6);

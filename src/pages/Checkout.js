@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { BiArrowBack } from "react-icons/bi";
-import tshirt from "../images/vyamtshirt.png";
 import Container from "../components/Container";
 import { useDispatch, useSelector } from "react-redux";
 import { useFormik } from "formik";
@@ -123,37 +122,10 @@ const Checkout = () => {
 
   
   const [convertedTotalAmount,setConvertedTotalAmount] = useState(null);
-  const [convertedShippingAmt,setConvertedShippingAmt] = useState(null);
+
   const [convertedDiscountAmt,setConvertedDiscountAmount]= useState(null);
   const [convertedCouponDisAmt,setConvertedCouponDisAmt]= useState(null);
   const [converteditemPrice,setConverteditemPrice] = useState([]);
-
-// useEffect(() =>{
-//   const convertAmounts = async() =>{
-//     if(currency === "Pound"){
-//       const conversionPromise = cartState.map((item) =>
-//         ConvertToPound(item?.price)
-//       );
-//       Promise.all(conversionPromise)
-//         .then((conversionPrice) =>{
-//           setConverteditemPrice(conversionPrice)
-//         })
-//         .catch((error) => console.error("Conversion error:" , error));
-
-//       const convertedTotal = await ConvertToPound(totalAmount);
-//       const convertedShipping = await ConvertToPound(shippingamt);
-//       const convertedDiscount = await ConvertToPound(discountAmount);
-//       const convertedCouponDiscount = await ConvertToPound(couponDisAmt);
-
-//       setConvertedTotalAmount(convertedTotal);
-//       setConvertedShippingAmt(convertedShipping);
-//       setConvertedDiscountAmount(convertedDiscount);
-//       setConvertedCouponDisAmt(convertedCouponDiscount);
-//     }
-//   };
-//   convertAmounts();
-// },[currency,cartState,totalAmount,shippingamt,discountAmount,couponDisAmt])
-
 
 useEffect(() =>{
   const convertAmounts = async() =>{
@@ -168,12 +140,12 @@ useEffect(() =>{
         .catch((error) => console.error("Conversion error:" , error));
 
       const convertedTotal = await ConvertToPound(totalAmount);
-      const convertedShipping = await ConvertToPound(shippingamt);
+      
       const convertedDiscount = await ConvertToPound(discountAmount);
       const convertedCouponDiscount = await ConvertToPound(couponDisAmt);
 
       setConvertedTotalAmount(convertedTotal);
-      setConvertedShippingAmt(convertedShipping);
+      
       setConvertedDiscountAmount(convertedDiscount);
       setConvertedCouponDisAmt(convertedCouponDiscount);
     
@@ -362,7 +334,7 @@ const convertedTotalSum = convertedTotalAmount - convertedDiscountAmt - converte
                   {/* {currency === "Rs"
                   ? `Rs ${item?.price * item?.quantity}`
                   : `£${converteditemPrice[index] * item?.quantity}`} */}
-                    Rs {item?.price * item?.quantity} / £{converteditemPrice[index] * item?.quantity}
+                    £ {item?.price * item?.quantity} / Rs {converteditemPrice[index] * item?.quantity}
                   </h5>
                 </div>
               </div>
@@ -379,7 +351,7 @@ const convertedTotalSum = convertedTotalAmount - convertedDiscountAmt - converte
                {/* {
                 currency === "Rs" ? `Rs ${totalAmount || "0"}` : `£ ${convertedTotalAmount || "0"}` 
                } */}
-                Rs {totalAmount} / £ {convertedTotalAmount}
+                £ {totalAmount} / Rs {convertedTotalAmount}
                 </p>
               </div>
               <div className="d-flex justify-content-between align-items-center">
@@ -388,7 +360,7 @@ const convertedTotalSum = convertedTotalAmount - convertedDiscountAmt - converte
                 {/* {currency === "Rs"
                 ? `Rs ${discountAmount || "0"}`
                 : `£ ${convertedDiscountAmt || "0"}`} */}
-                Rs {discountAmount || "0"} / £{convertedDiscountAmt ||"0"}
+                £ {discountAmount || "0"} / Rs {convertedDiscountAmt ||"0"}
                 </p>
               </div>
               <div className="d-flex justify-content-between align-items-center">
@@ -401,7 +373,7 @@ const convertedTotalSum = convertedTotalAmount - convertedDiscountAmt - converte
                      {/* {currency === "Rs"
                   ? `Rs ${couponDisAmt || "0"}`
                   : `£ ${convertedCouponDisAmt || "0"}`} */}
-                  Rs {couponDisAmt || "0"} / £ {convertedCouponDisAmt || "0"}
+                  £ {couponDisAmt || "0"} / Rs {convertedCouponDisAmt || "0"}
                   </p>
                 </div>
               )}
@@ -413,7 +385,7 @@ const convertedTotalSum = convertedTotalAmount - convertedDiscountAmt - converte
               {/* {currency === "Rs"
               ? `Rs ${(totalAmount - discountAmount) || "0"} `
               : `£ ${convertedTotalAmount - convertedDiscountAmt  || "0"}`} */}
-              Rs {TotalSum} / £ {convertedTotalSum}
+              £ {TotalSum} / Rs {convertedTotalSum}
               </h5>
             </div>
             <Link to="/product" className="button">

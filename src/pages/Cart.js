@@ -44,33 +44,6 @@ const Cart = () => {
   const [convertedPrices, setConvertedPrices] = useState([]);
   const [convertedSubtotal,setConvertedSubTotal] = useState(null);
 
-  // useEffect (() => {
-  //   let subTotal = 0;
-  //   for (let index = 0; index < useCartState?.length; index++) {
-  //     subTotal += (Number(useCartState[index].quantity)*useCartState[index].price)  
-  //   }
-
-  //   if(currency === "Pound"){
-  //     const conversionPrmoiseTotal = [ConvertToPound(subTotal)]
-  //     Promise.all(conversionPrmoiseTotal)
-  //       .then((converted) =>{
-  //         setConvertedSubTotal(converted[0]);
-  //       })
-  //       .catch((error) => console.error("Conversion error:" , error));
-  //     const conversionPromise = useCartState.map((item) => 
-  //       ConvertToPound(item?.price)
-  //     );
-  //     Promise.all(conversionPromise)
-  //       .then((conversionPrices) => {
-  //         setConvertedPrices(conversionPrices);
-          
-  //       })
-  //       .catch((error) => console.error("Conversion error" , error));
-  //   }
-  //   else{
-  //     setTotalAmount(subTotal);
-  //   }
-  // },[currency,useCartState]);
   useEffect (() => {
     let subTotal = 0;
     for (let index = 0; index < useCartState?.length; index++) {
@@ -152,8 +125,8 @@ const Cart = () => {
                   {/* {currency === "Rs"
                   ? `Rs ${item?.price}`
                   : `£${convertedPrices[index]}`} */}
-                    Rs {item?.price} /<br/>
-                    £ {convertedPrices[index]}
+                    £ {item?.price} /<br/>
+                    Rs {convertedPrices[index]}
 
                   </h5>
                 </div>
@@ -180,8 +153,8 @@ const Cart = () => {
                   {/* {currency === "Rs"
                   ? `Rs ${item?.price * item?.quantity}`
                   : `£${convertedPrices[index] * item?.quantity}`} */}
-                    Rs {item?.price * item?.quantity} / <br/>
-                    £ {convertedPrices[index] * item?.quantity}
+                    £ {item?.price * item?.quantity} / <br/>
+                    Rs {convertedPrices[index] * item?.quantity}
                     </h5>
                 </div>
               </div>
@@ -222,7 +195,7 @@ const Cart = () => {
                   {/* {
                     currency === "Rs" ? `Rs ${totalAmount}`:`£ ${convertedSubtotal}`
                   } */}
-                  Rs {totalAmount} / £ {convertedSubtotal}
+                  £ {totalAmount} / Rs {convertedSubtotal}
                   </h4>
                 <p>Taxes and shipping calculated at checkout</p>
                 

@@ -6,7 +6,6 @@ import cart from "../images/cart.svg";
 import menu from "../images/menu.svg";
 import logo from "../images/Vyamlogo2.png"
 import { useDispatch, useSelector } from "react-redux";
-import { getUserCart } from "../features/user/userSlice";
 import { handleLogout } from "../utils/axiosConfig";
 import { toggleCurrency } from "../features/currency/currencySlice";
 
@@ -171,22 +170,28 @@ const Header = () => {
                         Contact
                       </Link>
                     </li>
+                    <li>
+                      <Link className="dropdown-item text-white" to="/return-policy">
+                        Retrun policy
+                      </Link>
+                    </li>
                   </ul>
                   
                 </div>
 
                 <div className="menu-links">
                   <div className="d-flex align-items-center gap-15">
-                  <button
+                  {/* <button
                     className="currency-toggle-btn"
                     onClick={handleCurrencyToggle}
                     // aria-pressed={currency === "Pound"}
                     >
                       {currency === "Rs" ? "Rs":"£"}
-                    </button>
+                    </button> */}
                     <NavLink to="/">Home</NavLink>
                     <NavLink to="/product">Our Store</NavLink>
                     <NavLink to="/contact">Contact</NavLink>
+              
                   </div>
                 </div>
               </div>

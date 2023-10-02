@@ -2,8 +2,7 @@ import React, { useEffect, useState } from "react";
 import ReactStars from "react-rating-stars-component";
 import BreadCrumb from "../components/BreadCrumb";
 import Meta from "../components/Meta";
-import ProductCard from "../components/ProductCard";
-import ReactImageZoom from "react-image-zoom";
+
 import Color from "../components/Color";
 import { AiOutlineHeart } from "react-icons/ai";
 import { Link, useLocation, useNavigate } from "react-router-dom";
@@ -20,7 +19,7 @@ import { ConvertToPound } from "../components/ConvertToPound";
 const SingleProduct = () => {
   const [colour,setColour] = useState(null)
   const [quantity,setQuantity] = useState(1)
-  const [alreadyAdded,setAlreadyAdded] = useState(false);
+  
   const location  = useLocation();
   const navigate = useNavigate();
   const getProductId = location.pathname.split("/")[2]
@@ -28,25 +27,11 @@ const SingleProduct = () => {
   const productState = useSelector((state) => state.product.singleproduct)
   console.log(productState);
   const cartState = useSelector((state) => state.auth.cartProducts)
- 
-  // const ratingAsNumber = parseInt(productState?.totalrating,10);
-  
-
 
   useEffect(() =>{
     dispatch(getAProduct(getProductId))
     dispatch(getUserCart())
   },[])
-
-  // useEffect(() =>{
-  //   for (let index = 0; index < cartState.length; index++) {
-  //     if(getProductId === cartState[index]?.productId?._id){
-  //       setAlreadyAdded(true);
-  //     } 
-  //   }
-  // })
-
-  
 
   const [size,setSelectedSize] = useState(null);
   const uploadCart = () =>{
@@ -163,7 +148,7 @@ const SingleProduct = () => {
                     currency === "Rs" ? `Rs ${productState?.price}`:`£ ${converteditemPrice}`
                   } */}
 
-                  Rs {productState?.price} / £{converteditemPrice}
+                £ {productState?.price} / Rs {converteditemPrice}
                 </p>
                 <div className="d-flex align-items-center gap-10">
                 <ReactStars
@@ -225,13 +210,12 @@ const SingleProduct = () => {
                   <Link to={"/size-chart"} className="sizeChart">View Size Chart</Link>
                 </div>
                 {
-                  alreadyAdded === false && <>
+                  
                   <div className="d-flex gap-10 flex-column mt-2 mb-3">
                   <h3 className="product-heading">Color :</h3>
                   <Color setColour = {setColour} colourData ={productState?.color} selectedColour={colour}/>
 
                 </div>
-                  </>
                 }
                 <div className="d-flex align-items-center gap-15 flex-row mt-2 mb-3">
                   {

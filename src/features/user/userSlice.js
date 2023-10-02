@@ -364,7 +364,7 @@ export const authSlice=createSlice({
             state.isLoading = false;
             state.isError = true;
             state.isSuccess = true;
-            state.message = action.payload.toString();
+            state.message = action.error;
         })
 
 

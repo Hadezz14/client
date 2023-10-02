@@ -1,6 +1,6 @@
 import React from 'react'
 import { DataGrid } from '@mui/x-data-grid'
-import { Field } from 'formik'
+
 
 const SizeChart = () => {
     const rows =[

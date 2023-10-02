@@ -9,7 +9,7 @@ const SmallBanner = ({item}) => {
             <img
               src={item?.images[0].url}
               className="img-fluid rounded-3 small-banner-image"
-              alt="product image"
+              alt='small Banner'   
             />
           )}
           <div className="small-banner-content position-absolute">

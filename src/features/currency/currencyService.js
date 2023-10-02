@@ -7,10 +7,10 @@ const API_KEY = "4203ccb753363c94e8063641";
 export const getRsToPoundConversionrate = async () => {
   try {
    const response = await  axios.get(
-   `https://v6.exchangerate-api.com/v6/${API_KEY}/latest/NPR`
+   `https://v6.exchangerate-api.com/v6/${API_KEY}/latest/GBP`
    );
    
-   const ConversionRate = response.data.conversion_rates.GBP;
+   const ConversionRate = response.data.conversion_rates.NPR;
    console.log(ConversionRate);
    return ConversionRate;
   } catch (error) {

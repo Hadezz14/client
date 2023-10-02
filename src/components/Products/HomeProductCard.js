@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from "react";
 import ReactStars from "react-rating-stars-component";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import wish from "../../images/wish.svg";
 import addcart from "../../images/add-cart.svg";
 import view from "../../images/view.svg";
-import styled from "styled-components"; // Import styled-components
-import { useSelector } from "react-redux";
+import styled from "styled-components"; 
 import { ConvertToPound } from "../ConvertToPound";
 
 const DiscountBanner = styled.div`
@@ -29,18 +28,6 @@ const ProductCardWrapper = styled.div`
   margin-bottom: 20px;
   @media (max-width:576px){
     padding: 10px;
-  }
-`;
-
-const ProductImage = styled.div`
-  height: 270px;
-  img {
-    object-fit: contain;
-    width: 100%;
-    height: 100%;
-  }
-  @media (max-width: 576px) {
-    height: auto;
   }
 `;
 
@@ -131,7 +118,6 @@ const HomeProductCard = ({item,onAddToWishlist}) => {
                 </div>
               </Link>
               <ProductDetails>
-                {/* <h6 className="brand">{item?.brand}</h6> */}
                 <Link to={`/product/${item?._id}`}>
                   <h5 className="product-title">{item?.title}</h5>
                 </Link>
@@ -142,16 +128,12 @@ const HomeProductCard = ({item,onAddToWishlist}) => {
                   edit={false}
                   activeColor="#ffd700"
                 />
-                {/* <p
-                  className={`description `}
-                  dangerouslySetInnerHTML={{ __html: item?.description }}
-                ></p> */}
                 <p className="price">
                   
                 {/* {
                     currency === "Rs" ? `Rs ${item?.price}`:`£${converted[index]}`
                   } */}
-                  Rs {item?.price} / £ {converted[index]}
+                  £ {item?.price} / Rs {converted[index]}
                   </p>
               </ProductDetails>
               <ActionBar>
