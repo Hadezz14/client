@@ -19,7 +19,7 @@ import { ConvertToPound } from "../components/ConvertToPound";
 const SingleProduct = () => {
   const [colour,setColour] = useState(null)
   const [quantity,setQuantity] = useState(1)
-  
+  const [alreadyAdded,setAlreadyAdded] = useState(false);
   const location  = useLocation();
   const navigate = useNavigate();
   const getProductId = location.pathname.split("/")[2]
@@ -110,6 +110,11 @@ const SingleProduct = () => {
    convertAmt();
   },[currency,productState])
   
+  const [selectedImage,setSelectedImage] = useState(productState?.images[0]?.url);
+  useEffect(() =>{
+    setSelectedImage(productState?.images[0]?.url)
+  },[productState])
+  
   return (
     <>
       <Meta title={"Product Name"} />
@@ -119,19 +124,21 @@ const SingleProduct = () => {
           <div className={`col-md-${col}`}>
             <div className="main-product-image">
             <img
-                src={productState?.images[0]?.url || "../images/vyamtshirt.png"}
+                src={selectedImage}
                 alt="main product"
                 className="img-fluid"
               />
             </div>
             <div className="other-product-images d-flex flex-wrap gap-15">
                 {productState?.images.map((item,index) =>{
-                    return <div>
+                    return (
+                      <div key={index} onClick={() => setSelectedImage(item?.url)}>
                     <img src={item?.url}
-                    className="img-fluid"
+                    className={`img-fluid ${selectedImage === item?.url ? "selected":""}`}
                     alt=""
                   />
                     </div>
+                    );
                 })}
             </div>
           </div>
