@@ -19,7 +19,7 @@ import { ConvertToPound } from "../components/ConvertToPound";
 const SingleProduct = () => {
   const [colour,setColour] = useState(null)
   const [quantity,setQuantity] = useState(1)
-  const [alreadyAdded,setAlreadyAdded] = useState(false);
+  
   const location  = useLocation();
   const navigate = useNavigate();
   const getProductId = location.pathname.split("/")[2]
@@ -27,6 +27,7 @@ const SingleProduct = () => {
   const productState = useSelector((state) => state.product.singleproduct)
   console.log(productState);
   const cartState = useSelector((state) => state.auth.cartProducts)
+  const [alreadyAdded,setAlreadyAdded] = useState(false);
 
   useEffect(() =>{
     dispatch(getAProduct(getProductId))
@@ -110,10 +111,12 @@ const SingleProduct = () => {
    convertAmt();
   },[currency,productState])
   
-  const [selectedImage,setSelectedImage] = useState(productState?.images[0]?.url);
-  useEffect(() =>{
-    setSelectedImage(productState?.images[0]?.url)
-  },[productState])
+  const [selectedImage,setSelectedImage] = useState(productState && productState?.images[0]?.url );
+  console.log(productState?.images[0].url);
+  
+  // useEffect(() =>{
+  //   setSelectedImage(productState?.images[0]?.url || "../images/vyamtshirt.png")
+  // })
   
   return (
     <>
@@ -124,9 +127,9 @@ const SingleProduct = () => {
           <div className={`col-md-${col}`}>
             <div className="main-product-image">
             <img
-                src={selectedImage}
+                src={selectedImage || productState?.images[0]?.url}
                 alt="main product"
-                className="img-fluid"
+                className=""
               />
             </div>
             <div className="other-product-images d-flex flex-wrap gap-15">
@@ -134,7 +137,7 @@ const SingleProduct = () => {
                     return (
                       <div key={index} onClick={() => setSelectedImage(item?.url)}>
                     <img src={item?.url}
-                    className={`img-fluid ${selectedImage === item?.url ? "selected":""}`}
+                    className={`img-fluid ${selectedImage === item?.url ? "selected" :""}`}
                     alt=""
                   />
                     </div>
@@ -325,13 +328,6 @@ const SingleProduct = () => {
                     <p className="mb-0">Based on {productState?.ratings.length} Reviews</p>
                   </div>
                 </div>
-                {orderedProduct && (
-                  <div>
-                    <a className="text-dark text-decoration-underline" href="">
-                      Write a Review
-                    </a>
-                  </div>
-                )}
               </div>
               <div className="review-form py-4">
                 <h4>Write a Review</h4>

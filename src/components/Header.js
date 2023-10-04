@@ -172,7 +172,7 @@ const Header = () => {
                     </li>
                     <li>
                       <Link className="dropdown-item text-white" to="/return-policy">
-                        Retrun policy
+                        Exchange policy
                       </Link>
                     </li>
                   </ul>
@@ -191,6 +191,7 @@ const Header = () => {
                     <NavLink to="/">Home</NavLink>
                     <NavLink to="/product">Our Store</NavLink>
                     <NavLink to="/contact">Contact</NavLink>
+                    <NavLink to="/return-policy">Exchange policy</NavLink>
               
                   </div>
                 </div>
