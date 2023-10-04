@@ -822,13 +822,14 @@ footer .input-group-text {
   
 }
 .main-product-image img {
-  width: 80% !important;
-  height: 60% !important;
+  width: 60% !important;
+  height: 450px !important;
   object-fit: cover;
 }
 .other-product-images {
   background-color: white;
   padding: 25px;
+  object-fit: cover;
 }
 .other-product-images > div {
   padding: 3px;
