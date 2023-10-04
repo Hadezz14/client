@@ -386,7 +386,8 @@ const SingleProduct = () => {
                     return(
                       <div key={index} className="review">
                   <div className="d-flex gap-10 align-items-center">
-                    {/* <h6 className="mb-0">{item?.}</h6> */}
+                    <h6 className="mb-0">{item?.user}</h6>
+                    
                     <ReactStars
                       count={5}
                       size={24}
@@ -394,7 +395,9 @@ const SingleProduct = () => {
                       edit={false}
                       activeColor="#ffd700"
                     />
+                    
                   </div>
+                  
                   <p className="mt-3">
                     {item?.comment}
                   </p>
