@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { addToWishlist } from "../features/products/productSlice";
 import styled from "styled-components"; 
 import { ConvertToPound } from "./ConvertToPound";
+import SkeletonProductCard from "./Skeleton/SkeletonProductCard";
 
 const DiscountBanner = styled.div`
   position: absolute;
@@ -100,9 +101,11 @@ const ProductCard = (props) => {
 
     
   },[currency,data])
+
   return (
     <>
-      {data?.map((item, index) => {
+    {data ?(
+      data?.map((item, index) => {
         return (
           <ProductCardWrapper
             key={index}
@@ -184,7 +187,11 @@ const ProductCard = (props) => {
             </div>
           </ProductCardWrapper>
         );
-      })}
+      })
+    ):(
+      <SkeletonProductCard/>
+    )}
+      
     </>
   );
 };

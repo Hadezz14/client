@@ -12,7 +12,8 @@ import { useState } from "react";
 
 const Home = () => {
   const productState = useSelector((state) => state.product.product);
- 
+  const loading = useSelector((state) => state.product.isLoading);
+  console.log(loading)
   const navigate = useNavigate();
   const dispatch = useDispatch();
   useEffect(() =>{
@@ -21,7 +22,6 @@ const Home = () => {
   const getProducts =() =>{ 
     dispatch(getAllProducts());
   }
-  
   const handleAddToWishlist = (productId) => {
     dispatch(addToWishlist(productId));
   };
@@ -53,7 +53,9 @@ const Home = () => {
     <>
       <Container class1="home-wrapper-1 py-3">
         <div className="row">
-          {
+          {loading?(
+            <BigBannerSkeleton/>
+          ):(
             latestProduct?.map((item,index) =>(
               <div key={index} className="col-6"> 
                 <BigBanner
@@ -61,6 +63,8 @@ const Home = () => {
                 /> 
               </div>
             ))
+          )
+            
           }
           <div className="row py-4">
           {

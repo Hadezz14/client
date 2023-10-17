@@ -15,8 +15,10 @@ import { addRating, getAProduct } from "../features/products/productSlice";
 import { toast } from "react-toastify";
 import { addProdToCart, getUserCart } from "../features/user/userSlice";
 import { ConvertToPound } from "../components/ConvertToPound";
+import SkeletonSingleProduct from "../components/Skeleton/SkeletonComponents";
 
 const SingleProduct = () => {
+  const loading = useSelector((state) => state.product.isLoading);
   const [colour,setColour] = useState(null)
   const [quantity,setQuantity] = useState(1)
   
@@ -120,6 +122,10 @@ const SingleProduct = () => {
   
   return (
     <>
+    {loading ? (
+      <SkeletonSingleProduct/>
+    ):(
+      <>
       <Meta title={"Product Name"} />
       <BreadCrumb title="Product Name" />
       <Container class1="main-product-wrapper py-3 home-wrapper-2">
@@ -132,12 +138,12 @@ const SingleProduct = () => {
                 className=""
               />
             </div>
-            <div className="other-product-images d-flex flex-wrap gap-15">
+            <div className="other-product-images d-flex flex-wrap gap-15 pointer">
                 {productState?.images.map((item,index) =>{
                     return (
                       <div key={index} onClick={() => setSelectedImage(item?.url)}>
                     <img src={item?.url}
-                    className={`img-fluid ${selectedImage === item?.url ? "selected" :""}`}
+                    className={`img-fluid ${selectedImage === item?.url ? "selected" :""} pointer`}
                     alt=""
                   />
                     </div>
@@ -202,7 +208,7 @@ const SingleProduct = () => {
                       productState?.size.map((sizeItem,index) =>(
                         <span 
                           key={index}
-                          className={`productSize badge border border-1 bg-white text-dark border-secondary 
+                          className={`productSize badge border border-1 bg-white text-dark border-secondary pointer
                             ${size === sizeItem.size ? "selected":""}
                             ${sizeItem.quantity <= 0 ? "outOfStock" :""}
                           `} 
@@ -217,7 +223,7 @@ const SingleProduct = () => {
                       ))
                     }
                   </div>
-                  <Link to={"/size-chart"} className="sizeChart">View Size Chart</Link>
+                  <Link to={"/size-chart"} className="sizeChart pointer">View Size Chart</Link>
                 </div>
                 {
                   
@@ -428,6 +434,8 @@ const SingleProduct = () => {
       >
         <AddHovermenu/>
       </div>
+    </>
+    )}
     </>
   );
 };

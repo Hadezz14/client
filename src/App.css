@@ -1366,3 +1366,7 @@ footer .input-group-text {
     max-width: 100%;
   }
 }
+
+.pointer {
+  cursor: pointer;
+}
