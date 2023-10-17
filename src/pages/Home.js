@@ -53,18 +53,14 @@ const Home = () => {
     <>
       <Container class1="home-wrapper-1 py-3">
         <div className="row">
-          {loading?(
-            <BigBannerSkeleton/>
-          ):(
+          {
             latestProduct?.map((item,index) =>(
               <div key={index} className="col-6"> 
                 <BigBanner
                   item ={item}
                 /> 
               </div>
-            ))
-          )
-            
+            ))  
           }
           <div className="row py-4">
           {
