@@ -5,6 +5,7 @@ import ProductCard from "../components/ProductCard";
 import Container from "../components/Container";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllProducts } from "../features/products/productSlice";
+import { Helmet } from "react-helmet";
 
 const OurStore = () => {
   const [grid, setGrid] = useState(12);
@@ -40,6 +41,10 @@ const OurStore = () => {
   return (
     <>
       <Meta title={"Our Store"} />
+      <Helmet>
+        <title>Explore Premium Gymwear and Sportswear at Vyam Store</title>
+        <meta name="description" content="Discover an extensive collection of high-quality gymwear and sportswear. Shop a wide range of athletic apparel designed for peak performance and style."/>
+      </Helmet>
       <BreadCrumb title="Our Store" />
       <Container class1="store-wrapper home-wrapper-2 py-5">
         <div className="row">

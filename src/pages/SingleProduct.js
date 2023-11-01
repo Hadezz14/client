@@ -15,6 +15,7 @@ import { addRating, getAProduct } from "../features/products/productSlice";
 import { toast } from "react-toastify";
 import { addProdToCart, getUserCart } from "../features/user/userSlice";
 import { ConvertToPound } from "../components/ConvertToPound";
+import { Helmet } from "react-helmet";
 
 const SingleProduct = () => {
   const [colour,setColour] = useState(null)
@@ -121,6 +122,10 @@ const SingleProduct = () => {
   return (
     <>
       <Meta title={"Product Name"} />
+      <Helmet>
+        <title>{productState?.title}</title>
+        <meta name="description" content={productState?.description}/>
+      </Helmet>
       <BreadCrumb title="Product Name" />
       <Container class1="main-product-wrapper py-3 home-wrapper-2">
         <div className="row">
@@ -135,6 +140,7 @@ const SingleProduct = () => {
             <div className="other-product-images d-flex flex-wrap gap-15">
                 {productState?.images.map((item,index) =>{
                     return (
+                      
                       <div key={index} onClick={() => setSelectedImage(item?.url)}>
                     <img src={item?.url}
                     className={`img-fluid ${selectedImage === item?.url ? "selected" :""}`}

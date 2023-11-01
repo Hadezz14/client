@@ -22,10 +22,16 @@ import { OpenRoute } from "./routing/OpenRoutes";
 import SizeChart from "./pages/SizeChart";
 import ExchangePolicy from "./pages/ExchangePolicy";
 import ErrorBoundary from "./ErrorBoundary";
+import { Helmet } from "react-helmet";
 function App() {
   return (
     <ErrorBoundary>
       <BrowserRouter>
+      <Helmet>
+        <title>Vyam</title>
+        <meta name="description" content="Discover premium gymwear and sportswear at Vyam. Shop our high-quality activewear designed for performance and style."/>
+        <meta name="keywords" content="Gymwear, Sportswear,Workout gear, Fitness Clothing "/>
+      </Helmet>
         <Routes>
           <Route path="/" element={<Layout />}>
             <Route index element={<Home />} />
