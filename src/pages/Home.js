@@ -12,7 +12,8 @@ import { useState } from "react";
 
 const Home = () => {
   const productState = useSelector((state) => state.product.product);
- 
+  const loading = useSelector((state) => state.product.isLoading);
+  console.log(loading)
   const navigate = useNavigate();
   const dispatch = useDispatch();
   useEffect(() =>{
@@ -21,7 +22,6 @@ const Home = () => {
   const getProducts =() =>{ 
     dispatch(getAllProducts());
   }
-  
   const handleAddToWishlist = (productId) => {
     dispatch(addToWishlist(productId));
   };
@@ -60,7 +60,7 @@ const Home = () => {
                   item ={item}
                 /> 
               </div>
-            ))
+            ))  
           }
           <div className="row py-4">
           {

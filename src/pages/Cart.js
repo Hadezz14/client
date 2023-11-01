@@ -141,6 +141,7 @@ const Cart = () => {
                       id=""
                       value={productUpdateDetail?.quantity ? productUpdateDetail?.quantity : item?.quantity}
                       onChange={(e) => {setProductUpdateDetail({cartItemId:item?._id,quantity:e.target.value})}}
+                      disabled
                     />
                   </div>
                   <div>

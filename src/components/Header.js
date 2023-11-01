@@ -8,7 +8,18 @@ import logo from "../images/Vyamlogo2.png"
 import { useDispatch, useSelector } from "react-redux";
 import { handleLogout } from "../utils/axiosConfig";
 import { toggleCurrency } from "../features/currency/currencySlice";
+import styled from "styled-components";
 
+const ResponsiveNavLink = styled(NavLink)`
+  font-size: 14px;
+  
+  @media (max-width: 576px) {
+    font-size: 12px;
+  }
+  @media (max-width: 375px) {
+    font-size: 10px;
+  }
+`;
 
 const Header = () => {
   const dispatch = useDispatch();
@@ -181,17 +192,10 @@ const Header = () => {
 
                 <div className="menu-links">
                   <div className="d-flex align-items-center gap-15">
-                  {/* <button
-                    className="currency-toggle-btn"
-                    onClick={handleCurrencyToggle}
-                    // aria-pressed={currency === "Pound"}
-                    >
-                      {currency === "Rs" ? "Rs":"£"}
-                    </button> */}
-                    <NavLink to="/">Home</NavLink>
-                    <NavLink to="/product">Our Store</NavLink>
-                    <NavLink to="/contact">Contact</NavLink>
-                    <NavLink to="/return-policy">Exchange policy</NavLink>
+                    <ResponsiveNavLink className="navtxt" to="/">Home</ResponsiveNavLink>
+                    <ResponsiveNavLink className="navtxt" to="/product">Our Store</ResponsiveNavLink>
+                    <ResponsiveNavLink className="navtxt" to="/contact">Contact</ResponsiveNavLink>
+                    <ResponsiveNavLink className="navtxt" to="/return-policy">Exchange policy</ResponsiveNavLink>
               
                   </div>
                 </div>

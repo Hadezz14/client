@@ -6,6 +6,7 @@ import addcart from "../../images/add-cart.svg";
 import view from "../../images/view.svg";
 import styled from "styled-components"; 
 import { ConvertToPound } from "../ConvertToPound";
+import SkeletonProductCard from "../Skeleton/SkeletonProductCard";
 
 const DiscountBanner = styled.div`
   position: absolute;
@@ -84,80 +85,81 @@ const HomeProductCard = ({item,onAddToWishlist}) => {
 
     
   },[item])
-
         return (
           <>
           {
-            item?.map((item,index)=>{
-                return(
-                    <ProductCardWrapper key={item._id}>
-            <div className="product-card position-relative">
-              {
-                item?.discount &&
-                <DiscountBanner>Save {item?.discount} %</DiscountBanner>
-              }
-              <WishlistIcon>
-                <button
-                  className="border-0 bg-transparent"
-                  onClick={(e) => {
-                    onAddToWishlist(item?._id);
-                  }}
-                >
-                  <img src={wish} alt="wishlist" />
-                </button>
-              </WishlistIcon>
+            item? (item?.map((item,index)=>{
+              return(
+                  <ProductCardWrapper key={item._id}>
+          <div className="product-card position-relative">
+            {
+              item?.discount &&
+              <DiscountBanner>Save {item?.discount} %</DiscountBanner>
+            }
+            <WishlistIcon>
+              <button
+                className="border-0 bg-transparent"
+                onClick={(e) => {
+                  onAddToWishlist(item?._id);
+                }}
+              >
+                <img src={wish} alt="wishlist" />
+              </button>
+            </WishlistIcon>
+            <Link to={`/product/${item?._id}`}>
+              <div style={{height:"200px",width:"200px",objectFit:"contain" }}>
+              {item?.images && item.images[0] && (
+                  <img
+                    src={item?.images[0].url}
+                    className="img-fluid"
+                    alt="product image"
+                  />
+                )}
+              </div>
+            </Link>
+            <ProductDetails>
               <Link to={`/product/${item?._id}`}>
-                <div style={{height:"200px",width:"200px",objectFit:"contain" }}>
-                {item?.images && item.images[0] && (
-                    <img
-                      src={item?.images[0].url}
-                      className="img-fluid"
-                      alt="product image"
-                    />
-                  )}
-                </div>
+                <h5 className="product-title">{item?.title}</h5>
               </Link>
-              <ProductDetails>
-                <Link to={`/product/${item?._id}`}>
-                  <h5 className="product-title">{item?.title}</h5>
-                </Link>
-                <ReactStars
-                  count={5}
-                  size={24}
-                  value={item?.totalrating}
-                  edit={false}
-                  activeColor="#ffd700"
-                />
-                <p className="price">
-                  
-                {/* {
-                    currency === "Rs" ? `Rs ${item?.price}`:`£${converted[index]}`
-                  } */}
-                  £ {item?.price} / Rs {converted[index]}
-                  </p>
-              </ProductDetails>
-              <ActionBar>
-                <div className="d-flex flex-column gap-15">
-                  <button className="border-0 bg-transparent">
-                    <img
-                      onClick={() => navigate("/product/" + item?._id)}
-                      src={view}
-                      alt="view"
-                    />
-                  </button>
-                  <button className="border-0 bg-transparent">
-                    <img
-                      onClick={() => navigate("/cart")}
-                      src={addcart}
-                      alt="addcart"
-                    />
-                  </button>
-                </div>
-              </ActionBar>
-            </div>
-          </ProductCardWrapper>
-                )
-            })
+              <ReactStars
+                count={5}
+                size={24}
+                value={item?.totalrating}
+                edit={false}
+                activeColor="#ffd700"
+              />
+              <p className="price">
+                
+              {/* {
+                  currency === "Rs" ? `Rs ${item?.price}`:`£${converted[index]}`
+                } */}
+                £ {item?.price} / Rs {converted[index]}
+                </p>
+            </ProductDetails>
+            <ActionBar>
+              <div className="d-flex flex-column gap-15">
+                <button className="border-0 bg-transparent">
+                  <img
+                    onClick={() => navigate("/product/" + item?._id)}
+                    src={view}
+                    alt="view"
+                  />
+                </button>
+                <button className="border-0 bg-transparent">
+                  <img
+                    onClick={() => navigate("/cart")}
+                    src={addcart}
+                    alt="addcart"
+                  />
+                </button>
+              </div>
+            </ActionBar>
+          </div>
+        </ProductCardWrapper>
+              )
+          })):(
+            <SkeletonProductCard/>
+          )
           }
           </>
         );
