@@ -1,5 +1,5 @@
 // export const base_url ="https://vyam-backend.onrender.com/api/";
-export const base_url ="http://localhost:5069/api/";
+export const base_url ="http://api.vyamstore.com/api/";
 
 const getTokenFromLocalStorage = 
     typeof localStorage !== "undefined" && localStorage.getItem("customer")
