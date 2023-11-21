@@ -4,101 +4,106 @@ import { BiArrowBack } from "react-icons/bi";
 import Container from "../components/Container";
 import { useDispatch, useSelector } from "react-redux";
 import { useFormik } from "formik";
-import * as yup from 'yup';
-import { applyDisCoupne, clearCart, clearUserCart, createUserOrder } from "../features/user/userSlice";
+import * as yup from "yup";
+import {
+  applyDisCoupne,
+  clearCart,
+  clearUserCart,
+  createUserOrder,
+} from "../features/user/userSlice";
 import { applyCoupon, getAllCoupon } from "../features/coupon/couponSlice";
 import { toast } from "react-toastify";
 import { ConvertToPound } from "../components/ConvertToPound";
-
 
 const shippingschema = yup.object({
   firstName: yup.string().required("Frist Name is Required"),
   lastName: yup.string().required("Last Name is Required"),
   address: yup.string().required("Address details are Required"),
   city: yup.string().required("City is Required"),
-  pincode: yup.number().required("Pincode Number is Required"),   
+  pincode: yup.number().required("Pincode Number is Required"),
 });
- 
-const Checkout = () => {
 
+const Checkout = () => {
   const dispatch = useDispatch();
-  const navigate =useNavigate();
-  const orderState = useSelector((state) => state.auth.order)
-  
-  const cartState = useSelector((state) => state.auth.cartProducts)
-  const userId = useSelector((state) =>state.auth.user._id);
-  const shippingamt = 100;
-  const [totalAmount,setTotalAmount] = useState(null);
-  const [discountAmount,setDiscountamt] = useState(null);
-  const [profit,setProfit] = useState(null);
+  const navigate = useNavigate();
+  const orderState = useSelector((state) => state.auth.order);
+
+  const cartState = useSelector((state) => state.auth.cartProducts);
+  const userId = useSelector((state) => state.auth.user._id);
+  const shippingamt = 0;
+  const [totalAmount, setTotalAmount] = useState(null);
+  const [discountAmount, setDiscountamt] = useState(null);
+  const [profit, setProfit] = useState(null);
   const [couponCode, setCouponCode] = useState("");
   const [discount, setDiscount] = useState(0);
 
-  const currency = useSelector((state) => state.currency.currency)
-  
- useEffect(() =>{
+  const currency = useSelector((state) => state.currency.currency);
+
+  useEffect(() => {
     let sum = 0;
     for (let index = 0; index < cartState?.length; index++) {
-      sum = sum+(Number(cartState[index].quantity)*cartState[index].price)
-      if((cartState[index].productId.discount)){
-        let discount = Number((sum*(cartState[index].productId.discount)/100))
+      sum = sum + Number(cartState[index].quantity) * cartState[index].price;
+      if (cartState[index].productId.discount) {
+        let discount = Number(
+          (sum * cartState[index].productId.discount) / 100
+        );
         setDiscountamt(discount);
       }
-      let profit = Number((cartState[index].quantity)*(cartState[index].productId.profit))
+      let profit = Number(
+        cartState[index].quantity * cartState[index].productId.profit
+      );
       setProfit(profit);
-      setTotalAmount(sum)
+      setTotalAmount(sum);
     }
-  },[cartState])
-  
+  }, [cartState]);
+
   const formik = useFormik({
-    initialValues: { 
-      shippingInfo:{
+    initialValues: {
+      shippingInfo: {
         firstName: "",
         lastName: "",
         address: "",
         city: "",
         other: "",
-        pincode: "", 
+        pincode: "",
       },
       totalPrice: 0,
     },
     // validationSchema: shippingschema,
     onSubmit: async (values) => {
-     
-      const orderedItems = cartState.map((item) =>({
+      const orderedItems = cartState.map((item) => ({
         product: item.productId._id,
-        productName:item.productId.title,
+        productName: item.productId.title,
         color: item.productId.color[0],
         quantity: item.quantity,
         price: item.price,
-  
-      }))
-      const orderData ={
-        shippingInfo:{...values.shippingInfo},
+      }));
+      const orderData = {
+        shippingInfo: { ...values.shippingInfo },
         orderedItems: orderedItems,
-        totalPrice: totalAmount+shippingamt,
-        totalPriceAfterDiscount:(totalAmount-discountAmount)+shippingamt,
-        profit:profit,     };
+        totalPrice: totalAmount + shippingamt,
+        totalPriceAfterDiscount: totalAmount - discountAmount + shippingamt,
+        profit: profit,
+      };
       try {
-        await dispatch(createUserOrder(orderData))
+        await dispatch(createUserOrder(orderData));
         // orderState.success === true ? ((navigate("/order-confirm"), dispatch(clearUserCart(userId)))) : null;
         // if ( orderState !== null) {
         //       dispatch(clearUserCart(userId));
         //       navigate("/order-confirm");
-        //     }  
+        //     }
       } catch (error) {
         console.error("Error creating order:", error);
       }
-      
-    }
+    },
   });
 
   const handleApplyCoupon = async () => {
     if (couponCode.trim() === "") {
-      toast.error('Enter a promo code')
+      toast.error("Enter a promo code");
       return;
     }
-  
+
     try {
       const response = await dispatch(
         applyCoupon({ promoCode: couponCode, userId: userId })
@@ -107,54 +112,59 @@ const Checkout = () => {
       if (response) {
         setDiscount(response.payload.discount);
       } else {
-        setDiscount(0); 
+        setDiscount(0);
       }
-      if (response.payload.error){
-        toast.error('Promo Code already used')
+      if (response.payload.error) {
+        toast.error("Promo Code already used");
       }
     } catch (error) {
       console.error("Error applying coupon:", error);
     }
   };
-  
-  const totalPriceAfterDis = totalAmount- discountAmount;
-  const couponDisAmt = (totalPriceAfterDis * discount)/ 100;  
 
-  
-  const [convertedTotalAmount,setConvertedTotalAmount] = useState(null);
+  const totalPriceAfterDis = totalAmount - discountAmount;
+  const couponDisAmt = (totalPriceAfterDis * discount) / 100;
 
-  const [convertedDiscountAmt,setConvertedDiscountAmount]= useState(null);
-  const [convertedCouponDisAmt,setConvertedCouponDisAmt]= useState(null);
-  const [converteditemPrice,setConverteditemPrice] = useState([]);
+  const [convertedTotalAmount, setConvertedTotalAmount] = useState(null);
 
-useEffect(() =>{
-  const convertAmounts = async() =>{
-    
+  const [convertedDiscountAmt, setConvertedDiscountAmount] = useState(null);
+  const [convertedCouponDisAmt, setConvertedCouponDisAmt] = useState(null);
+  const [converteditemPrice, setConverteditemPrice] = useState([]);
+
+  useEffect(() => {
+    const convertAmounts = async () => {
       const conversionPromise = cartState.map((item) =>
         ConvertToPound(item?.price)
       );
       Promise.all(conversionPromise)
-        .then((conversionPrice) =>{
-          setConverteditemPrice(conversionPrice)
+        .then((conversionPrice) => {
+          setConverteditemPrice(conversionPrice);
         })
-        .catch((error) => console.error("Conversion error:" , error));
+        .catch((error) => console.error("Conversion error:", error));
 
       const convertedTotal = await ConvertToPound(totalAmount);
-      
+
       const convertedDiscount = await ConvertToPound(discountAmount);
       const convertedCouponDiscount = await ConvertToPound(couponDisAmt);
 
       setConvertedTotalAmount(convertedTotal);
-      
+
       setConvertedDiscountAmount(convertedDiscount);
       setConvertedCouponDisAmt(convertedCouponDiscount);
-    
-  };
-  convertAmounts();
-},[currency,cartState,totalAmount,shippingamt,discountAmount,couponDisAmt])
+    };
+    convertAmounts();
+  }, [
+    currency,
+    cartState,
+    totalAmount,
+    shippingamt,
+    discountAmount,
+    couponDisAmt,
+  ]);
 
-const TotalSum = totalAmount - discountAmount -couponDisAmt;
-const convertedTotalSum = convertedTotalAmount - convertedDiscountAmt - convertedCouponDisAmt;
+  const TotalSum = totalAmount - discountAmount - couponDisAmt;
+  const convertedTotalSum =
+    convertedTotalAmount - convertedDiscountAmt - convertedCouponDisAmt;
 
   return (
     <>
@@ -193,14 +203,13 @@ const convertedTotalSum = convertedTotalAmount - convertedDiscountAmt - converte
                   </li>
                 </ol>
               </nav>
-          
+
               <h4 className="mb-3">Shipping Address</h4>
-              <form 
+              <form
                 onSubmit={formik.handleSubmit}
                 action=""
                 className="d-flex gap-15 flex-wrap justify-content-between"
-                >
-                
+              >
                 <div className="flex-grow-1">
                   <input
                     type="text"
@@ -212,9 +221,8 @@ const convertedTotalSum = convertedTotalAmount - convertedDiscountAmt - converte
                     onBlur={formik.handleBlur("shippingInfo.firstName")}
                   />
                   <div className="error ms-2 my-1">
-                      {
-                        formik.touched.shippingInfo?.firstName  && formik.errors.shippingInfo?.firstName
-                      }
+                    {formik.touched.shippingInfo?.firstName &&
+                      formik.errors.shippingInfo?.firstName}
                   </div>
                 </div>
                 <div className="flex-grow-1">
@@ -228,9 +236,8 @@ const convertedTotalSum = convertedTotalAmount - convertedDiscountAmt - converte
                     onBlur={formik.handleBlur("shippingInfo.lastName")}
                   />
                   <div className="error ms-2 my-1">
-                      {
-                        formik.touched.shippingInfo?.lastName && formik.errors.shippingInfo?.lastName
-                      }
+                    {formik.touched.shippingInfo?.lastName &&
+                      formik.errors.shippingInfo?.lastName}
                   </div>
                 </div>
                 <div className="w-100">
@@ -244,9 +251,8 @@ const convertedTotalSum = convertedTotalAmount - convertedDiscountAmt - converte
                     onBlur={formik.handleBlur("shippingInfo.address")}
                   />
                   <div className="error ms-2 my-1">
-                      {
-                        formik.touched.shippingInfo?.address && formik.errors.shippingInfo?.address
-                      }
+                    {formik.touched.shippingInfo?.address &&
+                      formik.errors.shippingInfo?.address}
                   </div>
                 </div>
                 <div className="w-100">
@@ -259,7 +265,6 @@ const convertedTotalSum = convertedTotalAmount - convertedDiscountAmt - converte
                     onChange={(event) => formik.handleChange(event)}
                     onBlur={formik.handleBlur("shippingInfo.other")}
                   />
-          
                 </div>
                 <div className="flex-grow-1">
                   <input
@@ -272,12 +277,11 @@ const convertedTotalSum = convertedTotalAmount - convertedDiscountAmt - converte
                     onBlur={formik.handleBlur("shippingInfo.city")}
                   />
                   <div className="error ms-2 my-1">
-                      {
-                        formik.touched.shippingInfo?.city && formik.errors.shippingInfo?.city
-                      }
+                    {formik.touched.shippingInfo?.city &&
+                      formik.errors.shippingInfo?.city}
                   </div>
                 </div>
-                
+
                 <div className="flex-grow-1">
                   <input
                     type="text"
@@ -289,9 +293,8 @@ const convertedTotalSum = convertedTotalAmount - convertedDiscountAmt - converte
                     onBlur={formik.handleBlur("shippingInfo.pincode")}
                   />
                   <div className="error ms-2 my-1">
-                      {
-                        formik.touched.shippingInfo?.pincode && formik.errors.shippingInfo?.pincode
-                      }
+                    {formik.touched.shippingInfo?.pincode &&
+                      formik.errors.shippingInfo?.pincode}
                   </div>
                 </div>
                 <div className="w-100">
@@ -300,8 +303,10 @@ const convertedTotalSum = convertedTotalAmount - convertedDiscountAmt - converte
                       <BiArrowBack className="me-2" />
                       Return to Cart
                     </Link>
-                    
-                    <button className="button" type="submit">Order</button>
+
+                    <button className="button" type="submit">
+                      Order
+                    </button>
                   </div>
                 </div>
               </form>
@@ -309,106 +314,115 @@ const convertedTotalSum = convertedTotalAmount - convertedDiscountAmt - converte
           </div>
           <div className="col-5">
             <div className="border-bottom py-4">
-              {
-                cartState && cartState?.map((item,index) =>{
-                  
-                  return(
+              {cartState &&
+                cartState?.map((item, index) => {
+                  return (
                     <div className="d-flex gap-10 mb-2 align-align-items-center">
-                <div className="w-75 d-flex gap-10">
-                  <div className="w-25 position-relative">
-                    <span
-                      style={{ top: "-10px", right: "2px" }}
-                      className="badge bg-secondary text-white rounded-circle p-2 position-absolute"
-                    >
-                      {item?.quantity}
-                    </span>
-                    <img height={100} width={100} src={item?.productId.images[0].url} alt="product" />
-                  </div>
-                  <div>
-                    <h5 className="total-price">{item?.productId?.title}</h5>
-                    <p className="total-price">{item?.colour?.title}</p>
-                  </div>
-                </div>
-                <div className="flex-grow-1">
-                  <h5 className="total">
-                  {/* {currency === "Rs"
+                      <div className="w-75 d-flex gap-10">
+                        <div className="w-25 position-relative">
+                          <span
+                            style={{ top: "-10px", right: "2px" }}
+                            className="badge bg-secondary text-white rounded-circle p-2 position-absolute"
+                          >
+                            {item?.quantity}
+                          </span>
+                          <img
+                            height={100}
+                            width={100}
+                            src={item?.productId.images[0].url}
+                            alt="product"
+                          />
+                        </div>
+                        <div>
+                          <h5 className="total-price">
+                            {item?.productId?.title}
+                          </h5>
+                          <p className="total-price">{item?.colour?.title}</p>
+                        </div>
+                      </div>
+                      <div className="flex-grow-1">
+                        <h5 className="total">
+                          {/* {currency === "Rs"
                   ? `Rs ${item?.price * item?.quantity}`
                   : `£${converteditemPrice[index] * item?.quantity}`} */}
-                    £ {item?.price * item?.quantity} / Rs {converteditemPrice[index] * item?.quantity}
-                  </h5>
-                </div>
-              </div>
-                  )
-                })
-              }
-              
+                          £ {item?.price * item?.quantity} / Rs{" "}
+                          {converteditemPrice[index] * item?.quantity}
+                        </h5>
+                      </div>
+                    </div>
+                  );
+                })}
             </div>
             <div className="border-bottom py-4">
-             
               <div className="d-flex justify-content-between align-items-center">
                 <p className="total">Subtotal</p>
                 <p className="total-price">
-               {/* {
+                  {/* {
                 currency === "Rs" ? `Rs ${totalAmount || "0"}` : `£ ${convertedTotalAmount || "0"}` 
                } */}
-                £ {totalAmount} / Rs {convertedTotalAmount}
+                  £ {totalAmount} / Rs {convertedTotalAmount}
                 </p>
               </div>
               <div className="d-flex justify-content-between align-items-center">
                 <p className="mb-0 total">Discount</p>
                 <p className="mb-0 total-price">
-                {/* {currency === "Rs"
+                  {/* {currency === "Rs"
                 ? `Rs ${discountAmount || "0"}`
                 : `£ ${convertedDiscountAmt || "0"}`} */}
-                £ {discountAmount || "0"} / Rs {convertedDiscountAmt ||"0"}
+                  £ {discountAmount || "0"} / Rs {convertedDiscountAmt || "0"}
                 </p>
               </div>
               <div className="d-flex justify-content-between align-items-center">
-                <p className="mb-0 total-price" style={{ fontWeight: "bold", color: "black" }}>Delivery charge will be taken according to your location</p>
+                <p
+                  className="mb-0 total-price"
+                  style={{ fontWeight: "bold", color: "black" }}
+                >
+                  Delivery charge will be taken according to your location
+                </p>
               </div>
               {discount > 0 && (
                 <div className="d-flex justify-content-between align-items-center">
-                  <p className="mb-0 total">Promo Code Discount</p> 
+                  <p className="mb-0 total">Promo Code Discount</p>
                   <p className="mb-0 total-price">
-                     {/* {currency === "Rs"
+                    {/* {currency === "Rs"
                   ? `Rs ${couponDisAmt || "0"}`
                   : `£ ${convertedCouponDisAmt || "0"}`} */}
-                  £ {couponDisAmt || "0"} / Rs {convertedCouponDisAmt || "0"}
+                    £ {couponDisAmt || "0"} / Rs {convertedCouponDisAmt || "0"}
                   </p>
                 </div>
               )}
             </div>
-            
+
             <div className="d-flex justify-content-between align-items-center border-bootom py-4">
               <h4 className="total">Total</h4>
               <h5 className="total-price">
-              {/* {currency === "Rs"
+                {/* {currency === "Rs"
               ? `Rs ${(totalAmount - discountAmount) || "0"} `
               : `£ ${convertedTotalAmount - convertedDiscountAmt  || "0"}`} */}
-              £ {TotalSum} / Rs {convertedTotalSum}
+                £ {TotalSum} / Rs {convertedTotalSum}
               </h5>
             </div>
             <Link to="/product" className="button">
-                      Continue to Shop
-                    </Link>
+              Continue to Shop
+            </Link>
           </div>
           <div className="py-5">
-    <div className="d-flex align-items-center">
-        <input
-      type="text"
-      placeholder="Enter Coupon Code"
-      value={couponCode}
-      onChange={(event) => setCouponCode(event.target.value)}
-    />
-      <button className="button" onClick={handleApplyCoupon}>
-        Apply Coupon
-      </button>
-    </div>
-  </div>
+            <div className="d-flex align-items-center">
+              <input
+                type="text"
+                placeholder="Enter Coupon Code"
+                value={couponCode}
+                onChange={(event) => setCouponCode(event.target.value)}
+              />
+              <button className="button" onClick={handleApplyCoupon}>
+                Apply Coupon
+              </button>
+            </div>
+          </div>
         </div>
       </Container>
     </>
   );
-}
+};
 
 export default Checkout;

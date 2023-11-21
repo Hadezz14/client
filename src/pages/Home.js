@@ -9,76 +9,68 @@ import { useNavigate } from "react-router-dom";
 import { addToWishlist } from "../features/products/productSlice";
 import HomeProductCard from "../components/Products/HomeProductCard";
 import { useState } from "react";
+import { getOrders } from "../features/user/userSlice";
 
 const Home = () => {
   const productState = useSelector((state) => state.product.product);
   const loading = useSelector((state) => state.product.isLoading);
-  console.log(loading)
+  console.log(loading);
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  useEffect(() =>{
+  useEffect(() => {
     getProducts();
-  },[]);
-  const getProducts =() =>{ 
+  }, []);
+  const getProducts = () => {
     dispatch(getAllProducts());
-  }
+  };
+  useEffect(() => {
+    myorders();
+  }, []);
+  const myorders = () => {
+    dispatch(getOrders());
+  };
   const handleAddToWishlist = (productId) => {
     dispatch(addToWishlist(productId));
   };
   const firstFourProducts = productState.slice(0, 4);
-  const latestProduct = productState.slice(0,2);
+  const latestProduct = productState.slice(0, 2);
 
-  const [col,setCol] = useState(12);
-  useEffect(() =>{
-    const handleResize =() =>{
-      if(window.innerWidth <= 425){
-        setCol(12)
-      }
-      else if(window.innerWidth <=768){
-        setCol(6)
-      }
-      else{
-        setCol(3)
+  const [col, setCol] = useState(12);
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth <= 425) {
+        setCol(12);
+      } else if (window.innerWidth <= 768) {
+        setCol(6);
+      } else {
+        setCol(3);
       }
     };
-    window.addEventListener("resize",handleResize);
-    return ()=>{
-      window.removeEventListener("resize",handleResize)
-    }
-  },[])
-  
-
+    window.addEventListener("resize", handleResize);
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
 
   return (
     <>
       <Container class1="home-wrapper-1 py-3">
         <div className="row">
-          {
-            latestProduct?.map((item,index) =>(
-              <div key={index} className="col-6"> 
-                <BigBanner
-                  item ={item}
-                /> 
-              </div>
-            ))  
-          }
+          {latestProduct?.map((item, index) => (
+            <div key={index} className="col-6">
+              <BigBanner item={item} />
+            </div>
+          ))}
           <div className="row py-4">
-          {
-            firstFourProducts?.map((item,index) =>(
+            {firstFourProducts?.map((item, index) => (
               <div className={`col-3`}>
-            
-            <div className="d-flex flex-wrap gap-10 justify-content-between align-items-center">    
-              <SmallBanner
-                item ={item}
-              />
+                <div className="d-flex flex-wrap gap-10 justify-content-between align-items-center">
+                  <SmallBanner item={item} />
+                </div>
               </div>
-            
+            ))}
           </div>
-            ))
-          }
         </div>
-          </div>
-          
       </Container>
       <Container class1="home-wrapper-2">
         <div className="row">
@@ -99,28 +91,23 @@ const Home = () => {
           </div>
         </div>
       </Container>
-      
+
       <Container class1="featured-wrapper py-3 home-wrapper-2">
         <div className="row">
           <div className="col-12">
             <h3 className="section-heading">New Arival</h3>
             <div className="row">
               {/* <HomeProductCard/> */}
-            {
-              firstFourProducts?.map((item,index) =>(
+              {firstFourProducts?.map((item, index) => (
                 <div key={index} className={`col-${col}`}>
-             
                   <HomeProductCard
                     item={[item]}
-                   onAddToWishlist={handleAddToWishlist} 
+                    onAddToWishlist={handleAddToWishlist}
                   />
-                  </div>
-                  
-               
+                </div>
               ))}
+            </div>
           </div>
-          </div>
-          
         </div>
       </Container>
     </>

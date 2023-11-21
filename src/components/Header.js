@@ -1,10 +1,10 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import { NavLink, Link, useNavigate } from "react-router-dom";
 import { AiFillHeart, AiOutlineLogout, AiOutlineUser } from "react-icons/ai";
-import {GiHamburgerMenu } from "react-icons/gi"
+import { GiHamburgerMenu } from "react-icons/gi";
 import cart from "../images/cart.svg";
 import menu from "../images/menu.svg";
-import logo from "../images/Vyamlogo2.png"
+import logo from "../images/Vyamlogo2.png";
 import { useDispatch, useSelector } from "react-redux";
 import { handleLogout } from "../utils/axiosConfig";
 import { toggleCurrency } from "../features/currency/currencySlice";
@@ -12,7 +12,7 @@ import styled from "styled-components";
 
 const ResponsiveNavLink = styled(NavLink)`
   font-size: 14px;
-  
+
   @media (max-width: 576px) {
     font-size: 12px;
   }
@@ -33,17 +33,17 @@ const Header = () => {
   };
   const navigate = useNavigate();
 
-  const handleLogoutClick =() =>{
+  const handleLogoutClick = () => {
     handleLogout();
     window.location.reload();
     navigate("/login");
-  }
+  };
 
   const currency = useSelector((state) => state.currency.currency);
-  
-  const handleCurrencyToggle =() => {
-    dispatch (toggleCurrency());
-  }
+
+  const handleCurrencyToggle = () => {
+    dispatch(toggleCurrency());
+  };
 
   return (
     <>
@@ -55,13 +55,19 @@ const Header = () => {
                 <img className="logo" src={logo} alt="Logo" />
               </Link>
             </div>
-            
 
             <div className="headMenu col-md-9 col-6">
               <div className="header-upper-links d-flex align-items-center justify-content-end gap-3">
-                <Link to="/wishlist" className="d-flex align-items-center text-white">
+                <Link
+                  to="/wishlist"
+                  className="d-flex align-items-center text-white"
+                >
                   <AiFillHeart color="black" size={30} />
-                  <p className="mb-0 header-txt ms-2">Favourite<br />wishlist</p>
+                  <p className="mb-0 header-txt ms-2">
+                    Favourite
+                    <br />
+                    wishlist
+                  </p>
                 </Link>
 
                 <Link
@@ -76,41 +82,40 @@ const Header = () => {
                   </p>
                 </Link>
 
-                <Link to="/cart" className="cart d-flex align-items-center text-white">
+                <Link
+                  to="/cart"
+                  className="cart d-flex align-items-center text-white"
+                >
                   <img src={cart} alt="cart" width="30" />
                   <span className="badge0">
                     {cartState?.length ? cartState?.length : 0}
                   </span>
                 </Link>
-              
+
                 {authState?.user !== null && (
-            // Render the Logout link when a user is logged in
-            <Link
-              to="#"
-              onClick={handleLogoutClick}
-              className="d-flex align-items-center text-white mx-2"
-            >
-              <AiOutlineLogout color="black" size={30} />
-            </Link>
-          )}
+                  // Render the Logout link when a user is logged in
+                  <Link
+                    to="#"
+                    onClick={handleLogoutClick}
+                    className="d-flex align-items-center text-white mx-2"
+                  >
+                    <AiOutlineLogout color="black" size={30} />
+                  </Link>
+                )}
               </div>
             </div>
-          <button
-          className="hamburger bg-none"
-          onClick={toggleMenu}
-        >
-        <GiHamburgerMenu/>
-          <span className="badge1">
-                    {cartState?.length ? cartState?.length : 0}
-                  </span>
-        </button>
+            <button className="hamburger bg-none" onClick={toggleMenu}>
+              <GiHamburgerMenu />
+              <span className="badge1">
+                {cartState?.length ? cartState?.length : 0}
+              </span>
+            </button>
           </div>
         </div>
       </header>
-        
 
-       {/* Hamburger menu */}
-       {showMenu && (
+      {/* Hamburger menu */}
+      {showMenu && (
         <div className="hamburger-menu">
           <Link to="/wishlist" className="d-flex align-items-center text-white">
             <AiFillHeart color="white" size={30} />
@@ -165,7 +170,6 @@ const Header = () => {
                     className="dropdown-menu"
                     aria-labelledby="dropdownMenuButton1"
                   >
-                    
                     <li>
                       <Link className="dropdown-item text-white" to="/">
                         Home
@@ -177,26 +181,43 @@ const Header = () => {
                       </Link>
                     </li>
                     <li>
+                      <Link className="dropdown-item text-white" to="/orders">
+                        My Orders
+                      </Link>
+                    </li>
+                    <li>
                       <Link className="dropdown-item text-white" to="/contact">
                         Contact
                       </Link>
                     </li>
                     <li>
-                      <Link className="dropdown-item text-white" to="/return-policy">
+                      <Link
+                        className="dropdown-item text-white"
+                        to="/return-policy"
+                      >
                         Exchange policy
                       </Link>
                     </li>
                   </ul>
-                  
                 </div>
 
                 <div className="menu-links">
                   <div className="d-flex align-items-center gap-15">
-                    <ResponsiveNavLink className="navtxt" to="/">Home</ResponsiveNavLink>
-                    <ResponsiveNavLink className="navtxt" to="/product">Our Store</ResponsiveNavLink>
-                    <ResponsiveNavLink className="navtxt" to="/contact">Contact</ResponsiveNavLink>
-                    <ResponsiveNavLink className="navtxt" to="/return-policy">Exchange policy</ResponsiveNavLink>
-              
+                    <ResponsiveNavLink className="navtxt" to="/">
+                      Home
+                    </ResponsiveNavLink>
+                    <ResponsiveNavLink className="navtxt" to="/product">
+                      Our Store
+                    </ResponsiveNavLink>
+                    <ResponsiveNavLink className="navtxt" to="/orders">
+                      My Order
+                    </ResponsiveNavLink>
+                    <ResponsiveNavLink className="navtxt" to="/contact">
+                      Contact
+                    </ResponsiveNavLink>
+                    <ResponsiveNavLink className="navtxt" to="/return-policy">
+                      Exchange policy
+                    </ResponsiveNavLink>
                   </div>
                 </div>
               </div>

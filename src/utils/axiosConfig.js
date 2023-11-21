@@ -1,16 +1,17 @@
 // export const base_url ="https://vyam-backend.onrender.com/api/";
-export const base_url ="https://api.vyamstore.com/api/";
+// export const base_url ="https://api.vyamstore.com/api/";
+export const base_url = "http://localhost:5069/api/";
 
-const getTokenFromLocalStorage = 
-    typeof localStorage !== "undefined" && localStorage.getItem("customer")
+const getTokenFromLocalStorage =
+  typeof localStorage !== "undefined" && localStorage.getItem("customer")
     ? JSON.parse(localStorage.getItem("customer"))
-    :null;
+    : null;
 
-    const clearTokenFromLocalStorage =() =>{
-      if(typeof localStorage !=="undefined"){
-        localStorage.removeItem("customer");
-      }
-    }
+const clearTokenFromLocalStorage = () => {
+  if (typeof localStorage !== "undefined") {
+    localStorage.removeItem("customer");
+  }
+};
 export const config = {
   headers: {
     Authorization: `Bearer ${
@@ -20,7 +21,6 @@ export const config = {
   },
 };
 
-export const handleLogout =() =>{
+export const handleLogout = () => {
   clearTokenFromLocalStorage();
-}
-
+};
