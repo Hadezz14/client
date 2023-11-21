@@ -131,6 +131,7 @@ const SingleProduct = () => {
       <Helmet>
         <title>{productState?.title}</title>
         <meta name="description" content={productState?.description}/>
+        <link rel="canonical" href="/product/:id"/>
       </Helmet>
       <BreadCrumb title="Product Name" />
       <Container class1="main-product-wrapper py-3 home-wrapper-2">

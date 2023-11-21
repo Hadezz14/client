@@ -44,6 +44,7 @@ const OurStore = () => {
       <Helmet>
         <title>Explore Premium Gymwear and Sportswear at Vyam Store</title>
         <meta name="description" content="Discover an extensive collection of high-quality gymwear and sportswear. Shop a wide range of athletic apparel designed for peak performance and style."/>
+        <link rel="canonical" href="/product"/>
       </Helmet>
       <BreadCrumb title="Our Store" />
       <Container class1="store-wrapper home-wrapper-2 py-5">
