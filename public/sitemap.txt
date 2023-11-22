@@ -1,9 +1,4 @@
 
-# Homepage
 https://vyamstore.com/
-
-# Pages
 https://vyamstore.com/product
-
-# Product Pages (replace :id with actual IDs)
 https://vyamstore.com/product/:id

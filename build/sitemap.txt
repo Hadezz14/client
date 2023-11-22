@@ -1,0 +1,4 @@
+
+https://vyamstore.com/
+https://vyamstore.com/product
+https://vyamstore.com/product/:id
