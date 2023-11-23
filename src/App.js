@@ -28,7 +28,7 @@ function App() {
   return (
     <BrowserRouter>
       <Helmet>
-        <title>Vyam</title>
+        <title>VYAM | Shop Gym Wear at Vyam - High-Quality Activewear</title>
         <meta
           name="description"
           content="Discover premium gymwear and sportswear at Vyam. Shop our high-quality activewear designed for performance and style."
@@ -37,6 +37,7 @@ function App() {
           name="keywords"
           content="Gymwear, Sportswear,Workout gear, Fitness Clothing "
         />
+	<h1>Explore Our Premium Gym Wear Collection at Vyam</h1>
       </Helmet>
       <Routes>
         <Route path="/" element={<Layout />}>
