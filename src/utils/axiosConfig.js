@@ -2,25 +2,23 @@
  export const base_url ="https://api.vyamstore.com/api/";
 //export const base_url = "http://localhost:5069/api/";
 
-const getTokenFromLocalStorage =
-  typeof localStorage !== "undefined" && localStorage.getItem("customer")
-    ? JSON.parse(localStorage.getItem("customer"))
-    : null;
-
 const clearTokenFromLocalStorage = () => {
   if (typeof localStorage !== "undefined") {
     localStorage.removeItem("customer");
   }
 };
-export const config = {
-  headers: {
-    Authorization: `Bearer ${
-      getTokenFromLocalStorage !== null ? getTokenFromLocalStorage.token : ""
-    }`,
-    Accept: "application/json",
-  },
-};
-
 export const handleLogout = () => {
   clearTokenFromLocalStorage();
+};
+
+export const config = () => {
+  const user = JSON.parse(localStorage.getItem("customer")) || {};
+  const token = user.token || "";
+
+  return {
+    headers: {
+      Authorization: `Bearer ${token}`,
+      Accept: "application/json",
+    },
+  };
 };
