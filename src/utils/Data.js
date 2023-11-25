@@ -16,7 +16,7 @@ export const services = [
       image: "images/service-04.png",
     },
     {
-      title: "Case on Delivey",
+      title: "Cash on Delievery",
       tagline: "100% Protected Payment",
       image: "images/service-05.png",
     },

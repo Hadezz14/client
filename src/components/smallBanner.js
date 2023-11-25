@@ -11,6 +11,15 @@ const SmallBannerSkeletonWrapper = styled.div`
   margin-bottom: 20px;
 `;
 
+const SmallBannerContent = styled.div`
+  position: absolute;
+  top: 25%;
+  left: 10%;
+  background-color: rgba(255, 255, 255, 0.27); /* Adjust the alpha value as needed */
+  padding: 10px;
+  border-radius: 5px;
+`;
+
 const SmallBanner = ({ item }) => {
   return (
     <Link to={item ? `/product/${item?._id}` : `#`}>
@@ -24,10 +33,10 @@ const SmallBanner = ({ item }) => {
                 alt="small Banner"
               />
             )}
-            <div className="small-banner-content position-absolute">
+            <SmallBannerContent className="small-banner-content">
               <h4>New</h4>
               <h5>{item?.title}</h5>
-            </div>
+            </SmallBannerContent>
           </>
         ) : (
           <SmallBannerSkeletonWrapper />

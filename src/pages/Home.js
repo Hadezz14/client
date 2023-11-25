@@ -95,11 +95,11 @@ const Home = () => {
       <Container class1="featured-wrapper py-3 home-wrapper-2">
         <div className="row">
           <div className="col-12">
-            <h3 className="section-heading">New Arival</h3>
-            <div className="row">
+            <h3 className="section-heading">New Arrivals</h3>
+            <div className="productRow">
               {/* <HomeProductCard/> */}
               {firstFourProducts?.map((item, index) => (
-                <div key={index} className={`col-${col}`}>
+                <div key={index} className={`col-3`}>
                   <HomeProductCard
                     item={[item]}
                     onAddToWishlist={handleAddToWishlist}

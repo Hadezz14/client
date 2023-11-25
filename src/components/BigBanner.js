@@ -22,6 +22,7 @@ const BigBannerSkeletonWrapper = styled.div`
 const BigBanner = ({ item }) => {
 
   return (
+    
     <div
       style={{
         display: "flex",
@@ -34,8 +35,11 @@ const BigBanner = ({ item }) => {
       }}
     >
       {item? (
+        <Link to={`/product/${item?._id}`}>
+
         <div style={{ flex: "4" }}>
           {item?.images && item.images[0] && (
+            
             <img
               src={item?.images[0].url}
               className="img-fluid rounded-3 banner-image"
@@ -43,11 +47,13 @@ const BigBanner = ({ item }) => {
             />
           )}
         </div>
+        </Link>
       ) : (
         <BigBannerSkeletonWrapper/>
       )}
 
       {item && (
+        
         <div
           style={{
             display: "flex",

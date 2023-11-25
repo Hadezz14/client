@@ -24,9 +24,12 @@ const ProductCardWrapper = styled.div`
   background-color: white;
   border-radius: 10px;
   overflow: hidden;
-  width: 100%;
-  position: relative;
-  margin-bottom: 20px;
+  width: 91%;
+  bordr-left:20px;
+  margin-left:40px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
   @media (max-width:576px){
     padding: 10px;
   }
@@ -91,7 +94,7 @@ const HomeProductCard = ({item,onAddToWishlist}) => {
             item? (item?.map((item,index)=>{
               return(
                   <ProductCardWrapper key={item._id}>
-          <div className="product-card position-relative">
+          <div className="home-product-card">
             {
               item?.discount &&
               <DiscountBanner>Save {item?.discount} %</DiscountBanner>
@@ -111,7 +114,7 @@ const HomeProductCard = ({item,onAddToWishlist}) => {
               {item?.images && item.images[0] && (
                   <img
                     src={item?.images[0].url}
-                    className="img-fluid"
+                    className="home-product-image"
                     alt="product image"
                   />
                 )}
@@ -119,11 +122,11 @@ const HomeProductCard = ({item,onAddToWishlist}) => {
             </Link>
             <ProductDetails>
               <Link to={`/product/${item?._id}`}>
-                <h5 className="product-title">{item?.title}</h5>
+                <h5 className="home-product-title">{item?.title}</h5>
               </Link>
               <ReactStars
                 count={5}
-                size={24}
+                size={20}
                 value={item?.totalrating}
                 edit={false}
                 activeColor="#ffd700"
