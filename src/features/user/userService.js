@@ -31,8 +31,9 @@ const login = async (userData) => {
 };
 
 const logout = async () => {
+  const request = config();
   try {
-    const response = await axios.get(`${base_url}user/logout`, null, config);
+    const response = await axios.get(`${base_url}user/logout`, null, request);
     return response.data;
   } catch (error) {
     throw error.response ? error.response.data : error.message;
@@ -40,30 +41,34 @@ const logout = async () => {
 };
 
 const getUserWishlist = async () => {
-  const response = await axios.get(`${base_url}user/wishlist`, config);
+  const request = config();
+  const response = await axios.get(`${base_url}user/wishlist`, request);
   if (response.data) {
     return response.data;
   }
 };
 
 const addToCart = async (cartData) => {
-  const response = await axios.post(`${base_url}user/cart`, cartData, config);
+  const request = config();
+  const response = await axios.post(`${base_url}user/cart`, cartData, request);
   if (response.data) {
     return response.data;
   }
 };
 
 const getCart = async () => {
-  const response = await axios.get(`${base_url}user/cart`, config);
+  const request = config();
+  const response = await axios.get(`${base_url}user/cart`, request);
   if (response.data) {
     return response.data;
   }
 };
 
 const removeProdcutFromCart = async (cartItemId) => {
+  const request = config();
   const response = await axios.delete(
     `${base_url}user/delete-product-cart/${cartItemId}`,
-    config
+    request
   );
   if (response.data) {
     return response.data;
@@ -71,9 +76,10 @@ const removeProdcutFromCart = async (cartItemId) => {
 };
 
 const updateProdcutFromCart = async (cartDetail) => {
+  const request = config();
   const response = await axios.delete(
     `${base_url}user/update-product-cart/${cartDetail.cartItemId}/${cartDetail.quantity}`,
-    config
+    request
   );
   if (response.data) {
     return response.data;
@@ -81,8 +87,9 @@ const updateProdcutFromCart = async (cartDetail) => {
 };
 
 const clearCart = async (userId) => {
+  const request = config();
   try {
-    const response = await axios.delete(`${base_url}user/empty-cart`, config, {
+    const response = await axios.delete(`${base_url}user/empty-cart`, request, {
       userId,
     });
     return response.data;
@@ -91,12 +98,13 @@ const clearCart = async (userId) => {
   }
 };
 const createOrder = async (orderData) => {
+  const request = config();
   try {
     console.log(orderData);
     const response = await axios.post(
       `${base_url}user/cart/create-order`,
       orderData,
-      config
+      request
     );
     console.log(response.data);
     return response.data;
@@ -129,7 +137,10 @@ const signinGoogle = async () => {
     });
     console.log(response);
     if (response.data) {
-      localStorage.setItem("customer", JSON.stringify(response.data));
+      await new Promise((resolve) => {
+        localStorage.setItem("customer", JSON.stringify(response.data));
+        resolve();
+      });
       return response.data;
     }
   } catch (error) {
@@ -138,23 +149,36 @@ const signinGoogle = async () => {
 };
 
 const getUserOrders = async () => {
+  const request = config();
   try {
-    const response = await axios.get(`${base_url}user/getmyorders`, config);
+    const response = await axios.get(`${base_url}user/getmyorders`, request);
     return response.data;
   } catch (error) {
     throw error.response.data.message;
   }
 };
 const cancleOrder = async (orderId, status) => {
+  const request = config();
   try {
     const response = await axios.put(
       `${base_url}user/order/cancle-order/${orderId}`,
       { status },
-      config
+      request
     );
     return response.data;
   } catch (error) {
     throw new Error(error);
+  }
+};
+
+const cancleOrderItem = async (orderData) => {
+  const request = config();
+  const response = await axios.delete(
+    `${base_url}user/remove-order/${orderData.orderId}/${orderData.itemId}`,
+    request
+  );
+  if (response.data) {
+    return response.data;
   }
 };
 export const authService = {
@@ -172,4 +196,5 @@ export const authService = {
   signinGoogle,
   getUserOrders,
   cancleOrder,
+  cancleOrderItem,
 };

@@ -4,6 +4,7 @@ import { toast } from "react-toastify";
 import { signInWithGoogle } from "../../firebase";
 import axios from "axios";
 import { act } from "react-dom/test-utils";
+import { TrendingUpOutlined } from "@mui/icons-material";
 
 const getCustomerfromLocalStorage = localStorage.getItem("customer")
   ? JSON.parse(localStorage.getItem("customer"))
@@ -167,6 +168,17 @@ export const canclemyOrder = createAsyncThunk(
   async ({ orderId, status }, thunkAPI) => {
     try {
       return await authService.cancleOrder(orderId, status);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
+
+export const canclemyOrderItem = createAsyncThunk(
+  "order/cancle-order/item",
+  async (orderData, thunkAPI) => {
+    try {
+      return await authService.cancleOrderItem(orderData);
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
     }
@@ -418,6 +430,27 @@ export const authSlice = createSlice({
         state.isError = false;
         state.isSuccess = true;
         state.message = action.error;
+      })
+      .addCase(canclemyOrderItem.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(canclemyOrderItem.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isSuccess = true;
+        state.isError = false;
+        state.removeorderItem = action.payload;
+        if (state.isSuccess) {
+          toast.success("Product Removed from Order");
+        }
+      })
+      .addCase(canclemyOrderItem.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isSuccess = false;
+        state.isError = true;
+        state.message = action.error;
+        if (state.isSuccess === false) {
+          toast.error("Error Cancling order");
+        }
       });
   },
 });

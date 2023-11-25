@@ -1,8 +1,12 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Container from "../components/Container";
 import BreadCrumb from "../components/BreadCrumb";
 import { useDispatch, useSelector } from "react-redux";
-import { canclemyOrder, getOrders } from "../features/user/userSlice";
+import {
+  canclemyOrder,
+  canclemyOrderItem,
+  getOrders,
+} from "../features/user/userSlice";
 
 import {
   MDBCard,
@@ -16,6 +20,7 @@ import {
   MDBRow,
   MDBTypography,
 } from "mdb-react-ui-kit";
+import { AiOutlineDelete } from "react-icons/ai";
 
 const Order = () => {
   useEffect(() => {
@@ -28,6 +33,8 @@ const Order = () => {
   const orderState = useSelector((state) => state?.auth?.user?.orders);
   console.log(orderState);
 
+  const [itemremoveDetails, setItemremoveDetails] = useState(null);
+
   const cancleOrder = async (orderId, status) => {
     try {
       await dispatch(canclemyOrder({ orderId, status }));
@@ -36,6 +43,18 @@ const Order = () => {
       console.log("Error", error);
     }
   };
+
+  useEffect(() => {
+    if (itemremoveDetails !== null) {
+      dispatch(
+        canclemyOrderItem({
+          orderId: itemremoveDetails?.orderId,
+          itemId: itemremoveDetails?.itemId,
+        })
+      );
+      dispatch(getOrders());
+    }
+  }, [itemremoveDetails]);
 
   return (
     <>
@@ -46,7 +65,7 @@ const Order = () => {
             orderState?.map((item, index) => {
               let statusColorClass = "";
               switch (item.OrderStatus) {
-                case "Cancled":
+                case "Cancelled":
                   statusColorClass = "text-danger";
                   break;
                 case "Pending":
@@ -103,7 +122,21 @@ const Order = () => {
                               <MDBTypography tag="h6" className="bold">
                                 {i?.product?.title}
                               </MDBTypography>
-                              <p className="text-muted"> Qt:{i?.quantity}</p>
+                              <p className="text-muted">
+                                {" "}
+                                Qt:{i?.quantity} {""}
+                                {item?.OrderStatus === "Pending" && (
+                                  <AiOutlineDelete
+                                    onClick={() => {
+                                      setItemremoveDetails({
+                                        orderId: item?._id,
+                                        itemId: i?._id,
+                                      });
+                                    }}
+                                    className="text-danger"
+                                  />
+                                )}
+                              </p>
                               <MDBTypography tag="h5" className="mb-3">
                                 {" "}
                                 ${i?.price}{" "}
@@ -126,12 +159,14 @@ const Order = () => {
                         <div className="d-flex justify-content-between">
                           <div className="border-start h-100"></div>
                           <MDBTypography tag="h5" className="fw-normal mb-0">
-                            <h5
+                            <a
                               className="text-danger"
-                              onClick={() => cancleOrder(item?._id, "Cancled")}
+                              onClick={() =>
+                                cancleOrder(item?._id, "Cancelled")
+                              }
                             >
-                              Cancle
-                            </h5>
+                              Cancel
+                            </a>
                           </MDBTypography>
                           <MDBTypography
                             tag="h5"
