@@ -129,7 +129,7 @@ const Contact = () => {
                     <li className="mb-3 d-flex gap-15 align-items-center">
                       <AiOutlineMail className="fs-5" />
                       <a href="mailto:vyam@gmail.com">
-                        vyam@gmail.com
+                        vyam.bdago8@gmail.com
                       </a>
                     </li>
                     <li className="mb-3 d-flex gap-15 align-items-center">

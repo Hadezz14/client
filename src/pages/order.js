@@ -23,17 +23,19 @@ import {
 import { AiOutlineDelete } from "react-icons/ai";
 
 const Order = () => {
+  const dispatch = useDispatch();
+  const orderState = useSelector((state) => state?.auth?.user?.orders);
+  const isLoading = useSelector((state) => state?.auth?.isLoading);
+
+  const [itemremoveDetails, setItemremoveDetails] = useState(null);
+
   useEffect(() => {
     myorders();
   }, []);
+
   const myorders = () => {
     dispatch(getOrders());
   };
-  const dispatch = useDispatch();
-  const orderState = useSelector((state) => state?.auth?.user?.orders);
-  console.log(orderState);
-
-  const [itemremoveDetails, setItemremoveDetails] = useState(null);
 
   const cancleOrder = async (orderId, status) => {
     try {
@@ -61,7 +63,11 @@ const Order = () => {
       <BreadCrumb title="My Orders" />
       <>
         <section className="vh-100 gradient-custom-2 overflow-auto">
-          {orderState?.map &&
+          {isLoading ? (
+            <div className="loading-spinner-container">
+            <div className="loading-spinner"></div>
+          </div>
+          ) : orderState?.length > 0 ? (
             orderState?.map((item, index) => {
               let statusColorClass = "";
               switch (item.OrderStatus) {
@@ -107,7 +113,7 @@ const Order = () => {
                         <div>
                           <MDBTypography tag="h6" className="mb-0">
                             {" "}
-                            <a className={`${statusColorClass}`}>
+                            <a className={`£{statusColorClass}`}>
                               {item?.OrderStatus}
                             </a>{" "}
                           </MDBTypography>
@@ -139,7 +145,7 @@ const Order = () => {
                               </p>
                               <MDBTypography tag="h5" className="mb-3">
                                 {" "}
-                                ${i?.price}{" "}
+                                £{i?.price}{" "}
                               </MDBTypography>
                             </div>
                             <div>
@@ -161,9 +167,7 @@ const Order = () => {
                           <MDBTypography tag="h5" className="fw-normal mb-0">
                             <a
                               className="text-danger"
-                              onClick={() =>
-                                cancleOrder(item?._id, "Cancelled")
-                              }
+                              onClick={() => cancleOrder(item?._id, "Cancelled")}
                             >
                               Cancel
                             </a>
@@ -178,11 +182,22 @@ const Order = () => {
                   </MDBCard>
                 </MDBContainer>
               );
-            })}
+            })
+          ) : (
+            <MDBContainer className="py-2 h-20">
+              <MDBCard className="card-stepper" style={{ borderRadius: "15px" }}>
+                <MDBCardBody className="p-4">
+                  <MDBTypography tag="h6" className="mb-0">
+                    No any Orders, please browse and shop our products.
+                  </MDBTypography>
+                </MDBCardBody>
+              </MDBCard>
+            </MDBContainer>
+          )}
         </section>
       </>
     </>
   );
-};
+          }
 
 export default Order;

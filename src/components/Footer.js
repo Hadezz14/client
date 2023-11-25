@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { BsLinkedin, BsGithub, BsYoutube, BsInstagram } from "react-icons/bs";
+import { BsFacebook, BsGithub, BsYoutube, BsInstagram } from "react-icons/bs";
 
 const Footer = () => {
   return (
@@ -12,33 +12,27 @@ const Footer = () => {
               <h4 className="text-white mb-4">Contact Us</h4>
               <div>
                 <address className="text-white fs-6">
-                  Our <br /> location<br />
+                  Our location<br />
                   Nepal
                 </address>
                 <a
                   
                   className="mt-3 d-block mb-1 text-white"
                 >
-                  Phone
+                  Phone<br/>9801234567
                 </a>
                 <a
                  
                   className="mt-2 d-block mb-0 text-white"
                 >
-                  Email
+                  Email<br/>vyam.bdago8@gmail.com
                 </a>
                 <div className="social_icons d-flex align-items-center gap-30 mt-4">
                   <a className="text-white" href="#">
-                    <BsLinkedin className="fs-4" />
+                    <BsFacebook className="fs-4" />
                   </a>
                   <a className="text-white" href="#">
                     <BsInstagram className="fs-4" />
-                  </a>
-                  <a className="text-white" href="#">
-                    <BsGithub className="fs-4" />
-                  </a>
-                  <a className="text-white" href="#">
-                    <BsYoutube className="fs-4" />
                   </a>
                 </div>
               </div>
