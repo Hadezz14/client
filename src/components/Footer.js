@@ -19,7 +19,7 @@ const Footer = () => {
                   
                   className="mt-3 d-block mb-1 text-white"
                 >
-                  Phone<br/>9801234567
+                  Phone<br/>+977 984-9651409
                 </a>
                 <a
                  

@@ -124,7 +124,7 @@ const Contact = () => {
                     </li>
                     <li className="mb-3 d-flex gap-15 align-items-center">
                       <BiPhoneCall className="fs-5" />
-                      <a href="tel:+91 8264954234">Phone Number</a>
+                      <a href="tel:+91 8264954234">+977 984-9651409</a>
                     </li>
                     <li className="mb-3 d-flex gap-15 align-items-center">
                       <AiOutlineMail className="fs-5" />
