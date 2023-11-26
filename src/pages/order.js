@@ -21,6 +21,7 @@ import {
   MDBTypography,
 } from "mdb-react-ui-kit";
 import { AiOutlineDelete } from "react-icons/ai";
+import { ConvertToPound } from "../components/ConvertToPound";
 
 const Order = () => {
   const dispatch = useDispatch();
@@ -58,6 +59,29 @@ const Order = () => {
     }
   }, [itemremoveDetails]);
 
+  const currency = useSelector((state) => state?.currency?.currency);
+  const [convertedPrices, setConvertedPrices] = useState([]);
+  const [convertedTotalPrice, setConvertedTotalPrice] = useState([]);
+  useEffect(() => {
+    const convertPrices = async () => {
+      try {
+        const conversionPromise = orderState?.map(async (item) => {
+          const total = await ConvertToPound(item?.totalPrice);
+          const items = await Promise.all(
+            item?.orderedItems?.map(async (i) => ConvertToPound(i?.price))
+          );
+          return { total, items };
+        });
+        const convertedResults = await Promise.all(conversionPromise);
+        setConvertedTotalPrice(convertedResults.map((result) => result.total));
+        setConvertedPrices(convertedResults.map((result) => result.items));
+      } catch (error) {
+        console.error("Converison error:", error);
+      }
+    };
+    convertPrices();
+  }, [currency, orderState]);
+
   return (
     <>
       <BreadCrumb title="My Orders" />
@@ -65,8 +89,8 @@ const Order = () => {
         <section className="vh-100 gradient-custom-2 overflow-auto">
           {isLoading ? (
             <div className="loading-spinner-container">
-            <div className="loading-spinner"></div>
-          </div>
+              <div className="loading-spinner"></div>
+            </div>
           ) : orderState?.length > 0 ? (
             orderState?.map((item, index) => {
               let statusColorClass = "";
@@ -106,7 +130,8 @@ const Order = () => {
                             {" "}
                             Total Price:{" "}
                             <span className="fw-bold text-body">
-                              {item?.totalPrice}
+                              £ {item?.totalPrice} | Rs{" "}
+                              {convertedTotalPrice[index]}{" "}
                             </span>
                           </p>
                         </div>
@@ -120,7 +145,7 @@ const Order = () => {
                         </div>
                       </div>
                     </MDBCardHeader>
-                    {item?.orderedItems?.map((i, index) => {
+                    {item?.orderedItems?.map((i, itemindex) => {
                       return (
                         <MDBCardBody key={index} className="p-4">
                           <div className="d-flex flex-row mb-4 pb-2">
@@ -145,7 +170,8 @@ const Order = () => {
                               </p>
                               <MDBTypography tag="h5" className="mb-3">
                                 {" "}
-                                £{i?.price}{" "}
+                                £ {i?.price} | Rs{" "}
+                                {convertedPrices[index][itemindex]}{" "}
                               </MDBTypography>
                             </div>
                             <div>
@@ -167,7 +193,9 @@ const Order = () => {
                           <MDBTypography tag="h5" className="fw-normal mb-0">
                             <a
                               className="text-danger"
-                              onClick={() => cancleOrder(item?._id, "Cancelled")}
+                              onClick={() =>
+                                cancleOrder(item?._id, "Cancelled")
+                              }
                             >
                               Cancel
                             </a>
@@ -185,7 +213,10 @@ const Order = () => {
             })
           ) : (
             <MDBContainer className="py-2 h-20">
-              <MDBCard className="card-stepper" style={{ borderRadius: "15px" }}>
+              <MDBCard
+                className="card-stepper"
+                style={{ borderRadius: "15px" }}
+              >
                 <MDBCardBody className="p-4">
                   <MDBTypography tag="h6" className="mb-0">
                     No any Orders, please browse and shop our products.
@@ -198,6 +229,6 @@ const Order = () => {
       </>
     </>
   );
-          }
+};
 
 export default Order;
