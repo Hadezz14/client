@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/static/css/main.4b7cacad.css",
-    "main.js": "/static/js/main.767aead3.js",
+    "main.css": "/static/css/main.e29a0c5a.css",
+    "main.js": "/static/js/main.91831d7e.js",
     "static/media/vyamtshirt.png": "/static/media/vyamtshirt.00ef91ef2cbec43cf197.png",
     "static/media/empty-cart.jpg": "/static/media/empty-cart.66f4b0d6f771756ea9fc.jpg",
     "static/media/order-confirmed.png": "/static/media/order-confirmed.090e4ede7b6396016026.png",
@@ -13,11 +13,11 @@
     "static/media/view.svg": "/static/media/view.656dca615fdc5fb084c5199c18eeb24a.svg",
     "static/media/wish.svg": "/static/media/wish.417da1a5c71c1c516af8c35a335efa66.svg",
     "static/media/add-cart.svg": "/static/media/add-cart.07089cca7ace32a4716dc122b1b11a68.svg",
-    "main.4b7cacad.css.map": "/static/css/main.4b7cacad.css.map",
-    "main.767aead3.js.map": "/static/js/main.767aead3.js.map"
+    "main.e29a0c5a.css.map": "/static/css/main.e29a0c5a.css.map",
+    "main.91831d7e.js.map": "/static/js/main.91831d7e.js.map"
   },
   "entrypoints": [
-    "static/css/main.4b7cacad.css",
-    "static/js/main.767aead3.js"
+    "static/css/main.e29a0c5a.css",
+    "static/js/main.91831d7e.js"
   ]
 }
