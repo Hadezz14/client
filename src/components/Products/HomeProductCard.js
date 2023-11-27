@@ -26,13 +26,18 @@ const ProductCardWrapper = styled.div`
   overflow: hidden;
   width: 91%;
   bordr-left:20px;
-  margin-left:40px;
   display: flex;
   flex-direction: row;
   align-items: center;
-  @media (max-width:576px){
-    padding: 10px;
-  }
+  @media (min-width:700px) and (max-width:840px){
+    width:550px;}
+
+@media (min-width:521px) and (max-width:699px){
+  padding :10px;
+  width:450px;}
+  @media (max-width:520px){
+    padding :10px;
+    width:300px;}
 `;
 
 const ProductDetails = styled.div`

@@ -9,15 +9,33 @@ const SmallBannerSkeletonWrapper = styled.div`
   background-color: gray;
   border-radius: 5px;
   margin-bottom: 20px;
+  
 `;
 
 const SmallBannerContent = styled.div`
   position: absolute;
-  top: 25%;
-  left: 10%;
-  background-color: rgba(255, 255, 255, 0.27); /* Adjust the alpha value as needed */
+  bottom: 0;
+  background-color: rgba(255, 255, 255, 0.50); /* Adjust the alpha value as needed */
   padding: 10px;
   border-radius: 5px;
+  width: 100%;
+
+  @media (max-width: 767px) {
+    font-size:12px;
+    padding: 5px;
+  }
+
+  @media (min-width: 768px) and (max-width: 991px) {
+    font-size:14px;
+  }
+
+  @media (min-width: 992px) and (max-width: 1199px) {
+    font-size:18px;
+  }
+
+  @media (min-width: 1200px) {
+    width: 100%; /* Adjust as needed */
+  }
 `;
 
 const SmallBanner = ({ item }) => {

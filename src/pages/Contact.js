@@ -47,7 +47,7 @@ const Contact = () => {
                   <div>
                     <input
                       type="text"
-                      className="form-control"
+                      className="form-control .contact-input"
                       placeholder="Name"
                       name ="name"
                       onChange={formik.handleChange("name")}
@@ -117,24 +117,24 @@ const Contact = () => {
                 <div>
                   <ul className="ps-0">
                     <li className="mb-3 d-flex gap-15 align-items-center">
-                      <AiOutlineHome className="fs-5" />
-                      <address className="mb-0">
+                      <AiOutlineHome className=" .contact-icon fs-7 " />
+                      <address className="mb-0 contact-text">
                         Kathmandu, Nepal
                       </address>
                     </li>
                     <li className="mb-3 d-flex gap-15 align-items-center">
-                      <BiPhoneCall className="fs-5" />
-                      <a href="tel:+91 8264954234">+977 984-9651409</a>
+                      <BiPhoneCall className="fs-7 .contact-icon" />
+                      <a className="contact-text" href="tel:+977 984-9651409">+977 984-9651409</a>
                     </li>
                     <li className="mb-3 d-flex gap-15 align-items-center">
-                      <AiOutlineMail className="fs-5" />
-                      <a href="mailto:vyam@gmail.com">
+                      <AiOutlineMail className="fs-7 .contact-icon"/>
+                      <a href="mailto:vyam@gmail.com" className="contact-text contact-text-site">
                         vyam.bdago8@gmail.com
                       </a>
                     </li>
                     <li className="mb-3 d-flex gap-15 align-items-center">
-                      <BiInfoCircle className="fs-5" />
-                      <p className="mb-0">Monday – Friday 10 AM – 8 PM</p>
+                      <BiInfoCircle className="fs-7 .contact-icon" />
+                      <p className="mb-0 contact-text-open">Monday – Friday 10 AM – 8 PM</p>
                     </li>
                   </ul>
                 </div>

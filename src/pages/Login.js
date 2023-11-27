@@ -13,7 +13,6 @@ const CenteredContainer = styled(Container)`
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh; // Adjust the height as needed
 `;
 const Login = () => {
   const navigate = useNavigate()
@@ -30,12 +29,12 @@ const Login = () => {
       <Meta title={"Login"} />
       <BreadCrumb title="Login" />
 
-      <CenteredContainer class1="login-wrapper py-4 home-wrapper-2">
-        
+      <CenteredContainer className="py-4 home-wrapper-2 ">
+          <div className="d-flex justify-content-center">
           <GoogleButton
             onClick={handleGooglelogin}
           />
-        
+          </div>
       </CenteredContainer>
     </>
   );

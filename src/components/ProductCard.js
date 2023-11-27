@@ -77,11 +77,11 @@ const ProductDetails = styled.div`
     }
 
     @media (max-width: 375px) {
-      font-size: 13px;
+      font-size: 12px;
     }
 
     @media (max-width: 320px) {
-      font-size: 12px;
+      font-size: 11px;
     }
   }
   p.price {
@@ -92,14 +92,14 @@ const ProductDetails = styled.div`
     }
 
     @media (max-width: 375px) {
-      font-size: 13px;
+      font-size: 12px;
     }
 
     @media (max-width: 320px) {
-      font-size: 12px;
+      font-size: 10px;
     }
   }
-  p.description {
+  p.dis {
     font-size: 13px;
     color: var(--color-777777);
     margin-right: 20px;
@@ -109,12 +109,13 @@ const ProductDetails = styled.div`
     }
 
     @media (max-width: 375px) {
-      font-size: 11px;
+      font-size: 8px;
+      display:none !important;
+    }
+    @media(max-width: 320px){
+      display:none !important;
     }
 
-    @media (max-width: 320px) {
-      font-size: 10px;
-    }
   }
 `;
 
@@ -130,6 +131,11 @@ const WishlistIcon = styled.div`
   position: absolute;
   top: 10px;
   right: 10px;
+  @media(max-width:375px){
+    position: relative;
+    left:98%;
+  
+  }
 `;
 
 const ProductCard = (props) => {
@@ -176,16 +182,7 @@ const ProductCard = (props) => {
                 item?.discount &&
                 <DiscountBanner>Save {item?.discount} %</DiscountBanner>
               }
-              <WishlistIcon>
-                <button
-                  className="border-0 bg-transparent"
-                  onClick={(e) => {
-                    addToWish(item?._id);
-                  }}
-                >
-                  <img src={wish} alt="wishlist" />
-                </button>
-              </WishlistIcon>
+              
               <Link to={`/product/${item._id}`}>
                 <ProductImage>
                   {item?.images && item.images[0] && (
@@ -196,31 +193,37 @@ const ProductCard = (props) => {
                   )}
                 </ProductImage>
               </Link>
+              
               <ProductDetails>
-                <h6 className="brand">{item?.brand}</h6>
+              <WishlistIcon>
+                <button
+                  className="border-0 bg-transparent"
+                  onClick={(e) => {
+                    addToWish(item?._id);
+                  }}
+                >
+                  <img src={wish} alt="wishlist" />
+                </button>
+              </WishlistIcon>
                 <Link to={`/product/${item._id}`}>
                   <h5 className="product-title">{item?.title}</h5>
                 </Link>
                 <ReactStars
                   count={5}
-                  size={20}
+                  size={12}
                   value={item?.totalrating}
                   edit={false}
                   activeColor="#ffd700"
                 />
                 <p
-                  className={`description ${
+                  className={`dis ${
                     grid === 12 ? "d-block" : "d-none"
                   }`}
                   dangerouslySetInnerHTML={{ __html: item?.description }}
                 ></p>
+                
                 <p className="price">
-                {/* {
-                    currency === "Rs" ? `Rs ${item?.price}`:`£${converted[index]}`
-                  } */}
-                  
-                  £ {item?.price} / Rs {converted[index]}
-                  
+                  £ {item?.price} <br/> Rs {converted[index]}      
                 </p>
               </ProductDetails>
               <ActionBar>

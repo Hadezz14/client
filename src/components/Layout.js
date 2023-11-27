@@ -5,10 +5,13 @@ import 'react-toastify/dist/ReactToastify.css';
 import Footer from "./Footer";
 import Header from "./Header";
 const Layout = () => {
+  console.log(document.documentElement.clientHeight);
   return (
-    <>
+    <div style={{minHeight:"100vh", display:"flex", flexDirection:"column"}}>
       <Header />
+      <div style={{flex:1}}>
       <Outlet />
+      </div>
       <Footer />
       <ToastContainer
         position="top-right"
@@ -22,7 +25,7 @@ const Layout = () => {
         pauseOnHover
         theme="light"
       />
-    </>
+    </div>
   );
 };
 

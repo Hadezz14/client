@@ -62,7 +62,7 @@ const OurStore = () => {
                         setGrid(6);
                       }}
                       src="images/gr2.svg"
-                      className="d-block img-fluid"
+                      className="d-block img-fluid productLayout"
                       alt="grid"
                     />
 

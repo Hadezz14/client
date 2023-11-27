@@ -84,7 +84,7 @@ const Order = () => {
     <>
       <BreadCrumb title="My Orders" />
       <>
-        <section className="vh-100 gradient-custom-2 overflow-auto">
+        <section className="gradient-custom-2 overflow-auto">
           {isLoading ? (
             <div className="loading-spinner-container">
             <div className="loading-spinner"></div>

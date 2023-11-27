@@ -7,7 +7,7 @@ import { MdOutlineLocationOn } from "react-icons/md";
 
 const Footer = () => {
   return (
-    <footer className="py-4 text-white">
+    <footer className="py-4 text-white footer-txt">
       <div className="container-xxl">
         <div className="row">
           <div className="col-lg-4 col-md-6 col-sm-12 py-3">
@@ -34,7 +34,7 @@ const Footer = () => {
               <Link to="/" className="text-white text-decoration-none">
                 Home
               </Link>
-              <Link to="/shop" className="text-white text-decoration-none">
+              <Link to="/product" className="text-white text-decoration-none">
                 Shop
               </Link>
               <Link to="/contact" className="text-white text-decoration-none">

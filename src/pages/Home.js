@@ -40,7 +40,7 @@ const Home = () => {
     const handleResize = () => {
       if (window.innerWidth <= 425) {
         setCol(12);
-      } else if (window.innerWidth <= 768) {
+      } else if (window.innerWidth <= 900) {
         setCol(6);
       } else {
         setCol(3);
@@ -55,16 +55,16 @@ const Home = () => {
   return (
     <>
       <Container class1="home-wrapper-1 py-3">
-        <div className="row">
+        <div className="row ">
           {latestProduct?.map((item, index) => (
-            <div key={index} className="col-6">
+            <div key={index} className="col-6 bigBanner">
               <BigBanner item={item} />
             </div>
           ))}
-          <div className="row py-4">
+          <div className="row py-4 small-bannerDiv">
             {firstFourProducts?.map((item, index) => (
               <div className={`col-3`}>
-                <div className="d-flex flex-wrap gap-10 justify-content-between align-items-center">
+                <div className="d-flex flex-wrap gap-10 justify-content-between align-items-center smallBannerGap ">
                   <SmallBanner item={item} />
                 </div>
               </div>
