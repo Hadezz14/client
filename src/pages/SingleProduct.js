@@ -34,6 +34,7 @@ const SingleProduct = () => {
   useEffect(() =>{
     dispatch(getAProduct(getProductId))
     dispatch(getUserCart())
+    setSelectedImage(null);
   },[])
   const addToWish= (id) =>{
     dispatch(addToWishlist(id));
