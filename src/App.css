@@ -1876,7 +1876,9 @@ footer .input-group-text {
 @media (max-width: 525px) {
   .small-bannerDiv{
     display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(2, 0.3fr);
+  grid-row-gap: 10px;
+  grid-column-gap: 0px !important;
   }
   .small-bannerDiv .col-3 {
     width: 100% !important;
