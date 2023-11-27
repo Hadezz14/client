@@ -24,11 +24,12 @@ const  getSingleProduct = async(id) => {
 };
 
 const  addToWishlist = async(prodId) => {
+    const request = config();
     try {
         const response = await axios.put(
             `${base_url}product/wishlist`,
             {prodId},
-            config
+            request
             );   
         return response.data;
     } catch (error) {

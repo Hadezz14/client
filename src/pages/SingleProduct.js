@@ -11,7 +11,7 @@ import Container from "../components/Container";
 
 import AddHovermenu from "../components/AddHover";
 import { useDispatch, useSelector } from "react-redux";
-import { addRating, getAProduct } from "../features/products/productSlice";
+import { addRating, addToWishlist, getAProduct } from "../features/products/productSlice";
 import { toast } from "react-toastify";
 import { addProdToCart, getUserCart } from "../features/user/userSlice";
 import { ConvertToPound } from "../components/ConvertToPound";
@@ -28,7 +28,6 @@ const SingleProduct = () => {
   const getProductId = location.pathname.split("/")[2]
   const dispatch = useDispatch();
   const productState = useSelector((state) => state.product.singleproduct)
-  console.log(productState);
   const cartState = useSelector((state) => state.auth.cartProducts)
   const [alreadyAdded,setAlreadyAdded] = useState(false);
 
@@ -36,6 +35,9 @@ const SingleProduct = () => {
     dispatch(getAProduct(getProductId))
     dispatch(getUserCart())
   },[])
+  const addToWish= (id) =>{
+    dispatch(addToWishlist(id));
+  };
 
   const [size,setSelectedSize] = useState(null);
   const uploadCart = () =>{
@@ -115,11 +117,7 @@ const SingleProduct = () => {
   },[currency,productState])
   
   const [selectedImage,setSelectedImage] = useState(productState && productState?.images[0]?.url );
-  console.log(productState?.images[0].url);
   
-  // useEffect(() =>{
-  //   setSelectedImage(productState?.images[0]?.url || "../images/vyamtshirt.png")
-  // })
   
   return (
     <>
@@ -289,20 +287,11 @@ const SingleProduct = () => {
                 </div>
                 <div className="d-flex align-items-center gap-15">
                   <div>
-                    <a href="">
-                      <AiOutlineHeart className="fs-5 me-2" /> Add to Wishlist
-                    </a>
+                    <div onClick={() =>{addToWish(productState?._id)}}>
+                      <AiOutlineHeart  className="fs-5 me-2" /> Add to Wishlist
+                    </div>
                   </div>
                 </div>
-                {/* <div className="d-flex gap-10 flex-column  my-3">
-                  <h3 className="product-heading">Shipping & Returns :</h3>
-                  <p className="product-data">
-                    Free shipping and returns available on all orders! <br /> We
-                    ship all US domestic orders within
-                    <b>5-10 business days!</b>
-                  </p>
-                </div> */}
-                
               </div>
             </div>
           </div>

@@ -149,6 +149,11 @@ footer .input-group-text {
   color: white;
   padding: 8px 17px;
 }
+.footer-nav{
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
 
 /* Footer Part Ends Here */
 

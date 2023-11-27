@@ -99,16 +99,6 @@ const HomeProductCard = ({item,onAddToWishlist}) => {
               item?.discount &&
               <DiscountBanner>Save {item?.discount} %</DiscountBanner>
             }
-            <WishlistIcon>
-              <button
-                className="border-0 bg-transparent"
-                onClick={(e) => {
-                  onAddToWishlist(item?._id);
-                }}
-              >
-                <img src={wish} alt="wishlist" />
-              </button>
-            </WishlistIcon>
             <Link to={`/product/${item?._id}`}>
               <div style={{height:"200px",width:"200px",objectFit:"contain" }}>
               {item?.images && item.images[0] && (
@@ -139,24 +129,6 @@ const HomeProductCard = ({item,onAddToWishlist}) => {
                 £ {item?.price} / Rs {converted[index]}
                 </p>
             </ProductDetails>
-            <ActionBar>
-              <div className="d-flex flex-column gap-15">
-                <button className="border-0 bg-transparent">
-                  <img
-                    onClick={() => navigate("/product/" + item?._id)}
-                    src={view}
-                    alt="view"
-                  />
-                </button>
-                <button className="border-0 bg-transparent">
-                  <img
-                    onClick={() => navigate("/cart")}
-                    src={addcart}
-                    alt="addcart"
-                  />
-                </button>
-              </div>
-            </ActionBar>
           </div>
         </ProductCardWrapper>
               )
