@@ -1502,10 +1502,10 @@ footer .input-group-text {
 
   .hamburger-menu {
     position: absolute;
-    right: 0;
+    right: 12px;
+    top:5%;
     background-color: var(--color-131921);
     padding: 0.5rem;
-    z-index: 1; 
     border-radius: 0.5rem;
     display: flex;
   flex-direction: column;
@@ -1540,6 +1540,10 @@ footer .input-group-text {
     border-top: 1px solid black;
     padding-top: 10px;
     margin-top: 10px;
+  }
+
+  .menu-links{
+    display: none;
   }
 }
 .badge0 {
@@ -1873,15 +1877,17 @@ footer .input-group-text {
   letter-spacing: 1px;
   }
 }
-@media (max-width: 525px) {
-  .small-bannerDiv{
+/* @media (max-width: 525px) { */
+  /* .small-bannerDiv{
     display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  }
-  .small-bannerDiv .col-3 {
+  grid-template-columns: repeat(2, 0.3fr);
+  grid-row-gap: 10px;
+  grid-column-gap: 0px !important;
+  } */
+  /* .small-bannerDiv .col-3 {
     width: 100% !important;
   }
-}
+} */
 @media (max-width: 469px) {
   .productRow{
     display: flex;

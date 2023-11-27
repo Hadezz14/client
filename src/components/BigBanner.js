@@ -49,6 +49,8 @@ const BigBanner = ({ item }) => {
         backgroundColor: "#c9c9c9",
         padding: "5px",
         borderRadius: "5px",
+        height:"500px",
+        textAlign: "center"
       }}
     >
       {item? (
@@ -90,8 +92,8 @@ const BigBanner = ({ item }) => {
               color: "white",
               padding: "8px 15px",
               borderRadius: "5px",
-              fontSize: "8px",
-              marginBottom: "5px",
+              fontSize: "15px",
+              marginBottom: "10px",
             }}
           >
             BUY NOW

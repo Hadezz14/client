@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { NavLink, Link, useNavigate } from "react-router-dom";
 import { AiFillHeart, AiOutlineLogout, AiOutlineUser } from "react-icons/ai";
 import { GiHamburgerMenu } from "react-icons/gi";
@@ -27,6 +27,8 @@ const Header = () => {
   const authState = useSelector((state) => state.auth);
 
   const [showMenu, setShowMenu] = useState(false);
+  const [showButton, setShowButton] = useState(false);
+
 
   const toggleMenu = () => {
     setShowMenu(!showMenu);
@@ -44,6 +46,44 @@ const Header = () => {
   const handleCurrencyToggle = () => {
     dispatch(toggleCurrency());
   };
+
+  useEffect(() => {
+    const handleResize = () => {
+      setShowButton(window.innerWidth <= 520);
+    };
+  
+    // Attach the event listener when the component mounts
+    window.addEventListener("resize", handleResize);
+  
+    // Initialize the state based on the initial screen size
+    handleResize();
+  
+    // Detach the event listener when the component unmounts
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
+
+  useEffect(() => {
+    const closeMenuOnOutsideClick = (event) => {
+      // Check if the click is outside the menu and not the hamburger button
+      if (
+        showMenu &&
+        event.target.closest(".hamburger-menu") === null &&
+        event.target.closest(".hamburger") === null
+      ) {
+        setShowMenu(false);
+      }
+    };
+
+    // Attach the event listener when the component mounts
+    document.addEventListener("click", closeMenuOnOutsideClick);
+
+    // Detach the event listener when the component unmounts
+    return () => {
+      document.removeEventListener("click", closeMenuOnOutsideClick);
+    };
+  }, [showMenu])
 
   return (
     <>
@@ -121,17 +161,7 @@ const Header = () => {
             <AiFillHeart color="white" size={30} />
             <p className="mb-0 header-txt ms-2">Favourite wishlist</p>
           </Link>
-          <Link
-            to={authState?.user === null ? "/login" : ""}
-            className="d-flex align-items-center text-white mx-2"
-          >
-            <AiOutlineUser color="white" size={30} />
-            <p className="mb-0">
-              {authState?.user === null
-                ? "Log in My Account"
-                : `Welcome ${authState?.user?.firstname}`}
-            </p>
-          </Link>
+          
           <Link to="/cart" className="d-flex align-items-center text-white">
             <img src={cart} alt="cart" width="30" />
             <span className="badge0">
@@ -218,8 +248,22 @@ const Header = () => {
                     <ResponsiveNavLink className="navtxt" to="/return-policy">
                       Exchange policy
                     </ResponsiveNavLink>
+                 
                   </div>
                 </div>
+                {showButton && (
+                  <Link
+                  to={authState?.user === null ? "/login" : ""}
+                  className="d-flex align-items-center text-white mx-2"
+                >
+                  <AiOutlineUser color="white" size={20} />
+                  <p className="mb-0">
+                    {authState?.user === null
+                      ? "Log in"
+                      : `Welcome ${authState?.user?.firstname}`}
+                  </p>
+                </Link>
+                )}
               </div>
             </div>
           </div>

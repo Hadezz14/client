@@ -62,14 +62,16 @@ const Home = () => {
             </div>
           ))}
           <div className="row py-4 small-bannerDiv">
-            {firstFourProducts?.map((item, index) => (
-              <div className={`col-3`}>
-                <div className="d-flex flex-wrap gap-10 justify-content-between align-items-center smallBannerGap ">
-                  <SmallBanner item={item} />
-                </div>
-              </div>
-            ))}
-          </div>
+  {firstFourProducts?.map((item, index) => (
+    <div className="col-12 col-xs-12 col-md-6 col-lg-3" key={index}>
+      <div className="d-flex flex-column gap-10 justify-content-between align-items-center smallBannerGap">
+        <SmallBanner item={item} />
+      </div>
+    </div>
+  ))}
+</div>
+
+
         </div>
       </Container>
       <Container class1="home-wrapper-2">

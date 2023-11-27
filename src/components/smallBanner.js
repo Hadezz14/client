@@ -2,24 +2,52 @@ import React from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 
-const SmallBannerSkeletonWrapper = styled.div`
+const SmallBannerWrapper = styled.div`
   position: relative;
   width: 100%;
-  height: 150px;
-  background-color: gray;
-  border-radius: 5px;
+  height: 250px;
+  background-color: #f4f4f4;
+  border-radius: 10px;
+  overflow: hidden;
   margin-bottom: 20px;
-  
+  transition: transform 0.3s ease-in-out;
+
+  &:hover {
+    transform: scale(1.05);
+  }
+
+  .small-banner-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 10px;
+  }
 `;
 
 const SmallBannerContent = styled.div`
   position: absolute;
   bottom: 0;
-  background-color: rgba(255, 255, 255, 0.50); /* Adjust the alpha value as needed */
-  padding: 10px;
-  border-radius: 5px;
-  width: 100%;
+  left: 0;
+  right: 0;
+  background: linear-gradient(transparent, rgba(0, 0, 0, 0.7));
+  color: #fff;
+  padding: 20px;
+  border-radius: 0 0 10px 10px;
+  text-align: center;
+  transition: opacity 0.3s ease-in-out;
 
+  h4 {
+    font-size: 18px;
+    margin-bottom: 5px;
+    font-weight: bold;
+  }
+
+  h5 {
+    font-size: 18px;
+    font-weight: normal;
+    line-height: 1.2;
+    color: wheat;
+  }
   @media (max-width: 767px) {
     font-size:12px;
     padding: 5px;
@@ -41,7 +69,7 @@ const SmallBannerContent = styled.div`
 const SmallBanner = ({ item }) => {
   return (
     <Link to={item ? `/product/${item?._id}` : `#`}>
-      <div className="small-banner position-relative">
+      <SmallBannerWrapper className="small-banner position-relative">
         {item ? (
           <>
             {item?.images && item.images[0] && (
@@ -52,14 +80,14 @@ const SmallBanner = ({ item }) => {
               />
             )}
             <SmallBannerContent className="small-banner-content">
-              <h4>New</h4>
+              <h4>New Arrival</h4>
               <h5>{item?.title}</h5>
             </SmallBannerContent>
           </>
         ) : (
-          <SmallBannerSkeletonWrapper />
+          <div className="skeleton-placeholder"></div>
         )}
-      </div>
+      </SmallBannerWrapper>
     </Link>
   );
 };
