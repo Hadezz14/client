@@ -10,11 +10,14 @@ import { addToWishlist } from "../features/products/productSlice";
 import HomeProductCard from "../components/Products/HomeProductCard";
 import { useState } from "react";
 import { getOrders } from "../features/user/userSlice";
+import Carousel from "react-multi-carousel";
+import "react-multi-carousel/lib/styles.css";
+import HeroSection from "../components/HeroSection";
 
 const Home = () => {
   const productState = useSelector((state) => state.product.product);
+  console.log(productState);
   const loading = useSelector((state) => state.product.isLoading);
-  console.log(loading);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   useEffect(() => {
@@ -51,27 +54,49 @@ const Home = () => {
       window.removeEventListener("resize", handleResize);
     };
   }, []);
+  const renderProducts = () => {
+    if (window.innerWidth >= 1024) {
+      return firstFourProducts;
+    } else {
+      return latestProduct;
+    }
+  };
+  const responsive = {
+    desktop: {
+      breakpoint: { max: 3000, min: 1024 },
+      items: 4,
+    },
+    tablet: {
+      breakpoint: { max: 1024, min: 464 },
+      items: 2,
+    },
+    mobile: {
+      breakpoint: { max: 464, min: 0 },
+      items: 1,
+    },
+  };
+  const sortedProducts = productState
+    .slice()
+    .sort((a, b) => b.totalrating - a.totalrating);
+  const featuredProducts = sortedProducts.slice(0, 8);
 
   return (
     <>
+      <HeroSection />
       <Container class1="home-wrapper-1 py-3">
         <div className="row ">
-          {latestProduct?.map((item, index) => (
-            <div key={index} className="col-6 bigBanner">
-              <BigBanner item={item} />
-            </div>
-          ))}
+          <h3 className="section-heading text-center font-weight-bold">
+            Lastest Products in the Collection
+          </h3>
           <div className="row py-4 small-bannerDiv">
-  {firstFourProducts?.map((item, index) => (
-    <div className="col-12 col-xs-12 col-md-6 col-lg-3" key={index}>
-      <div className="d-flex flex-column gap-10 justify-content-between align-items-center smallBannerGap">
-        <SmallBanner item={item} />
-      </div>
-    </div>
-  ))}
-</div>
-
-
+            {renderProducts()?.map((item, index) => (
+              <div className="col-12 col-xs-12 col-md-6 col-lg-3" key={index}>
+                <div className="d-flex flex-column gap-10 justify-content-between align-items-center smallBannerGap">
+                  <SmallBanner item={item} />
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
       </Container>
       <Container class1="home-wrapper-2">
@@ -93,25 +118,35 @@ const Home = () => {
           </div>
         </div>
       </Container>
-
-      <Container class1="featured-wrapper py-3 home-wrapper-2">
-        <div className="row">
-          <div className="col-12">
-            <h3 className="section-heading">New Arrivals</h3>
-            <div className="productRow">
-              {/* <HomeProductCard/> */}
-              {firstFourProducts?.map((item, index) => (
-                <div key={index} className={`col-3`}>
-                  <HomeProductCard
-                    item={[item]}
-                    onAddToWishlist={handleAddToWishlist}
-                  />
-                </div>
-              ))}
+      {featuredProducts && (
+        <Container class1="featured-wrapper py-3 home-wrapper-2">
+          <h3 className="section-heading text-center font-weight-bold">
+            Highest Rated Products
+          </h3>
+          <div className="row">
+            <div className="col-12">
+              <div className="productRow">
+                <Carousel
+                  autoPlay
+                  autoPlaySpeed={2000}
+                  responsive={responsive}
+                  infinite
+                  showDots={true}
+                  arrows={false}
+                >
+                  {featuredProducts?.map((item, index) => (
+                    <HomeProductCard
+                      key={index}
+                      item={[item]}
+                      onAddToWishlist={handleAddToWishlist}
+                    />
+                  ))}
+                </Carousel>
+              </div>
             </div>
           </div>
-        </div>
-      </Container>
+        </Container>
+      )}
     </>
   );
 };

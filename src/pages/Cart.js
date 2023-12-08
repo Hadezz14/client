@@ -23,6 +23,7 @@ const Cart = () => {
   const [productUpdateDetail, setProductUpdateDetail] = useState(null);
   const [totalAmount, setTotalAmount] = useState(null);
   const useCartState = useSelector((state) => state.auth.cartProducts);
+  console.log(useCartState);
 
   const userId = useSelector((state) => state.auth.user._id);
 
@@ -95,98 +96,100 @@ const Cart = () => {
                   <h4 className="cart-col-4">Total</h4>
                 </div>
                 {useCartState &&
-  useCartState?.map((item, index) => {
-    if (item?.productId !== null) {
-      return (
-        <div
-          key={index}
-          className="cart-data py-3 mb-3 d-flex justify-content-between align-items-center"
-          >
-          <div className="cart-col-1 gap-15 d-flex align-items-center">
-            <div className="w-25">
-              {item?.productId.images &&
-                item.productId.images[0] && (
-                  <img
-                    src={item?.productId.images[0].url}
-                    className="img-fluid"
-                    alt="product image"
-                  />
-                )}
-            </div>
-            <div className="w-75">
-              <div>
-                <p>{item?.productId.title}</p>
-              </div>
-              <div className="d-flex gap-2">
-                <p>Color:</p>
-                <ul className="colors ps-0">
-                  {item?.productId.color.map((color, index) => (
-                    <li
-                      key={index}
-                      style={{ backgroundColor: color }}
-                    ></li>
-                  ))}
-                </ul>
-              </div>
-              <p>Size: {item?.size}</p>
-            </div>
-          </div>
-          <div className="cart-col-2">
-            <div className="price">
-              £ {item?.price}
-            </div>
-            <p>|</p>
-            <div className="nepaliPrice">
-            Rs {convertedPrices[index]}
-            </div>
-          </div>
-          <div className="cart-col-3 d-flex align-items-center gap-20">
-            <div>
-              <input
-                className="form-control styled-input"
-                type="number"
-                min={1}
-                max={10}
-                value={
-                  productUpdateDetail?.quantity
-                    ? productUpdateDetail?.quantity
-                    : item?.quantity
-                }
-                onChange={(e) => {
-                  setProductUpdateDetail({
-                    cartItemId: item?._id,
-                    quantity: e.target.value,
-                  });
-                }}
-                disabled
-                // style={{ width: '48px', textAlign: 'center' }} 
-              />
-            </div>
-            <div style={{ marginLeft: '10px' }}>
-  <AiFillDelete
-    onClick={() => {
-      deleteACartProduct(item?._id);
-    }}
-    className="text-danger dlt-product"
-  />
-</div>
-
-          </div>
-          <div className="cart-col-4">
-            <div className="price">
-              £ {item?.price * item?.quantity}
-            </div>
-            <p>|</p>
-            <div className="nepaliPrice">
-            Rs {convertedPrices[index] * item?.quantity}
-            </div>
-          </div>
-        </div>
-      );
-    }
-    return null;
-  })}
-
+                  useCartState?.map((item, index) => {
+                    if (item?.productId !== null) {
+                      return (
+                        <div
+                          key={index}
+                          className="cart-data py-3 mb-3 d-flex justify-content-between align-items-center"
+                        >
+                          <div className="cart-col-1 gap-15 d-flex align-items-center">
+                            <div className="w-25">
+                              {item?.productId.images &&
+                                item.productId.images[0] && (
+                                  <img
+                                    src={item?.productId.images[0].url}
+                                    className="img-fluid"
+                                    alt="product image"
+                                  />
+                                )}
+                            </div>
+                            <div className="w-75">
+                              <div>
+                                <p>{item?.productId.title}</p>
+                              </div>
+                              <div className="d-flex gap-2">
+                                <p>Color:</p>
+                                {/* <ul className="colors ps-0">
+                                  {item?.productId.color.map((color, index) => (
+                                    <li
+                                      key={index}
+                                      style={{ backgroundColor: color }}
+                                    ></li>
+                                  ))}
+                                </ul> */}
+                                <ul className="colors ps-0">
+                                  <li
+                                    key={index}
+                                    style={{ backgroundColor: item?.colour }}
+                                  ></li>
+                                </ul>
+                              </div>
+                              <p>Size: {item?.size}</p>
+                            </div>
+                          </div>
+                          <div className="cart-col-2">
+                            <div className="price">£ {item?.price}</div>
+                            <p>|</p>
+                            <div className="nepaliPrice">
+                              Rs {convertedPrices[index]}
+                            </div>
+                          </div>
+                          <div className="cart-col-3 d-flex align-items-center gap-20">
+                            <div>
+                              <input
+                                className="form-control styled-input"
+                                type="number"
+                                min={1}
+                                max={10}
+                                value={
+                                  productUpdateDetail?.quantity
+                                    ? productUpdateDetail?.quantity
+                                    : item?.quantity
+                                }
+                                onChange={(e) => {
+                                  setProductUpdateDetail({
+                                    cartItemId: item?._id,
+                                    quantity: e.target.value,
+                                  });
+                                }}
+                                disabled
+                                // style={{ width: '48px', textAlign: 'center' }}
+                              />
+                            </div>
+                            <div style={{ marginLeft: "10px" }}>
+                              <AiFillDelete
+                                onClick={() => {
+                                  deleteACartProduct(item?._id);
+                                }}
+                                className="text-danger dlt-product"
+                              />
+                            </div>
+                          </div>
+                          <div className="cart-col-4">
+                            <div className="price">
+                              £ {item?.price * item?.quantity}
+                            </div>
+                            <p>|</p>
+                            <div className="nepaliPrice">
+                              Rs {convertedPrices[index] * item?.quantity}
+                            </div>
+                          </div>
+                        </div>
+                      );
+                    }
+                    return null;
+                  })}
 
                 {useCartState &&
                   useCartState?.map((item, index) => {

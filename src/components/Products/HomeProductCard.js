@@ -4,15 +4,15 @@ import { Link, useNavigate } from "react-router-dom";
 import wish from "../../images/wish.svg";
 import addcart from "../../images/add-cart.svg";
 import view from "../../images/view.svg";
-import styled from "styled-components"; 
+import styled from "styled-components";
 import { ConvertToPound } from "../ConvertToPound";
 import SkeletonProductCard from "../Skeleton/SkeletonProductCard";
 
 const DiscountBanner = styled.div`
   position: absolute;
   top: 0;
-  left:0;
-  background-color: var(--color-bf4800); 
+  left: 0;
+  background-color: var(--color-bf4800);
   color: white; // Set the text color for the banner
   padding: 5px 10px; // Adjust the padding as needed
   border-radius: 10px 0 0 0; // Add a border radius to the top right corner
@@ -20,24 +20,28 @@ const DiscountBanner = styled.div`
 `;
 
 const ProductCardWrapper = styled.div`
-  padding: 15px;
   background-color: white;
   border-radius: 10px;
   overflow: hidden;
   width: 91%;
-  bordr-left:20px;
+  border-left: 20px;
   display: flex;
   flex-direction: row;
   align-items: center;
-  @media (min-width:700px) and (max-width:840px){
-    width:550px;}
+  margin-buttom: 2rem;
 
-@media (min-width:521px) and (max-width:699px){
-  padding :10px;
-  width:450px;}
-  @media (max-width:520px){
-    padding :10px;
-    width:300px;}
+  @media (min-width: 700px) and (max-width: 840px) {
+    width: 550px;
+  }
+
+  @media (min-width: 521px) and (max-width: 699px) {
+    padding: 10px;
+    width: 450px;
+  }
+  @media (max-width: 520px) {
+    padding: 10px;
+    width: 300px;
+  }
 `;
 
 const ProductDetails = styled.div`
@@ -60,89 +64,75 @@ const ProductDetails = styled.div`
   }
 `;
 
-const ActionBar = styled.div`
-  position: absolute;
-  top: 50%;
-  right: -23px;
-  transform: translateY(-50%);
-  transition: 0.3s;
-`;
-
-const WishlistIcon = styled.div`
-  position: absolute;
-  top: 10px;
-  right: 10px;
-`;
-
-const HomeProductCard = ({item,onAddToWishlist}) => {
-    
+const HomeProductCard = ({ item, onAddToWishlist }) => {
   const navigate = useNavigate();
-  
-  const convert = async(price) =>{
+
+  const convert = async (price) => {
     return await ConvertToPound(price);
   };
 
-  const [converted,setConverted] = useState([]);
-  useEffect(() =>{
-    
-      const conversionPromise = item.map((i) => convert(i?.price));
+  const [converted, setConverted] = useState([]);
+  useEffect(() => {
+    const conversionPromise = item.map((i) => convert(i?.price));
 
-      Promise.all(conversionPromise)
-        .then((convertedPrices) => setConverted(convertedPrices))
-        .catch((error) => console.error("Conversion error", error));
-
-    
-  },[item])
-        return (
-          <>
-          {
-            item? (item?.map((item,index)=>{
-              return(
-                  <ProductCardWrapper key={item._id}>
-          <div className="home-product-card">
-            {
-              item?.discount &&
-              <DiscountBanner>Save {item?.discount} %</DiscountBanner>
-            }
-            <Link to={`/product/${item?._id}`}>
-              <div style={{height:"200px",width:"200px",objectFit:"contain" }}>
-              {item?.images && item.images[0] && (
-                  <img
-                    src={item?.images[0].url}
-                    className="home-product-image"
-                    alt="product image"
-                  />
+    Promise.all(conversionPromise)
+      .then((convertedPrices) => setConverted(convertedPrices))
+      .catch((error) => console.error("Conversion error", error));
+  }, [item]);
+  return (
+    <>
+      {item ? (
+        item?.map((item, index) => {
+          return (
+            <ProductCardWrapper key={item._id}>
+              <div className="home-product-card">
+                {item?.discount && (
+                  <DiscountBanner>Save {item?.discount} %</DiscountBanner>
                 )}
-              </div>
-            </Link>
-            <ProductDetails>
-              <Link to={`/product/${item?._id}`}>
-                <h5 className="home-product-title">{item?.title}</h5>
-              </Link>
-              <ReactStars
-                count={5}
-                size={20}
-                value={item?.totalrating}
-                edit={false}
-                activeColor="#ffd700"
-              />
-              <p className="price">
-                
-              {/* {
+                <Link to={`/product/${item?._id}`}>
+                  <div
+                    style={{
+                      height: "200px",
+                      width: "200px",
+                      objectFit: "contain",
+                    }}
+                  >
+                    {item?.images && item.images[0] && (
+                      <img
+                        src={item?.images[0].url}
+                        className="home-product-image"
+                        alt="product image"
+                      />
+                    )}
+                  </div>
+                </Link>
+                <ProductDetails>
+                  <Link to={`/product/${item?._id}`}>
+                    <h5 className="home-product-title">{item?.title}</h5>
+                  </Link>
+                  <ReactStars
+                    count={5}
+                    size={20}
+                    value={item?.totalrating}
+                    edit={false}
+                    activeColor="#ffd700"
+                  />
+                  <p className="price">
+                    {/* {
                   currency === "Rs" ? `Rs ${item?.price}`:`£${converted[index]}`
                 } */}
-                £ {item?.price} / Rs {converted[index]}
-                </p>
-            </ProductDetails>
-          </div>
-        </ProductCardWrapper>
-              )
-          })):(
-            <SkeletonProductCard/>
-          )
-          }
-          </>
-        );
-    };
+                    £ {item?.price} / Rs {converted[index]}
+                  </p>
+                </ProductDetails>
+              </div>
+            </ProductCardWrapper>
+          );
+        })
+      ) : (
+        <SkeletonProductCard />
+      )}
+    </>
+  );
+};
 
 export default HomeProductCard;
