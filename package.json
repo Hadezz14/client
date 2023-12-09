@@ -13,6 +13,7 @@
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^14.4.3",
     "axios": "^1.4.0",
+    "currencyexchanges": "^1.1.1",
     "firebase": "^10.3.1",
     "formik": "^2.4.2",
     "helmet": "^7.0.0",
