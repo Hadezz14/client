@@ -192,14 +192,28 @@ footer .input-group-text {
   height: 400px; /* Set your desired height */
   object-fit: cover; /* Maintain aspect ratio and cover container */
 }
+.home-wrapper-1 {
+  margin-top: 2rem;
+  padding-top: 33px;
+
+}
 .home-wrapper-2 {
   padding-top: 33px;
   background-color: #f5f5f7;;
-  height: auto;
+}
+.featured-wrapper{
+  height: 100%;
+
 }
 .featured-wrapper .section-heading{
   padding-top: 20px;
-  margin-left: 18px;}
+  margin-left: 18px;
+}
+
+.typed-cursor {
+  opacity: 0 !important;
+}
+
 @media(max-width:768px){
   .banner-image{
     height: 200px;
@@ -227,6 +241,52 @@ footer .input-group-text {
     line-height: 24px;
   }
 }
+.custom-carousel {
+  overflow: hidden;
+  position: relative;
+}
+
+.carousel-track {
+  display: flex;
+  transition: transform 0.5s ease-in-out;
+}
+
+.carousel-item {
+  flex: 0 0 100%;
+  margin-right: 10px; /* Adjust spacing between items */
+}
+
+.carousel-controls {
+  position: absolute;
+  top: 50%;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  transform: translateY(-50%);
+}
+
+.prev,
+.next {
+  background-color: #fff;
+  border: 1px solid #ddd;
+  padding: 10px;
+  cursor: pointer;
+}
+
+/* Add media queries for responsive design */
+@media (min-width: 768px) {
+  .carousel-item {
+    flex: 0 0 50%;
+  }
+}
+
+@media (min-width: 1024px) {
+  .carousel-item {
+    flex: 0 0 33.33%;
+  }
+}
+
+/* Add more media queries for larger screens if needed */
 
 @media(max-width:430px){
   .banner-image{
@@ -463,24 +523,20 @@ footer .input-group-text {
   width: 100%;
 }
 .home-product-card {
-  padding: 15px;
-  background-color: white;
-  border-radius: 10px;
-  overflow: hidden;
-  width: 100%;
-  height: 375px;
+display: flex;
 }
 .product-card .product-image {
   height: 270px;
+  border-radius: 10px;
 }
 .home-product-image{
-  max-width: 100%;
-  height: 100%;
+  max-width: 500px;
+  height: 450px;
 }
 .home-product-title{
-  margin-top: 0.6rem;
   padding-top: 2px;
 }
+
 .product-card .product-image img {
   object-fit: contain;
 }
@@ -1121,6 +1177,9 @@ footer .input-group-text {
   }
   .cart-col-4 .nepaliPrice{
     margin-left: 0.5rem;
+  }
+  .exploreFooter{
+    margin-left: 10px !important;
   }
 }
 @media (min-width: 701px) and (max-width: 1024px) {
@@ -1989,3 +2048,90 @@ footer .input-group-text {
   
 }
 
+/* .slider{
+  position: relative;
+  width: 95%;
+  height: 375px;
+  overflow: hidden;
+  display: flex;
+  margin-top: 5rem;
+}
+
+#next, #prev{
+  position: absolute;
+  top: 40%;
+  color: slategrey;
+  background-color: transparent;
+  border: none;
+  font-size: xxx-large;
+  font-family: monospace;
+  font-weight: bold;
+  left:270px;
+}
+#next{
+  left: unset;
+  right: 80px;
+}
+.featuredCaoursel{
+  background-image: 
+        linear-gradient(
+            to top right, #8B5CF6, #EC4899
+        );
+  min-height: 100vh;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: monospace;
+}
+ */
+ .productSlide {
+  position: relative;
+  overflow: hidden;
+  width: 100%; 
+}
+
+.innerSlide {
+  display: flex;
+  transition: transform 0.5s ease;
+}
+
+.carouselProducts {
+  flex: 0 0 100%; 
+  max-width: 100%; 
+}
+
+
+
+
+.carousel-prev,
+.carousel-next {
+  position: absolute;
+  top: 14rem;
+  transform: translateY(-50%);
+  color: rgb(216, 216, 216);
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+  background-color: transparent;
+  font-size: 2.7rem;
+}
+
+.carousel-prev {
+  left: 10px;
+}
+
+.carousel-next {
+  right: 10px;
+}
+
+@media (max-width: 480px) {
+  .carousel-prev {
+    left: 6px;
+  }
+  .carousel-next {
+    right: 6px;
+  }
+
+
+}

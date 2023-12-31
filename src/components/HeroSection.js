@@ -2,8 +2,26 @@ import { NavLink } from "react-router-dom";
 import styled from "styled-components";
 import hero_img from "../images/vyamtshirt.png";
 import { MDBBtn } from "mdb-react-ui-kit";
+import { Link } from 'react-router-dom';
+import { useEffect, useRef } from "react";
+import Typed from 'typed.js';
+
+
 
 const HeroSection = () => {
+  const el = useRef(null);
+
+  useEffect(() => {
+    const typed = new Typed(el.current, {
+      strings: ["Elevate your fitness, embody the GOAT spirit. Unleash greatness with our exclusive fitness-focused clothing, blending style and performance. At VyamStore, we're committed to empowering your journey towards peak performance. Be the GOAT - Where Style Meets Strength, and every workout becomes a step towards your greatest version"], // Add your text here
+      typeSpeed: 10,
+      startDelay: 500,
+    });
+
+    return () => {
+      typed.destroy();
+    };
+  }, []);
   return (
     <Wrapper>
       <div className="container">
@@ -11,13 +29,11 @@ const HeroSection = () => {
           <div className="hero-section-data">
             <p className="intro-data">Welcome to </p>
             <h1> Vyam Store </h1>
-            <p>
-              Elevate your fitness, embody the GOAT spirit. Unleash greatness
-              with our exclusive fitness focused clothing, blending style and
-              performance. Be the GOAT - Where Style Meets Strength.
-            </p>
+            <p ref={el}></p>
             <NavLink>
-              <MDBBtn color="primary">Shop Now</MDBBtn>
+              <Link to="/product">
+                <MDBBtn color="primary" style={{marginTop: "10px", width:"300px"}}>Shop Now</MDBBtn>
+              </Link>            
             </NavLink>
           </div>
           {/* our homepage image  */}

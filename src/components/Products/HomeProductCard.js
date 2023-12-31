@@ -23,34 +23,52 @@ const ProductCardWrapper = styled.div`
   background-color: white;
   border-radius: 10px;
   overflow: hidden;
-  width: 91%;
-  border-left: 20px;
   display: flex;
-  flex-direction: row;
   align-items: center;
-  margin-buttom: 2rem;
+  justify-content: space-between; // Adjust the layout
+  margin-bottom: 2rem;
 
-  @media (min-width: 700px) and (max-width: 840px) {
-    width: 550px;
+ 
+
+  @media (max-width: 820px) {
+    flex-direction: column;
+    align-items: center;
+
   }
 
-  @media (min-width: 521px) and (max-width: 699px) {
-    padding: 10px;
-    width: 450px;
-  }
-  @media (max-width: 520px) {
-    padding: 10px;
-    width: 300px;
+
+  @media (max-width: 768px) {
+    align-items: center;
+    overflow: hidden;
   }
 `;
 
+const ImageContainer = styled.div`
+  width: 50%; // Set image container to 50% width
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px 10px 10px 29px;
+
+  @media (max-width: 1024px) {
+    width: 100%;
+  }
+
+`;
+
 const ProductDetails = styled.div`
+  width: 100%; // Set product details to 50% width
+  padding: 10px;
+
+  @media (max-width: 520px) {
+    width: 100%;
+  }
   h6 {
     color: var(--color-bf4800);
     font-size: 13px;
   }
   h5 {
-    font-size: 15px;
+    font-size: 19px;
     color: var(--color-1c1c1b);
   }
   p.price {
@@ -58,9 +76,24 @@ const ProductDetails = styled.div`
     color: var(--color-1c1c1b);
   }
   p.description {
-    font-size: 13px;
+    font-size: 16px;
     color: var(--color-777777);
-    margin-right: 20px;
+    padding: 10px 20px 0px 0px;
+    margin-top: 3rem;
+  }
+
+  @media (max-width: 820px) {
+    width: 100%;
+    text-align: center;
+
+    // .react-stars{
+    //   margin-left: 40%;
+    //   margin-top: 15px;
+    // }
+    .star-rating-wrapper {
+      display: flex;
+      justify-content: center;
+    }
   }
 `;
 
@@ -82,52 +115,43 @@ const HomeProductCard = ({ item, onAddToWishlist }) => {
   return (
     <>
       {item ? (
-        item?.map((item, index) => {
-          return (
-            <ProductCardWrapper key={item._id}>
-              <div className="home-product-card">
-                {item?.discount && (
-                  <DiscountBanner>Save {item?.discount} %</DiscountBanner>
-                )}
-                <Link to={`/product/${item?._id}`}>
-                  <div
-                    style={{
-                      height: "200px",
-                      width: "200px",
-                      objectFit: "contain",
-                    }}
-                  >
-                    {item?.images && item.images[0] && (
-                      <img
-                        src={item?.images[0].url}
-                        className="home-product-image"
-                        alt="product image"
-                      />
-                    )}
-                  </div>
-                </Link>
-                <ProductDetails>
-                  <Link to={`/product/${item?._id}`}>
-                    <h5 className="home-product-title">{item?.title}</h5>
-                  </Link>
-                  <ReactStars
-                    count={5}
-                    size={20}
-                    value={item?.totalrating}
-                    edit={false}
-                    activeColor="#ffd700"
+        item.map((item, index) => (
+          <ProductCardWrapper key={item._id}>
+            <ImageContainer>
+              {item.discount && (
+                <DiscountBanner>Save {item.discount} %</DiscountBanner>
+              )}
+              <Link to={`/product/${item._id}`}>
+                {item.images && item.images[0] && (
+                  <img
+                    src={item.images[0].url}
+                    alt="product"
+                    style={{ width: "500px", height: "450px", objectFit: "contain" }}
                   />
-                  <p className="price">
-                    {/* {
-                  currency === "Rs" ? `Rs ${item?.price}`:`£${converted[index]}`
-                } */}
-                    £ {item?.price} / Rs {converted[index]}
-                  </p>
-                </ProductDetails>
+                )}
+              </Link>
+            </ImageContainer>
+            <ProductDetails>
+              <Link to={`/product/${item._id}`}>
+                <h5 className="home-product-title">{item.title}</h5>
+                <div className="star-rating-wrapper">
+                <ReactStars
+                  count={5}
+                  size={24}
+                  value={item.totalrating}
+                  edit={false}
+                  activeColor="#ffd700"
+                />
               </div>
-            </ProductCardWrapper>
-          );
-        })
+              
+              <p className="description"
+                  dangerouslySetInnerHTML={{ __html: item?.description }}
+                ></p>
+                <p style={{color: "black", marginTop: "1.5rem", fontWeight: "500", fontSize: "16px"}}>Click to view Product</p>
+              </Link>
+              </ProductDetails>
+          </ProductCardWrapper>
+        ))
       ) : (
         <SkeletonProductCard />
       )}

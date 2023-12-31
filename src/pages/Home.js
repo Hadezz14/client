@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useCallback, useEffect } from "react";
 import Container from "../components/Container";
 import { services } from "../utils/Data";
 import SmallBanner from "../components/smallBanner";
@@ -54,13 +54,13 @@ const Home = () => {
       window.removeEventListener("resize", handleResize);
     };
   }, []);
-  const renderProducts = () => {
-    if (window.innerWidth >= 1024) {
-      return firstFourProducts;
-    } else {
-      return latestProduct;
-    }
-  };
+  // const renderProducts = () => {
+  //   if (window.innerWidth >= 1024) {
+  //     return firstFourProducts;
+  //   } else {
+  //     return latestProduct;
+  //   }
+  // };
   const responsive = {
     desktop: {
       breakpoint: { max: 3000, min: 1024 },
@@ -80,25 +80,71 @@ const Home = () => {
     .sort((a, b) => b.totalrating - a.totalrating);
   const featuredProducts = sortedProducts.slice(0, 8);
 
+  const [currentSlide, setCurrentSlide] = useState(0);
+  const totalSlides = featuredProducts.length;
+  const [isHovered, setIsHovered] = useState(false);
+
+  
+
+  const nextSlide = useCallback(() => {
+    setCurrentSlide((prev) => (prev + 1) % totalSlides);
+  }, [totalSlides]);
+
+  const prevSlide = useCallback(() => {
+    setCurrentSlide((prev) => (prev - 1 + totalSlides) % totalSlides);
+  }, [totalSlides]);
+
+  const handleMouseEnter = () => {
+    setIsHovered(true);
+  };
+
+  const handleMouseLeave = () => {
+    setIsHovered(false);
+  };
+
+  useEffect(() => {
+    let slideInterval;
+    if (!isHovered) {
+      slideInterval = setInterval(() => {
+        nextSlide();
+      }, 2000);
+    }
+
+    return () => {
+      if (slideInterval) {
+        clearInterval(slideInterval);
+      }
+    };
+  }, [nextSlide, isHovered]);
+
   return (
     <>
       <HeroSection />
-      <Container class1="home-wrapper-1 py-3">
-        <div className="row ">
+      {featuredProducts && (
+        <Container class1="featured-wrapper py-3 home-wrapper-2">
           <h3 className="section-heading text-center font-weight-bold">
-            Lastest Products in the Collection
+            Highest Rated Products
           </h3>
-          <div className="row py-4 small-bannerDiv">
-            {renderProducts()?.map((item, index) => (
-              <div className="col-12 col-xs-12 col-md-6 col-lg-3" key={index}>
-                <div className="d-flex flex-column gap-10 justify-content-between align-items-center smallBannerGap">
-                  <SmallBanner item={item} />
+          <div className="productSlide" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
+            <div
+              className="innerSlide"
+              style={{ transform: `translateX(-${currentSlide * 100}%)` }}
+            >
+              {featuredProducts.map((item, index) => (
+                <div className="carouselProducts" key={index}>
+                  <HomeProductCard
+                    item={[item]}
+                    onAddToWishlist={handleAddToWishlist}
+                  />
                 </div>
-              </div>
-            ))}
+              ))}
+            </div>
+            <button className="carousel-prev" onClick={prevSlide}>&lt;</button>
+            <button className="carousel-next" onClick={nextSlide}>&gt;</button>
           </div>
-        </div>
-      </Container>
+        </Container>
+      
+      )}
       <Container class1="home-wrapper-2">
         <div className="row">
           <div className="col-12">
@@ -118,35 +164,22 @@ const Home = () => {
           </div>
         </div>
       </Container>
-      {featuredProducts && (
-        <Container class1="featured-wrapper py-3 home-wrapper-2">
+      <Container class1="home-wrapper-1 py-3">
+        <div className="row ">
           <h3 className="section-heading text-center font-weight-bold">
-            Highest Rated Products
+            Lastest Products in the Collection
           </h3>
-          <div className="row">
-            <div className="col-12">
-              <div className="productRow">
-                <Carousel
-                  autoPlay
-                  autoPlaySpeed={2000}
-                  responsive={responsive}
-                  infinite
-                  showDots={true}
-                  arrows={false}
-                >
-                  {featuredProducts?.map((item, index) => (
-                    <HomeProductCard
-                      key={index}
-                      item={[item]}
-                      onAddToWishlist={handleAddToWishlist}
-                    />
-                  ))}
-                </Carousel>
+          <div className="row py-4 small-bannerDiv">
+            {firstFourProducts?.map((item, index) => (
+              <div className="col-12 col-xs-12 col-md-6 col-lg-3" key={index}>
+                <div className="d-flex flex-column gap-10 justify-content-between align-items-center smallBannerGap">
+                  <SmallBanner item={item} />
+                </div>
               </div>
-            </div>
+            ))}
           </div>
-        </Container>
-      )}
+        </div>
+      </Container>
     </>
   );
 };
